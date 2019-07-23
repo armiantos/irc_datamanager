@@ -66,6 +66,7 @@
     </ApplicationDefinition>
     <Compile Include="HelperClasses\CommandWrapper.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
+    <Compile Include="HelperClasses\Status.cs" />
     <Compile Include="Models\OpcDaModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\OpcDaViewModel.cs" />
