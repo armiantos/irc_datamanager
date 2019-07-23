@@ -65,16 +65,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataSourceWrappers\OpcDaWrapper.cs" />
+    <Compile Include="DataSourceWrappers\WinAppWrapper.cs" />
     <Compile Include="HelperClasses\CommandWrapper.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\Status.cs" />
     <Compile Include="Models\OpcDaModel.cs" />
+    <Compile Include="Models\WinAppModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\OpcDaViewModel.cs" />
     <Compile Include="ViewModels\OperationsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="ViewModels\WinAppViewModel.cs" />
     <Compile Include="Views\OpcDaView.xaml.cs">
       <DependentUpon>OpcDaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAppView.xaml.cs">
+      <DependentUpon>WinAppView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OpcDaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAppView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
