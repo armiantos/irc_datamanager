@@ -16,6 +16,9 @@ namespace irc_datamanager.Models
         private DataView itemsView;
         private string itemsViewVisibility;
         private string opcServersVisibility;
+        private string currentOpcServer;
+        private string searchField;
+        private List<string> opcServers;
 
         public OpcDaModel()
         {
@@ -36,7 +39,18 @@ namespace irc_datamanager.Models
             }
         }
 
-        public ObservableCollection<string> OpcServers { get; set; }
+        public List<string> OpcServers
+        {
+            get
+            {
+                return opcServers;
+            }
+            set
+            {
+                opcServers = value;
+                OnPropertyChanged("OpcServers");
+            }
+        }
 
         public DataView ItemsView
         {
@@ -46,8 +60,11 @@ namespace irc_datamanager.Models
             }
             set
             {
-                itemsView = value;
-                OnPropertyChanged("ItemsView");
+                if (value.Count > 0)
+                {
+                    itemsView = value;
+                    OnPropertyChanged("ItemsView");
+                }
             }
         }
 
@@ -90,5 +107,30 @@ namespace irc_datamanager.Models
             }
         }
 
+        public string CurrentOpcServer
+        {
+            get
+            {
+                return currentOpcServer;
+            }
+            set
+            {
+                currentOpcServer = value;
+                OnPropertyChanged("CurrentOpcServer");
+            }
+        }
+
+        public string SearchField
+        {
+            get
+            {
+                return searchField;
+            }
+            set
+            {
+                searchField = value;
+                OnPropertyChanged("SearchField");
+            }
+        }
     }
 }
