@@ -27,7 +27,9 @@ namespace irc_datamanager.ViewModels
             sinkViewModels = new List<ViewModel>();
 
             OpcDaViewModel opcDaViewModel = new OpcDaViewModel();
+            WinAppViewModel winAppViewModel = new WinAppViewModel();
             sourceViewModels.Add(opcDaViewModel);
+            sourceViewModels.Add(winAppViewModel);
 
             sourceTypes = new List<string>(sourceViewModels.Count);
             foreach (ViewModel sourceViewModel in sourceViewModels)
