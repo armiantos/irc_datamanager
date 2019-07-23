@@ -11,9 +11,9 @@ namespace irc_datamanager.HelperClasses
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(object sender, string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(sender,
+            PropertyChanged?.Invoke(this,
                 new PropertyChangedEventArgs(propertyName));
         }
     }
