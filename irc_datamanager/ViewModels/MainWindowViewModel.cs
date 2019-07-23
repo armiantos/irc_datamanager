@@ -13,9 +13,18 @@ namespace irc_datamanager.ViewModels
         private ViewModel currentSinkViewModel;
         private ViewModel operationsViewModel;
 
+        private List<ViewModel> sourceViewModels;
+        private List<ViewModel> sinkViewModels;
+
         public MainWindowViewModel()
         {
-            
+            sourceViewModels = new List<ViewModel>();
+            sinkViewModels = new List<ViewModel>();
+
+            OpcDaViewModel opcDaViewModel = new OpcDaViewModel();
+            sourceViewModels.Add(opcDaViewModel);
+
+            CurrentSourceViewModel = sourceViewModels[0];
         }
 
         public ViewModel CurrentSourceViewModel
@@ -27,7 +36,7 @@ namespace irc_datamanager.ViewModels
             set
             {
                 currentSourceViewModel = value;
-                OnPropertyChanged(this, "CurrentSourceViewModel");
+                OnPropertyChanged("CurrentSourceViewModel");
             }
         }
 
@@ -40,11 +49,11 @@ namespace irc_datamanager.ViewModels
             set
             {
                 currentSinkViewModel = value;
-                OnPropertyChanged(this, "CurrentSinkViewModel");
+                OnPropertyChanged("CurrentSinkViewModel");
             }
         }
 
-        public ViewModel OperationViewModel
+        public ViewModel OperationsViewModel
         {
             get
             {
@@ -53,7 +62,7 @@ namespace irc_datamanager.ViewModels
             set
             {
                 operationsViewModel = value;
-                OnPropertyChanged(this, "OperationViewModel");
+                OnPropertyChanged("OperationViewModel");
             }
         }
     }

@@ -19,6 +19,7 @@ namespace irc_datamanager
             MainWindow mw = new MainWindow();
             MainWindowViewModel mwvm = new MainWindowViewModel();
             mw.DataContext = mwvm;
+            mw.Show();
         }
     }
 }
