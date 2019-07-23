@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:irc_datamanager.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:il="clr-namespace:Microsoft.Expression.Interactivity.Layout;assembly=Microsoft.Expression.Interactions"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
@@ -15,11 +17,20 @@
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center">
                 <Label HorizontalAlignment="Center"
-                       Margin="{StaticResource CommonMargin}">Available Windows</Label>
-                <ListBox ItemsSource="{Binding Windows}"
+                       Margin="{StaticResource CommonMargin}">Active Window</Label>
+                <Ellipse Fill="YellowGreen"
+                         Width="20"
+                         Height="20"
                          Margin="{StaticResource CommonMargin}"
-                         HorizontalAlignment="Center"/>
-
+                         Cursor="Hand"
+                         DataContext="{Binding DataContext,
+                                       RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <i:Interaction.Behaviors>
+                        <il:MouseDragElementBehavior/>
+                    </i:Interaction.Behaviors>
+                </Ellipse>
+                <Label Content="{Binding CurrentWindow}"
+                       Margin="{StaticResource CommonMargin}"/>
                 <Separator Margin="{StaticResource CommonMargin}"
                            Visibility="{Binding ChildWindowsVisibility}"></Separator>
 
