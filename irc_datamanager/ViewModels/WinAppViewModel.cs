@@ -23,7 +23,6 @@ namespace irc_datamanager.ViewModels
         {
             Model = new WinAppModel();
             Model.ChildWindowsVisibility = "Collapsed";
-            WinAppWrapper.GetWindows();
         }
         
     }

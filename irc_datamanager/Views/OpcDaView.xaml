@@ -44,7 +44,7 @@
                        Visibility="{Binding ItemsViewVisibility}">Items</Label>
                 <StackPanel Orientation="Horizontal"
                             Visibility="{Binding ItemsViewVisibility}"
-                            HorizontalAlignment="Center">
+                            HorizontalAlignment="Stretch">
                     <TextBox Text="{Binding SearchField}"
                              Margin="{StaticResource CommonMargin}"
                              Padding="{StaticResource CommonPadding}"

@@ -13,9 +13,14 @@
         <DataTemplate DataType="{x:Type viewModels:OpcDaViewModel}">
             <views:OpcDaView/>
         </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModels:WinAppViewModel}">
             <views:WinAppView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:DbViewModel}">
+            <views:DbView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:OperationsViewModel}">
+            <views:OperationsView/>
         </DataTemplate>
     </Window.Resources>
     

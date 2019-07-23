@@ -22,9 +22,7 @@
                              Margin="{StaticResource CommonMargin}"
                              Cursor="Hand"
                              DataContext="{Binding DataContext,
-                                           RelativeSource={RelativeSource AncestorType=UserControl}}"
-                             />
-
+                                           RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
                 <Label Content="{Binding CurrentWindow}"
                        Margin="{StaticResource CommonMargin}"/>

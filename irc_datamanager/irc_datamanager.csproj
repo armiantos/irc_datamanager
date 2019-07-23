@@ -72,13 +72,20 @@
     <Compile Include="HelperClasses\Status.cs" />
     <Compile Include="Models\OpcDaModel.cs" />
     <Compile Include="Models\WinAppModel.cs" />
+    <Compile Include="ViewModels\DbViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\OpcDaViewModel.cs" />
     <Compile Include="ViewModels\OperationsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\WinAppViewModel.cs" />
+    <Compile Include="Views\DbView.xaml.cs">
+      <DependentUpon>DbView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OpcDaView.xaml.cs">
       <DependentUpon>OpcDaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperationsView.xaml.cs">
+      <DependentUpon>OperationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WinAppView.xaml.cs">
       <DependentUpon>WinAppView.xaml</DependentUpon>
@@ -95,7 +102,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DbView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OpcDaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OperationsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
