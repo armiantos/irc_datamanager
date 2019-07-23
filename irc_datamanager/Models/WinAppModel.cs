@@ -10,23 +10,9 @@ namespace irc_datamanager.Models
 {
     class WinAppModel : ObservableObject
     {
-        private List<string> windows;
         private DataView handlesView;
         private string currentWindow;
         private string childWindowsVisibility;
-
-        public List<string> Windows
-        {
-            get
-            {
-                return windows;
-            }
-            set
-            {
-                windows = value;
-                OnPropertyChanged("Windows");
-            }
-        }
 
         public string CurrentWindow
         {

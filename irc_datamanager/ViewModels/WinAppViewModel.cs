@@ -1,10 +1,9 @@
 ﻿using irc_datamanager.DataSourceWrappers;
+using irc_datamanager.HelperClasses;
 using irc_datamanager.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace irc_datamanager.ViewModels
 {
@@ -26,5 +25,6 @@ namespace irc_datamanager.ViewModels
             Model.ChildWindowsVisibility = "Collapsed";
             WinAppWrapper.GetWindows();
         }
+        
     }
 }
