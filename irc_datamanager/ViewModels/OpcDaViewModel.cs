@@ -29,6 +29,9 @@ namespace irc_datamanager.ViewModels
         public OpcDaViewModel()
         {
             OpcDaModel = new OpcDaModel();
+            OpcDaModel.OpcServersVisibility = "Hidden";
+            OpcDaModel.ItemsViewVisibility = "Hidden";
+
             OpcDaModel.PropertyChanged += ModelPropertyChangedHandler;
         }
 
