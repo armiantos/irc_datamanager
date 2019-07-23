@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <UserControl.Resources>
-        <Thickness x:Key="CommonMargin" Left="5" Top="5" Right="5" Bottom="5"/>
+        <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid DataContext="{Binding OpcDaModel}">
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -18,13 +18,28 @@
                 <Style TargetType="{x:Type TextBox}">
                     <Setter Property="Margin" Value="{StaticResource CommonMargin}"/>
                 </Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Margin" Value="{StaticResource CommonMargin}"/>
+                </Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="{StaticResource CommonMargin}"/>
+                </Style>
+                <Style TargetType="{x:Type DataGrid}">
+                    <Setter Property="Margin" Value="{StaticResource CommonMargin}"/>
+                </Style>
             </StackPanel.Resources>
             <Label>Host Address</Label>
-            <TextBox Text="{Binding Host}"></TextBox>
+            <TextBox Text="{Binding Host}"
+                     HorizontalContentAlignment="Center"
+                     VerticalAlignment="Center"></TextBox>
             <Button Command="{Binding DataContext.ConnectToHostCommand,
                 RelativeSource={RelativeSource AncestorType=UserControl}}">Connect</Button>
-            <Separator/>
-            <ListBox ItemsSource="{Binding OpcServers}"/>
+            <ListBox ItemsSource="{Binding OpcServers}"
+                     Visibility="{Binding OpcServersVisibility}"/>
+            <DataGrid ItemsSource="{Binding ItemsView}"
+                      Visibility="{Binding DataContext.ItemsViewVisibility,
+                                    RelativeSource={RelativeSource AncestorType=Grid}}"
+                      DataContext="{Binding ItemsTable}"/>
         </StackPanel>
     </Grid>
 </UserControl>
