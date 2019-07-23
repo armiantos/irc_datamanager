@@ -25,6 +25,14 @@
         <!-- First column -->
         <Grid Grid.Column="0"
               DataContext="{Binding CurrentSourceViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ComboBox ItemsSource="{Binding DataContext.SourceTypes, RelativeSource={RelativeSource AncestorType=Window}}"
+                      VerticalContentAlignment="Center"
+                      Margin="10"
+                      SelectedItem="{Binding DataContext.CurrentSourceName, RelativeSource={RelativeSource AncestorType=Window}}"/>
             <ContentControl Grid.Row="1" Content="{Binding}"/>
         </Grid>
         

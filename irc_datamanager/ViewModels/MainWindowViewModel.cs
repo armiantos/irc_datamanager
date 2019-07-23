@@ -1,6 +1,7 @@
 ﻿using irc_datamanager.HelperClasses;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,10 @@ namespace irc_datamanager.ViewModels
         private List<ViewModel> sourceViewModels;
         private List<ViewModel> sinkViewModels;
 
+        private List<string> sourceTypes;
+
+        private string currentSourceName;
+
         public MainWindowViewModel()
         {
             sourceViewModels = new List<ViewModel>();
@@ -24,7 +29,17 @@ namespace irc_datamanager.ViewModels
             OpcDaViewModel opcDaViewModel = new OpcDaViewModel();
             sourceViewModels.Add(opcDaViewModel);
 
-            CurrentSourceViewModel = sourceViewModels[0];
+            sourceTypes = new List<string>(sourceViewModels.Count);
+            foreach (ViewModel sourceViewModel in sourceViewModels)
+            {
+                sourceTypes.Add(sourceViewModel.ViewModelName);
+            }
+        }
+
+        private void ChangeSourceViewModel(string viewModelName)
+        {
+            CurrentSourceViewModel = sourceViewModels.FirstOrDefault(viewModel =>
+                                        viewModel.ViewModelName == viewModelName);
         }
 
         public ViewModel CurrentSourceViewModel
@@ -63,6 +78,27 @@ namespace irc_datamanager.ViewModels
             {
                 operationsViewModel = value;
                 OnPropertyChanged("OperationViewModel");
+            }
+        }
+
+        public List<string> SourceTypes
+        {
+            get
+            {
+                return sourceTypes;
+            }
+        }
+
+        public string CurrentSourceName
+        {
+            get
+            {
+                return currentSourceName;
+            }
+            set
+            {
+                currentSourceName = value;
+                ChangeSourceViewModel(currentSourceName);
             }
         }
     }
