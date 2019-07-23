@@ -1,7 +1,9 @@
-﻿using irc_datamanager.HelperClasses;
+﻿using irc_datamanager.DataSourceWrappers;
+using irc_datamanager.HelperClasses;
 using irc_datamanager.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ namespace irc_datamanager.ViewModels
 {
     public class OpcDaViewModel : ViewModel
     {
-        private ICommand connectToHostCommand;
+        private ICommand listServersCommand;
 
         public override string ViewModelName
         {
@@ -23,29 +25,68 @@ namespace irc_datamanager.ViewModels
 
         public OpcDaModel OpcDaModel { get; }
 
-        public ICommand ConnectToHostCommand
-        {
-            get
-            {
-                if (connectToHostCommand == null)
-                {
-                    connectToHostCommand = new CommandWrapper(param =>
-                    {
-                        ConnectToOpcServer();
-                    });
-                }
-                return connectToHostCommand;
-            }
-        }
-        
-        private void ConnectToOpcServer()
-        {
-            throw new NotImplementedException();
-        }
 
         public OpcDaViewModel()
         {
             OpcDaModel = new OpcDaModel();
+            OpcDaModel.PropertyChanged += ModelPropertyChangedHandler;
+        }
+
+        private void ModelPropertyChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CurrentOpcServer" && OpcDaModel.CurrentOpcServer != null)
+            {
+                OpcDaWrapper.GetInstance().Connect(OpcDaModel.CurrentOpcServer,
+                    OpcDaModel.Host);
+                DataTable itemsTable = new DataTable();
+                itemsTable.Columns.Add("Include", typeof(bool));
+                itemsTable.Columns.Add("Tag", typeof(string));
+                foreach (string itemName in OpcDaWrapper.GetInstance().ListItems())
+                {
+                    DataRow row = itemsTable.NewRow();
+                    row["Include"] = true;
+                    row["Tag"] = itemName;
+                    itemsTable.Rows.Add(row);
+                }
+                OpcDaModel.ItemsView = itemsTable.AsDataView();
+                OpcDaModel.ItemsViewVisibility = "Visible";
+            }
+            else if (e.PropertyName == "OpcServers")
+            {
+                OpcDaModel.OpcServersVisibility = "Visible";
+            }
+            else if (e.PropertyName == "SearchField")
+            {
+                FilterItems(OpcDaModel.SearchField);
+            }
+        }
+
+        public ICommand ListServersCommand
+        {
+            get
+            {
+                if (listServersCommand == null)
+                {
+                    listServersCommand = new CommandWrapper(param =>
+                    {
+                        ConnectToHost();
+                    });
+                }
+                return listServersCommand;
+            }
+        }
+        
+        private void ConnectToHost()
+        {
+            OpcDaModel.OpcServers = OpcDaWrapper.GetInstance().ListServers(OpcDaModel.Host);
+        }
+
+        private void FilterItems(string criterion)
+        {
+            DataTable dt = OpcDaModel.ItemsView.Table;
+            OpcDaModel.ItemsView = dt.AsEnumerable().Where(row =>
+                ((string)row["Tag"]).ToLower().Contains(criterion.ToLower()))
+                .AsDataView();
         }
     }
 }
