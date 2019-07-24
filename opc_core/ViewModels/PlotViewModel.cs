@@ -58,7 +58,7 @@ namespace irc_core.ViewModels
                 ChartValues<double> values = new ChartValues<double>();
                 for (int j = 0; j < 30; j++)
                 {
-                    values.Add(random.NextDouble());
+                    values.Add(random.Next(100));
                 }
                 line.Values = values;
                 mdl.Series.Add(line);
