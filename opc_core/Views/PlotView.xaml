@@ -7,12 +7,13 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Medium"
-             TextElement.FontSize="14">
-    <materialDesign:Card Width="400" 
-                         Height="300"
+             TextElement.FontSize="14"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <materialDesign:Card MinWidth="300"
+                         Padding="10"
                          Margin="20">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,9 +22,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <lvc:CartesianChart Series="{Binding Series}"
-                                Grid.Row="0"/>
+                                Grid.Row="0"
+                                Margin="20"/>
             <Label Content="{Binding Name}"
-                   Grid.Row="1"/>
+                   Grid.Row="1"
+                   Margin="20"/>
+            <Button Style="{StaticResource MaterialDesignIconButton}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Command="{Binding DataContext.ClosePlotViewCommand,
+                RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=3}}"
+                    CommandParameter="{Binding}">
+                <materialDesign:PackIcon
+                    Kind="Close"
+                    Height="24"
+                    Width="24"/>
+            </Button>
+
         </Grid>
         
     </materialDesign:Card>

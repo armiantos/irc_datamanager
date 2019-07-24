@@ -1,5 +1,6 @@
 ﻿using irc_core.Models;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace irc_core.ViewModels
     public class PlotViewModel
     {
         private ICommand addPlotViewCommand;
+
+        private ICommand closePlotViewCommand;
 
         public ObservableCollection<PlotModel> Plots { get; set; }
 
@@ -34,18 +37,38 @@ namespace irc_core.ViewModels
             }
         }
 
+        public ICommand ClosePlotViewCommand
+        {
+            get
+            {
+                if (closePlotViewCommand == null)
+                    closePlotViewCommand = new CommandWrapper(param =>
+                    RemovePlot((PlotModel)param));
+                return closePlotViewCommand;
+            }
+        }
+
         private void AddPlot(object param)
         {
             PlotModel mdl = new PlotModel(RandomString(5));
-            LineSeries line1 = new LineSeries();
-            ChartValues<double> values = new ChartValues<double>();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 2; i++)
             {
-                values.Add(random.NextDouble());
+                LineSeries line = new LineSeries();
+                line.Title = $"line#{i}";
+                ChartValues<double> values = new ChartValues<double>();
+                for (int j = 0; j < 30; j++)
+                {
+                    values.Add(random.NextDouble());
+                }
+                line.Values = values;
+                mdl.Series.Add(line);
             }
-            line1.Values = values;
-            mdl.Series.Add(line1);
             Plots.Add(mdl);
+        }
+
+        private void RemovePlot(PlotModel toBeRemoved)
+        {
+            Plots.Remove(toBeRemoved);
         }
 
         /// <summary>
