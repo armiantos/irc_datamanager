@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace irc_datamanager.HelperClasses
+namespace irc_connector.HelperClasses
 {
     class CommandWrapper : ICommand
     {

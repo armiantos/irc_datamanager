@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_datamanager.ViewModels
+namespace irc_connector.ViewModels
 {
     public abstract class ViewModel
     {

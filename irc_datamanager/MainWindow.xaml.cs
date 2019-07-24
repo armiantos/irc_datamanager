@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_datamanager
+namespace irc_connector
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

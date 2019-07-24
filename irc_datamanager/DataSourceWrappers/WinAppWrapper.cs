@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_datamanager.DataSourceWrappers
+namespace irc_connector.DataSourceWrappers
 {
     public class WinAppWrapper
     {

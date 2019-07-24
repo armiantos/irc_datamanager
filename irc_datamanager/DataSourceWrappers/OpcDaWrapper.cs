@@ -7,7 +7,7 @@ using TitaniumAS.Opc.Client.Common;
 using TitaniumAS.Opc.Client.Da;
 using TitaniumAS.Opc.Client.Da.Browsing;
 
-namespace irc_datamanager.DataSourceWrappers
+namespace irc_connector.DataSourceWrappers
 {
     public class OpcDaWrapper
     {

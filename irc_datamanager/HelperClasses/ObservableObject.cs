@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_datamanager.HelperClasses
+namespace irc_connector.HelperClasses
 {
     public class ObservableObject : INotifyPropertyChanged
     {

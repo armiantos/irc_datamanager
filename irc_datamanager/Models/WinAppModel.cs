@@ -1,4 +1,4 @@
-﻿using irc_datamanager.HelperClasses;
+﻿using irc_connector.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_datamanager.Models
+namespace irc_connector.Models
 {
     class WinAppModel : ObservableObject
     {

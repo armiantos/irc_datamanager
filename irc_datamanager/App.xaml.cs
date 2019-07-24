@@ -1,4 +1,4 @@
-﻿using irc_datamanager.ViewModels;
+﻿using irc_connector.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace irc_datamanager
+namespace irc_connector
 {
     /// <summary>
     /// Interaction logic for App.xaml
