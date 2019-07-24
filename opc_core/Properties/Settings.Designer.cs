@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace irc_connector.Properties {
+namespace irc_core.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

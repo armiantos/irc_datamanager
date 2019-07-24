@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_datamanager.Views
+namespace irc_connector.Views
 {
     /// <summary>
     /// Interaction logic for OpcDaView.xaml

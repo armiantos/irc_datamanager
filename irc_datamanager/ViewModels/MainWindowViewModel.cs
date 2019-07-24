@@ -1,4 +1,4 @@
-﻿using irc_datamanager.HelperClasses;
+﻿using irc_connector.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_datamanager.ViewModels
+namespace irc_connector.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
     {
@@ -26,14 +26,26 @@ namespace irc_datamanager.ViewModels
             sourceViewModels = new List<ViewModel>();
             sinkViewModels = new List<ViewModel>();
 
+            // initialize source viewmodels
             OpcDaViewModel opcDaViewModel = new OpcDaViewModel();
+            WinAppViewModel winAppViewModel = new WinAppViewModel();
             sourceViewModels.Add(opcDaViewModel);
+            sourceViewModels.Add(winAppViewModel);
 
+            // register source types to combobox via binding
             sourceTypes = new List<string>(sourceViewModels.Count);
             foreach (ViewModel sourceViewModel in sourceViewModels)
             {
                 sourceTypes.Add(sourceViewModel.ViewModelName);
             }
+
+            // initialize sink viewmodels
+            DbViewModel dbViewModel = new DbViewModel();
+            CurrentSinkViewModel = dbViewModel;
+
+            // initialize OperationsViewModel
+            OperationsViewModel operationsViewModel = new OperationsViewModel();
+            OperationsViewModel = operationsViewModel;
         }
 
         private void ChangeSourceViewModel(string viewModelName)

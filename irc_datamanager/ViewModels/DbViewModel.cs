@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace irc_connector.ViewModels
 {
-    public abstract class ViewModel
+    class DbViewModel : ViewModel
     {
-        public virtual string ViewModelName
+        public override string ViewModelName
         {
             get
             {
-                return "ViewModelName";
+                return "Databases";
             }
         }
     }

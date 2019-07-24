@@ -1,4 +1,4 @@
-﻿using irc_connector.ViewModels;
+﻿using irc_core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace irc_connector
+namespace irc_core
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -16,9 +16,10 @@ namespace irc_connector
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
             MainWindow mw = new MainWindow();
-            MainWindowViewModel mwvm = new MainWindowViewModel();
-            mw.DataContext = mwvm;
+            AppViewModel avm = new AppViewModel();
+            mw.DataContext = avm;
             mw.Show();
         }
     }

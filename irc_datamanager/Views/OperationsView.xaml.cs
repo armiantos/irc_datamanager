@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_connector
+namespace irc_connector.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OperationsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OperationsView : UserControl
     {
-        public MainWindow()
+        public OperationsView()
         {
             InitializeComponent();
         }

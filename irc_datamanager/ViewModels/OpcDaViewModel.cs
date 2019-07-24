@@ -1,6 +1,6 @@
-﻿using irc_datamanager.DataSourceWrappers;
-using irc_datamanager.HelperClasses;
-using irc_datamanager.Models;
+﻿using irc_connector.DataSourceWrappers;
+using irc_connector.HelperClasses;
+using irc_connector.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace irc_datamanager.ViewModels
+namespace irc_connector.ViewModels
 {
     public class OpcDaViewModel : ViewModel
     {
@@ -29,6 +29,9 @@ namespace irc_datamanager.ViewModels
         public OpcDaViewModel()
         {
             OpcDaModel = new OpcDaModel();
+            OpcDaModel.OpcServersVisibility = "Hidden";
+            OpcDaModel.ItemsViewVisibility = "Hidden";
+
             OpcDaModel.PropertyChanged += ModelPropertyChangedHandler;
         }
 

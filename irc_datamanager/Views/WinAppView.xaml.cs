@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_connector
+namespace irc_connector.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for WinAppView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WinAppView : UserControl
     {
-        public MainWindow()
+        public WinAppView()
         {
             InitializeComponent();
         }
