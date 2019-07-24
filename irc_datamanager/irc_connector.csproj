@@ -91,8 +91,6 @@
     </ApplicationDefinition>
     <Compile Include="DataSourceWrappers\OpcDaWrapper.cs" />
     <Compile Include="DataSourceWrappers\WinAppWrapper.cs" />
-    <Compile Include="HelperClasses\CommandWrapper.cs" />
-    <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\Status.cs" />
     <Compile Include="Models\OpcDaModel.cs" />
     <Compile Include="Models\WinAppModel.cs" />
@@ -174,6 +172,12 @@
     <Resource Include="Images\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WpfSharedLibrary\WpfSharedLibrary.csproj">
+      <Project>{C6C587E5-D15B-41E0-9227-C7CB87A164D7}</Project>
+      <Name>WpfSharedLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

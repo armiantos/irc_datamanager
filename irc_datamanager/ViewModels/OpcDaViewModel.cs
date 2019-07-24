@@ -1,5 +1,5 @@
 ﻿using irc_connector.DataSourceWrappers;
-using irc_connector.HelperClasses;
+using WpfSharedLibrary;
 using irc_connector.Models;
 using System;
 using System.Collections.Generic;

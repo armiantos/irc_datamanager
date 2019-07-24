@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace irc_connector.HelperClasses
+namespace WpfSharedLibrary
 {
-    class CommandWrapper : ICommand
+    public class CommandWrapper : ICommand
     {
         private Action<object> execute;
         private Predicate<object> canExecute;
@@ -20,11 +16,7 @@ namespace irc_connector.HelperClasses
             this.canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {

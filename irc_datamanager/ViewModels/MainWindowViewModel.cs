@@ -1,4 +1,4 @@
-﻿using irc_connector.HelperClasses;
+﻿using WpfSharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
