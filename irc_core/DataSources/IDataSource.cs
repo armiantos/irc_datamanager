@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace irc_core.ViewModels
+namespace irc_core.DataSources
 {
-    public class SidePanelViewModel
+    public interface IDataSource
     {
     }
 }
