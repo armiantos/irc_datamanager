@@ -85,7 +85,7 @@
                     VerticalAlignment="Bottom"
                     Margin="20"
                     Command="{Binding AddPlotViewCommand}"
-                    Style="{StaticResource MaterialDesignIconButton}">
+                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
                 <materialDesign:PackIcon
                         Kind="Add"
                         Height="24"
