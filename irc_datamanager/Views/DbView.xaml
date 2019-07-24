@@ -46,14 +46,18 @@
                         <Setter Property="Padding" Value="10"/>
                     </Style>
                 </StackPanel.Resources>
-                <ComboBox ItemsSource="{Binding SupportedDbs}"></ComboBox>
+                <ComboBox ItemsSource="{Binding SupportedDbs}"
+                          Padding="10"
+                          DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"></ComboBox>
                 <Label>Host</Label>
-                <TextBox></TextBox>
+                <TextBox Text="{Binding Host}"></TextBox>
                 <Label>Username</Label>
-                <TextBox ></TextBox>
+                <TextBox Text="{Binding Username}"></TextBox>
                 <Label>Password</Label>
                 <PasswordBox x:Name="PasswordField"></PasswordBox>
-                <Button>Connect</Button>
+                <Button Command="{Binding DbConnectCommand}"
+                        CommandParameter="{Binding ElementName=PasswordField}"
+                        DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">Connect</Button>
             </StackPanel>
         </ScrollViewer>
         
