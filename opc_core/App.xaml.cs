@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,13 @@ namespace irc_core
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            MainWindow mw = new MainWindow();
+            AppViewModel avm = new AppViewModel();
+            mw.DataContext = avm;
+            mw.Show();
+        }
     }
 }
