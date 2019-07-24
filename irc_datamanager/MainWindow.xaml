@@ -8,7 +8,8 @@
         xmlns:views="clr-namespace:irc_datamanager.Views"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Connector" Height="450" Width="800"
+        MinHeight="450" MinWidth="800">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModels:OpcDaViewModel}">
             <views:OpcDaView/>
@@ -26,13 +27,17 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"
+                              MinWidth="150"/>
+            <ColumnDefinition Width="1*"
+                              MinWidth="150"/>
+            <ColumnDefinition Width="1*"
+                              MinWidth="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         
         <!-- First column -->
@@ -54,7 +59,10 @@
                       SelectedItem="{Binding DataContext.CurrentSourceName, RelativeSource={RelativeSource AncestorType=Window}}"/>
             <ContentControl Grid.Row="1" Content="{Binding}"/>
         </Grid>
-        
+
+        <GridSplitter Grid.Column="0" Width="2"
+                      Grid.RowSpan="2"/>
+
 
         <!-- Second column -->
         <Label Grid.Column="1"
@@ -67,7 +75,11 @@
               Margin="20 0 0 0">
             <ContentControl Content="{Binding}"/>
         </Grid>
-        
+
+
+        <GridSplitter Grid.Column="1" Width="2"
+                      Grid.RowSpan="2"/>
+
         <!-- Third column -->
         <Label Grid.Column="2"
                Grid.Row="0"
@@ -79,6 +91,14 @@
               Margin="20 0 0 0">
             <ContentControl Content="{Binding}"/>
         </Grid>
+
+        <StatusBar Grid.ColumnSpan="3" 
+                   Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="0 0 10 0">Status:</Label>
+                <Label Content="{Binding StatusMessage}"/>
+            </StackPanel>
+        </StatusBar>
 
     </Grid>
 </Window>
