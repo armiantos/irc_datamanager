@@ -70,13 +70,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataSources\DatabaseSource.cs" />
+    <Compile Include="DataSources\IDataSource.cs" />
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
-    <Compile Include="ViewModels\DataSourcesViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
-    <Compile Include="ViewModels\SidePanelViewModel.cs" />
-    <Compile Include="Views\DataSourcesView.xaml.cs">
-      <DependentUpon>DataSourcesView.xaml</DependentUpon>
+    <Compile Include="Views\DataSourceView.xaml.cs">
+      <DependentUpon>DataSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
@@ -93,7 +93,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\DataSourcesView.xaml">
+    <Page Include="Views\DataSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

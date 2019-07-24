@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Connector" Height="450" Width="800"
+        Title="IRC Core" Height="450" Width="800"
         MinHeight="450" MinWidth="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}">
@@ -19,16 +19,9 @@
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
     </Window.Resources>
     <Grid>
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type viewModels:DataSourcesViewModel}">
-                <views:DataSourcesView/>
-            </DataTemplate>
-        </Grid.Resources>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="Auto"
-                              MaxWidth="250"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
@@ -41,17 +34,14 @@
                         <Setter Property="Foreground" Value="{StaticResource PrimaryHueDarkForegroundBrush}"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Margin="5"
-                        Command="{Binding ToggleSidePanelCommand}"
-                        CommandParameter="{Binding DataSourcesViewModel}">
+                <Button Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Database"
                                                  VerticalAlignment="Center"/>
                         <Label VerticalAlignment="Center">Data sources</Label>
                     </StackPanel>
                 </Button>
-                <Button Margin="5"
-                        Command="{Binding ToggleSidePanelCommand}">
+                <Button Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Gear"
                                                  VerticalAlignment="Center"/>
@@ -61,22 +51,18 @@
             </StackPanel>
         </Border>
 
-        <ContentControl Content="{Binding}"
-                        DataContext="{Binding CurrentSidePanel}"
-                        Grid.Column="1"/>
 
-        <Grid DataContext="{Binding PlotViewModel}"
-              Grid.Column="2">
+        <Grid Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Plots}">
+                <ItemsControl ItemsSource="{Binding DataSources}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel/>
+                            <StackPanel Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <views:PlotView/>
+                            <views:DataSourceView/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -84,7 +70,7 @@
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Margin="20"
-                    Command="{Binding AddPlotViewCommand}"
+                    Command="{Binding AddDataSourceCommand}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
                 <materialDesign:PackIcon
                         Kind="Add"

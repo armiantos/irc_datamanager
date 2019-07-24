@@ -1,5 +1,7 @@
-﻿using System;
+﻿using irc_core.DataSources;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +14,15 @@ namespace irc_core.ViewModels
     {
         private PlotViewModel plotViewModel;
 
-        private SidePanelViewModel currentSidePanel;
+        private ICommand addDataSourceCommand;
 
-        private DataSourcesViewModel dataSourcesViewModel;
-
-        private ICommand toggleSidePanelCommand;
+        public ObservableCollection<IDataSource> DataSources { get; set; }
                
         public AppViewModel()
         {
             PlotViewModel = new PlotViewModel();
 
-            dataSourcesViewModel = new DataSourcesViewModel();
+            DataSources = new ObservableCollection<IDataSource>();
         }
 
         public PlotViewModel PlotViewModel
@@ -38,44 +38,33 @@ namespace irc_core.ViewModels
             }
         }
 
-        public DataSourcesViewModel DataSourcesViewModel
+        public ICommand AddDataSourceCommand
         {
             get
             {
-                return dataSourcesViewModel;
+                if (addDataSourceCommand == null)
+                    addDataSourceCommand = new CommandWrapper(param =>
+                    AddNewDataSource());
+                return addDataSourceCommand;
             }
         }
 
-        public ICommand ToggleSidePanelCommand
+        private void AddNewDataSource()
         {
-            get
-            {
-                if (toggleSidePanelCommand == null)
-                    toggleSidePanelCommand = new CommandWrapper(param =>
-                    CurrentSidePanel = (SidePanelViewModel)param);
-                return toggleSidePanelCommand;
-            }
+            DatabaseSource dbSource = new DatabaseSource();
+            DataSources.Add(dbSource);
+            dbSource.Name = RandomString(7);
         }
 
-        public SidePanelViewModel CurrentSidePanel
+        /// <summary>
+        /// temporary generate random name
+        /// </summary>
+        private static Random random = new Random();
+        public static string RandomString(int length)
         {
-            get
-            {
-                return currentSidePanel;
-            }
-            set
-            {
-                if (currentSidePanel != value)
-                {
-                    currentSidePanel = value;
-                }
-                else
-                {
-                    currentSidePanel = null;
-                }
-
-                OnPropertyChanged("CurrentSidePanel");
-            }
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxwz";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
