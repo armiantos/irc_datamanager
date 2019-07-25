@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="irc_core.Views.DatabaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:irc_core.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
+             xmlns:ds="clr-namespace:irc_core.DataSources">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="{Binding Label}"
+               Margin="10"
+               Grid.Row="0"></Label>
+        
+        <ItemsControl ItemsSource="{Binding Collections}"
+                      Grid.Row="1"
+                      Margin="0 0 0 40">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <DataTemplate DataType="{x:Type ds:DatabaseCollection}">
+                <local:CollectionView/>
+            </DataTemplate>
+        </ItemsControl>
+        
+        <!-- options button -->
+        <Button Style="{StaticResource MaterialDesignIconButton}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding ConfigureDatabaseCommand}">
+            <materialDesign:PackIcon Kind="DotsVertical"
+                                         Height="24"
+                                         Width="24"/>
+        </Button>
+    </Grid>
+</UserControl>

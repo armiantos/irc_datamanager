@@ -78,13 +78,31 @@ namespace irc_core.Dialogs
                 {
                     dataSourceOKCommand = new CommandWrapper(param =>
                     {
+                        CreateNewDataSource();
                         Close();
-                        // build new data source in mainviewmodel
                     });
                 }
                 return dataSourceOKCommand;
             }
         }
+        #endregion
+
+        #region methods
+        private void CreateNewDataSource()
+        {
+            if (CurrentDataSource is AddDatabaseSource)
+            {
+                AddDatabaseSource dbInfo = (AddDatabaseSource)CurrentDataSource;
+                DatabaseSource dbSource = new DatabaseSource();
+                OnNewDataSource(dbSource);
+            }
+        }
+        #endregion
+
+        #region events
+        public delegate void NewDataSourceEventHandler(DataSource newDataSource);
+
+        public event NewDataSourceEventHandler OnNewDataSource;
         #endregion
     }
 

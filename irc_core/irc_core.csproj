@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataSources\DatabaseCollection.cs" />
+    <Compile Include="DataSources\DatabaseSource.cs" />
     <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="Dialogs\AddDatabaseSource.cs" />
     <Compile Include="Dialogs\Dialog.cs" />
@@ -84,8 +85,11 @@
     <Compile Include="Views\AddDatabaseView.xaml.cs">
       <DependentUpon>AddDatabaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DataSourceView.xaml.cs">
-      <DependentUpon>DataSourceView.xaml</DependentUpon>
+    <Compile Include="Views\CollectionView.xaml.cs">
+      <DependentUpon>CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseView.xaml.cs">
+      <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
@@ -110,7 +114,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DataSourceView.xaml">
+    <Page Include="Views\CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +159,9 @@
       <Project>{C6C587E5-D15B-41E0-9227-C7CB87A164D7}</Project>
       <Name>WpfSharedLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DatabaseLibrary\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,7 +14,7 @@ namespace irc_core.DataSources
 {
     class DatabaseCollection : DataSource
     {
-        private string name;
+        private string label;
 
         public ObservableCollection<PlotModel> Plots { get; set; }
 
@@ -22,22 +22,22 @@ namespace irc_core.DataSources
 
         private ICommand closeDataViewCommand;
 
-        public DatabaseCollection(string type, string host, string username, string password)
+        public DatabaseCollection()
         {
             Plots = new ObservableCollection<PlotModel>();
-            Name = RandomString(10);
+            Label = RandomString(10);
             // handle new database connection
         }
 
-        public string Name
+        public string Label
         {
             get
             {
-                return name;
+                return label;
             }
             set
             {
-                name = value;
+                label = value;
                 OnPropertyChanged("Name");
             }
         }

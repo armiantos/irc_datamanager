@@ -1,5 +1,6 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -74,14 +75,14 @@ namespace irc_core.ViewModels
         private void AddNewDataSource()
         {
             CurrentDialogHost = new AddDataSourceDialog();
-            OpenDialog();
+            CurrentDialogHost.Show();
+            ((AddDataSourceDialog)CurrentDialogHost).OnNewDataSource += NewDataSourceHandler;
         }
 
-        private void OpenDialog()
+        private void NewDataSourceHandler(DataSource newDataSource)
         {
-            AddDataSourceDialog addDataSourceDialog = new AddDataSourceDialog();
-            CurrentDialogHost = addDataSourceDialog;
-            CurrentDialogHost.Show();
+            Console.WriteLine("adding new data source");
+            DataSources.Add(newDataSource);
         }
 
         #endregion
