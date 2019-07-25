@@ -82,30 +82,18 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
-                    <StackPanel Orientation="Vertical"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Margin="20">
-                        <Button Command="{Binding AddDataSourceCommand}"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                            Margin="10">
+                    <Button Command="{Binding AddDataSourceCommand}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                            Margin="20"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom">
                             <materialDesign:PackIcon
                                     Kind="Add"
                                     Height="24"
                                     Width="24"
                                     />
-                        </Button>
+                    </Button>
 
-                        <Button Command="{Binding OpenDialogCommand}"
-                                CommandParameter="{Binding}"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                                Margin="10">
-                                <materialDesign:PackIcon
-                                    Kind="Close"
-                                    Height="24"
-                                    Width="24"/>
-                        </Button>
-                    </StackPanel>
                 </Grid>
             </materialDesign:DialogHost>
         </Grid>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -29,24 +30,11 @@ namespace irc_core.ViewModels
 
         private AddDatasourceDialog addDatasourceDialog;
 
-        public ICommand CloseDialogCommand
-        {
-            get
-            {
-                if (closeDialogCommand == null)
-                    closeDialogCommand = new CommandWrapper(param =>
-                    CloseDialog(param));
-                return closeDialogCommand;
-            }
-        }
-
         public AppViewModel()
         {
             PlotViewModel = new PlotViewModel();
 
             DataSources = new ObservableCollection<IDataSource>();
-
-            addDatasourceDialog = new AddDatasourceDialog();
 
             isDialogHostOpen = "False";
         }
@@ -81,10 +69,22 @@ namespace irc_core.ViewModels
             {
                 if (openDialogCommand == null)
                     openDialogCommand = new CommandWrapper(param =>
-                    OpenDialog(param));
+                    OpenDialog());
                 return openDialogCommand;
             }
         }
+
+        public ICommand CloseDialogCommand
+        {
+            get
+            {
+                if (closeDialogCommand == null)
+                    closeDialogCommand = new CommandWrapper(param =>
+                    CloseDialog(((PasswordBox)param).Password));
+                return closeDialogCommand;
+            }
+        }
+
 
         public string IsDialogHostOpen
         {
@@ -108,34 +108,33 @@ namespace irc_core.ViewModels
             {
                 return addDatasourceDialog;
             }
+            set
+            {
+                addDatasourceDialog = value;
+                OnPropertyChanged("CurrentDialogHost");
+            }
         }
 
         private void AddNewDataSource()
         {
-            DatabaseSource dbSource = new DatabaseSource();
-            DataSources.Add(dbSource);
-            dbSource.Name = RandomString(7);
+            CurrentDialogHost = new AddDatasourceDialog();
+            OpenDialog();
         }
 
-        private void OpenDialog(object param)
+        private void OpenDialog()
         {
             IsDialogHostOpen = "True";
         }
 
-        private void CloseDialog(object param)
+        private void CloseDialog(string password)
         {
             IsDialogHostOpen = "False";
-        }
 
-        /// <summary>
-        /// temporary generate random name
-        /// </summary>
-        private static Random random = new Random();
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxwz";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            DatabaseSource dbSource = new DatabaseSource(addDatasourceDialog.SelectedDb,
+                addDatasourceDialog.Host,
+                addDatasourceDialog.Username,
+                password);
+            DataSources.Add(dbSource);
         }
     }
 }

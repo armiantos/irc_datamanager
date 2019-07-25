@@ -22,6 +22,13 @@ namespace irc_core.DataSources
 
         private ICommand closeDataViewCommand;
 
+        public DatabaseSource(string type, string host, string username, string password)
+        {
+            Plots = new ObservableCollection<PlotModel>();
+            Name = RandomString(10);
+            // handle new database connection
+        }
+
         public string Name
         {
             get
@@ -77,11 +84,6 @@ namespace irc_core.DataSources
         private void RemoveDataView(object dataView)
         {
             Plots.Remove((PlotModel)dataView);
-        }
-
-        public DatabaseSource()
-        {
-            Plots = new ObservableCollection<PlotModel>();
         }
 
 

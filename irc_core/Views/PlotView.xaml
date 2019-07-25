@@ -36,7 +36,7 @@
                 RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
                     CommandParameter="{Binding}">
             <materialDesign:PackIcon
-                    Kind="Close"
+                    Kind="Minus"
                     Height="24"
                     Width="24"/>
         </Button>
