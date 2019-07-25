@@ -14,26 +14,10 @@
     <StackPanel Width="300">
         <TextBlock HorizontalAlignment="Center"
                    FontSize="18"
-                   Margin="10">Add new database source</TextBlock>
-        <ComboBox ItemsSource="{Binding SupportedDbs}"
-                  Margin="10"
-                  HorizontalContentAlignment="Center"
-                  SelectedValue="{Binding SelectedDb}"></ComboBox>
-        <TextBox Text="{Binding Host}"
-                 HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Host"
-                 Margin="10"></TextBox>
-
-        <TextBox Text="{Binding Username}"
-                 HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Username"
-                 Margin="10"></TextBox>
-
-        <PasswordBox x:Name="PasswordField"
-                     HorizontalContentAlignment="Center"
-                     Width="280"
-                     materialDesign:HintAssist.Hint="Password"
-                     Margin="10"></PasswordBox>
+                   Margin="10">Add new datasource</TextBlock>
+        <Grid>
+            <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSourceType}"/>
+        </Grid>
 
         <Button HorizontalAlignment="Center"
                 Margin="20"
