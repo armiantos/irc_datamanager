@@ -62,7 +62,11 @@
                     <views:AddDataSourceDialogView/>
                 </DataTemplate>
             </Grid.Resources>
-            <materialDesign:DialogHost>
+            <materialDesign:DialogHost IsOpen="{Binding IsDialogHostOpen}">
+                <materialDesign:DialogHost.DialogContent>
+                    <ContentControl Content="{Binding}" 
+                                    DataContext="{Binding CurrentDialogHost}"/>
+                </materialDesign:DialogHost.DialogContent>
                 <Grid>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding DataSources}">

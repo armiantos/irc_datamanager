@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -22,12 +23,23 @@ namespace irc_core.ViewModels
 
         private ICommand closeDialogCommand;
 
+        private string isDialogHostOpen;
+
         public ObservableCollection<IDataSource> DataSources { get; set; }
 
         private AddDatasourceDialog addDatasourceDialog;
 
-        
-               
+        public ICommand CloseDialogCommand
+        {
+            get
+            {
+                if (closeDialogCommand == null)
+                    closeDialogCommand = new CommandWrapper(param =>
+                    CloseDialog(param));
+                return closeDialogCommand;
+            }
+        }
+
         public AppViewModel()
         {
             PlotViewModel = new PlotViewModel();
@@ -35,6 +47,8 @@ namespace irc_core.ViewModels
             DataSources = new ObservableCollection<IDataSource>();
 
             addDatasourceDialog = new AddDatasourceDialog();
+
+            isDialogHostOpen = "False";
         }
 
         public PlotViewModel PlotViewModel
@@ -72,19 +86,23 @@ namespace irc_core.ViewModels
             }
         }
 
-        public ICommand CloseDialogCommand
+        public string IsDialogHostOpen
         {
             get
             {
-                if (closeDialogCommand == null)
-                    closeDialogCommand = new CommandWrapper(param =>
-                    CloseDialog(param));
-                return openDialogCommand;
+                return isDialogHostOpen;
+            }
+            set
+            {
+                if (isDialogHostOpen != value)
+                {
+                    isDialogHostOpen = value;
+                    OnPropertyChanged("IsDialogHostOpen");
+                }
             }
         }
 
-
-        public AddDatasourceDialog AddDatasourceDialog
+        public AddDatasourceDialog CurrentDialogHost
         {
             get
             {
@@ -99,18 +117,14 @@ namespace irc_core.ViewModels
             dbSource.Name = RandomString(7);
         }
 
-        private async void OpenDialog(object param)
+        private void OpenDialog(object param)
         {
-            Console.WriteLine(param);
-            object x = await DialogHost.Show(addDatasourceDialog);
-            Console.WriteLine(x);
+            IsDialogHostOpen = "True";
         }
 
-        private async void CloseDialog(object param)
+        private void CloseDialog(object param)
         {
-            Console.WriteLine(param);
-            object x = await DialogHost.Show(addDatasourceDialog);
-            Console.WriteLine(x);
+            IsDialogHostOpen = "False";
         }
 
         /// <summary>

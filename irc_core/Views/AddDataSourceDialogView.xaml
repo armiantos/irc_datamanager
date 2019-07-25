@@ -9,13 +9,12 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <StackPanel>
-
         <Label HorizontalAlignment="Center"
                Margin="10">Hello world</Label>
         <Button HorizontalAlignment="Center"
                 Margin="20"
                 Command="{Binding CloseDialogCommand}"
-                CommandParameter="{Binding}">
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
             <materialDesign:PackIcon Kind="Close"
                                         Width="24"
                                         Height="24"/>
