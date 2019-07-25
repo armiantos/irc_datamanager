@@ -12,7 +12,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    class DatabaseCollection : DataSource
+    public class DatabaseCollection : DataSource
     {
         private string label;
 

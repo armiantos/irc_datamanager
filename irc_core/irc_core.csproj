@@ -70,8 +70,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DatabaseLibrary\DbFactory.cs" />
+    <Compile Include="DatabaseLibrary\IDatabase.cs" />
+    <Compile Include="DatabaseLibrary\MongoDBWrapper.cs" />
     <Compile Include="DataSources\DatabaseCollection.cs" />
     <Compile Include="DataSources\DatabaseSource.cs" />
+    <Compile Include="DataSources\DatabaseSpace.cs" />
     <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="Dialogs\AddDatabaseSource.cs" />
     <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
@@ -88,6 +92,9 @@
     </Compile>
     <Compile Include="Views\CollectionView.xaml.cs">
       <DependentUpon>CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpacesView.xaml.cs">
+      <DependentUpon>SpacesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
@@ -118,6 +125,10 @@
     <Page Include="Views\CollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpacesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DatabaseView.xaml">
       <SubType>Designer</SubType>
@@ -161,8 +172,6 @@
       <Name>WpfSharedLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DatabaseLibrary\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

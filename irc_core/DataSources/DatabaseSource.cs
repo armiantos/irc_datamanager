@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.DatabaseLibrary;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace irc_core.DataSources
 {
-    class DatabaseSource : DataSource
+    public class DatabaseSource : DataSource
     {
+        private IDatabase client;
+
         private string label;
 
         public string Label
@@ -24,11 +27,14 @@ namespace irc_core.DataSources
             }
         }
 
-        public ObservableCollection<DatabaseCollection> Collections { get; set; }
+        public ObservableCollection<DatabaseSpace> Spaces { get; set; }
 
-        public DatabaseSource()
+        public DatabaseSource(string type, string host, string username, string password)
         {
-            Collections = new ObservableCollection<DatabaseCollection>();
+            Spaces = new ObservableCollection<DatabaseSpace>();
+            IDatabase client = DbFactory.CreateDatabase(type);
         }
     }
+
+
 }
