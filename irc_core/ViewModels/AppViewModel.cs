@@ -26,7 +26,7 @@ namespace irc_core.ViewModels
 
         private string isDialogHostOpen;
 
-        public ObservableCollection<IDataSource> DataSources { get; set; }
+        public ObservableCollection<DataSource> DataSources { get; set; }
 
         private AddDatasourceDialog addDatasourceDialog;
 
@@ -34,7 +34,7 @@ namespace irc_core.ViewModels
         {
             PlotViewModel = new PlotViewModel();
 
-            DataSources = new ObservableCollection<IDataSource>();
+            DataSources = new ObservableCollection<DataSource>();
 
             isDialogHostOpen = "False";
         }
