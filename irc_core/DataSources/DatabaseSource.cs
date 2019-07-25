@@ -55,12 +55,7 @@ namespace irc_core.DataSources
 
         private async void AddSpace()
         {
-            Console.WriteLine("listing spaces");
             var spaces = await client.ListDatabases();
-            foreach (string space in spaces)
-            {
-                Console.WriteLine(space);
-            }
             NotifyDataSourceEvent(this, spaces);
         }
 

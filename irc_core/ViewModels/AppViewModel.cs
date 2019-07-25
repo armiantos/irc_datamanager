@@ -1,6 +1,7 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -87,9 +88,12 @@ namespace irc_core.ViewModels
 
         private void DataSourceEventHandler(DataSource sender, object message)
         {
-            Console.WriteLine($"sender: {sender}");
-            Console.WriteLine($"message: {message}");
-            Console.WriteLine("event received by main view model");
+            if (message is List<string>)
+            {
+                var itemList = (List<string>)message;
+                CurrentDialogHost = new ListDialog(itemList);
+                CurrentDialogHost.Show();
+            }
         }
 
         #endregion

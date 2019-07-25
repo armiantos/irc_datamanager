@@ -30,7 +30,6 @@ namespace irc_core.DatabaseLibrary
                 port = hostTokens[1];
             }
             client = new MongoClient($"mongodb://{user}:{pass}@{host}:{port}/{dbAuth}");
-            Console.WriteLine($"mongodb://{user}:{pass}@{host}:{port}/{dbAuth}");
         }
 
         public void Disconnect()
