@@ -9,16 +9,26 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
+             xmlns:dialogs="clr-namespace:irc_core.Dialogs"
+             
              Padding="40">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type dialogs:AddDatabaseSource}">
+            <local:AddDatabaseView/>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <StackPanel Width="300">
         <TextBlock HorizontalAlignment="Center"
                    FontSize="18"
                    Margin="10">Add new datasource</TextBlock>
-        <ComboBox ItemsSource="{Binding SupportedDataSources}"
-                  SelectedValue="{Binding SelectedDataSource}"></ComboBox>
         
-        <Grid>
+        <ComboBox ItemsSource="{Binding SupportedTypes}"
+                  SelectedValue="{Binding SelectedType}"
+                  Margin="20"></ComboBox>
+        
+        <Grid Height="Auto"
+              Width="Auto">
             <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSource}"/>
         </Grid>
 

@@ -18,9 +18,9 @@ namespace irc_core.Views
     /// <summary>
     /// Interaction logic for AddNewDatabaseView.xaml
     /// </summary>
-    public partial class AddNewDatabaseView : UserControl
+    public partial class AddDatabaseView : UserControl
     {
-        public AddNewDatabaseView()
+        public AddDatabaseView()
         {
             InitializeComponent();
         }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WpfSharedLibrary;
 
@@ -14,5 +15,11 @@ namespace irc_core.Dialogs
         {
             await DialogHost.Show(this);
         }
+
+        public void Close()
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
+        }
+
     }
 }
