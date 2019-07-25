@@ -81,7 +81,6 @@ namespace irc_core.ViewModels
 
         private void NewDataSourceHandler(DataSource newDataSource)
         {
-            Console.WriteLine("adding new data source");
             DataSources.Add(newDataSource);
         }
 
