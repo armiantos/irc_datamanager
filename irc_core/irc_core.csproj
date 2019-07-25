@@ -101,6 +101,7 @@
     <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
+    <Compile Include="Dialogs\ListDialog.cs" />
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />

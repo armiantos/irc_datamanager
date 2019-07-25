@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,28 @@ namespace irc_core.DatabaseLibrary
 {
     public class MongoDBWrapper : IDatabase
     {
-        public void Connect(string dbHost, string dbUser, string dbPass)
+        private MongoClient client; 
+
+        public void Connect(string host, string user, string pass)
         {
-            throw new NotImplementedException();
+            string dbAuth = "admin";
+            string port = "27017";
+
+            string[] userTokens = user.Split('/');
+            if (userTokens.Length > 1)
+            {
+                user = userTokens[1];
+                dbAuth = userTokens[0];
+            }
+
+            string[] hostTokens = host.Split(':');
+            if (hostTokens.Length > 1)
+            {
+                host = hostTokens[0];
+                port = hostTokens[1];
+            }
+            client = new MongoClient($"mongodb://{user}:{pass}@{host}:{port}/{dbAuth}");
+            Console.WriteLine($"mongodb://{user}:{pass}@{host}:{port}/{dbAuth}");
         }
 
         public void Disconnect()
@@ -18,14 +38,15 @@ namespace irc_core.DatabaseLibrary
             throw new NotImplementedException();
         }
 
-        public List<string> ListCollections()
+        public Task<List<string>> ListCollections()
         {
             throw new NotImplementedException();
         }
 
-        public List<string> ListDatabases()
+        public async Task<List<string>> ListDatabases()
         {
-            throw new NotImplementedException();
+            var spaces = await client.ListDatabaseNamesAsync();
+            return await spaces.ToListAsync();
         }
     }
 }

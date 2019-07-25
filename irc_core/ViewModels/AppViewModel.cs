@@ -82,6 +82,14 @@ namespace irc_core.ViewModels
         private void NewDataSourceHandler(DataSource newDataSource)
         {
             DataSources.Add(newDataSource);
+            newDataSource.OnDataSourceEvent += DataSourceEventHandler;
+        }
+
+        private void DataSourceEventHandler(DataSource sender, object message)
+        {
+            Console.WriteLine($"sender: {sender}");
+            Console.WriteLine($"message: {message}");
+            Console.WriteLine("event received by main view model");
         }
 
         #endregion

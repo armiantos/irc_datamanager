@@ -12,8 +12,8 @@ namespace irc_core.DatabaseLibrary
 
         void Disconnect();
 
-        List<string> ListDatabases();
+        Task<List<string>> ListDatabases();
 
-        List<string> ListCollections();
+        Task<List<string>> ListCollections();
     }
 }

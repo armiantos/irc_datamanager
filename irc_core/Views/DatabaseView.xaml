@@ -41,8 +41,8 @@
         <Button Style="{StaticResource MaterialDesignIconButton}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Command="{Binding ConfigureDatabaseCommand}">
-            <materialDesign:PackIcon Kind="DotsVertical"
+                Command="{Binding AddSpaceCommand}">
+            <materialDesign:PackIcon Kind="Add"
                                          Height="24"
                                          Width="24"/>
         </Button>

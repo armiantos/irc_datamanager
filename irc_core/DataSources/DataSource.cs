@@ -9,5 +9,13 @@ namespace irc_core.DataSources
 {
     public abstract class DataSource : ObservableObject
     {
+        public delegate void DataSourceEventHandler(DataSource sender, object message);
+
+        public event DataSourceEventHandler OnDataSourceEvent;
+
+        public void NotifyDataSourceEvent(DataSource sender, object message)
+        {
+            OnDataSourceEvent(sender, message);
+        }
     }
 }
