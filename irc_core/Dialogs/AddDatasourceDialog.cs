@@ -9,74 +9,33 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDatasourceDialog : ObservableObject
+    public class AddDataSourceDialog : Dialog
     {
-        private string host;
-        private string username;
-        private string selectedDb;
+        public List<string> supportedTypes;
 
-        private List<string> supportedDbs;
+        private string selectedType;
 
-        public AddDatasourceDialog()
+        public List<string> SupportedTypes
         {
-            SupportedDbs = new List<string>
+            get
+            {
+                return supportedTypes;
+            }
+        }
+
+        public string SelectedType
+        {
+            get
+            {
+                return selectedType;
+            }
+            set
+            {
+                if (selectedType != value)
                 {
-                    "Cassandra",
-                    "mongoDB",
-                    "MySQL",
-                };
-            SelectedDb = supportedDbs[0];
-        }
-
-        public string Host
-        {
-            get
-            {
-                return host;
-            }
-            set
-            {
-                host = value;
-                OnPropertyChanged("Host");
-            }
-        }
-
-        public string Username
-        {
-            get
-            {
-                return username;
-            }
-            set
-            {
-                username = value;
-                OnPropertyChanged("Username");
-            }
-        }
-
-        public string SelectedDb
-        {
-            get
-            {
-                return selectedDb;
-            }
-            set
-            {
-                selectedDb = value;
-                OnPropertyChanged("SelectedDb");
-            }
-        }
-
-        public List<string> SupportedDbs
-        {
-            get
-            {
-                return supportedDbs;
-            }
-            set
-            {
-                supportedDbs = value;
-                OnPropertyChanged("SupportedDbs");
+                    selectedType = value;
+                    OnPropertyChanged("SelectedType");
+                }
             }
         }
     }

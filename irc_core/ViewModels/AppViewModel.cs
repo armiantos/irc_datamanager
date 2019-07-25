@@ -16,6 +16,8 @@ namespace irc_core.ViewModels
 {
     public class AppViewModel : ObservableObject
     {
+        #region privates
+
         private PlotViewModel plotViewModel;
 
         private ICommand addDataSourceCommand;
@@ -24,20 +26,22 @@ namespace irc_core.ViewModels
 
         private ICommand closeDialogCommand;
 
-        private string isDialogHostOpen;
+        private Dialog currentDialogHost;
 
         public ObservableCollection<DataSource> DataSources { get; set; }
 
-        private AddDatasourceDialog addDatasourceDialog;
+        #endregion
+
+
 
         public AppViewModel()
         {
             PlotViewModel = new PlotViewModel();
 
             DataSources = new ObservableCollection<DataSource>();
-
-            isDialogHostOpen = "False";
         }
+
+        #region public getters, setters
 
         public PlotViewModel PlotViewModel
         {
@@ -86,55 +90,39 @@ namespace irc_core.ViewModels
         }
 
 
-        public string IsDialogHostOpen
+        public Dialog CurrentDialogHost
         {
             get
             {
-                return isDialogHostOpen;
+                return currentDialogHost;
             }
             set
             {
-                if (isDialogHostOpen != value)
-                {
-                    isDialogHostOpen = value;
-                    OnPropertyChanged("IsDialogHostOpen");
-                }
-            }
-        }
-
-        public AddDatasourceDialog CurrentDialogHost
-        {
-            get
-            {
-                return addDatasourceDialog;
-            }
-            set
-            {
-                addDatasourceDialog = value;
+                currentDialogHost = value;
                 OnPropertyChanged("CurrentDialogHost");
             }
         }
+        #endregion
+
+        #region methods
 
         private void AddNewDataSource()
         {
-            CurrentDialogHost = new AddDatasourceDialog();
+            CurrentDialogHost = new AddDataSourceDialog();
             OpenDialog();
         }
 
-        private void OpenDialog()
+        private async void OpenDialog()
         {
-            IsDialogHostOpen = "True";
+            AddDataSourceDialog addDataSourceDialog = new AddDataSourceDialog();
+            CurrentDialogHost = addDataSourceDialog;
+            CurrentDialogHost.Show();
         }
 
         private void CloseDialog(string password)
         {
-            IsDialogHostOpen = "False";
-
-            DatabaseSource dbSource = new DatabaseSource(addDatasourceDialog.SelectedDb,
-                addDatasourceDialog.Host,
-                addDatasourceDialog.Username,
-                password);
-            DataSources.Add(dbSource);
+            throw new NotImplementedException();
         }
+        #endregion
     }
 }

@@ -15,15 +15,16 @@
         <TextBlock HorizontalAlignment="Center"
                    FontSize="18"
                    Margin="10">Add new datasource</TextBlock>
+        <ComboBox ItemsSource="{Binding SupportedDataSources}"
+                  SelectedValue="{Binding SelectedDataSource}"></ComboBox>
+        
         <Grid>
-            <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSourceType}"/>
+            <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSource}"/>
         </Grid>
 
         <Button HorizontalAlignment="Center"
                 Margin="20"
-                Command="{Binding CloseDialogCommand}"
-                CommandParameter="{Binding ElementName=PasswordField}"
-                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                Command="{Binding DataSourceOKCommand}">
             <materialDesign:PackIcon Kind="Check"
                                         Width="24"
                                         Height="24"/>

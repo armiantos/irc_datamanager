@@ -72,7 +72,8 @@
     </ApplicationDefinition>
     <Compile Include="DataSources\DatabaseSource.cs" />
     <Compile Include="DataSources\DataSource.cs" />
-    <Compile Include="Dialogs\AddDatasourceDialog.cs" />
+    <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
