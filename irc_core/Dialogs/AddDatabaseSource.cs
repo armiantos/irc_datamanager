@@ -104,8 +104,8 @@ namespace irc_core.Dialogs
 
         private void CreateDatabaseSource(string type, string host, string username, string password)
         {
-            DatabaseSource dbSource = new DatabaseSource { Label = type + " @ " + host };
-            Console.WriteLine(string.Join(", ", new string[] { type, host, username, password }));
+            DatabaseSource dbSource = new DatabaseSource(type, host, username, password) { Label = type + " @ " + host };
+            // don't know if user credentials are correct
             NotifyNewDataSource(dbSource);
         }
     }
