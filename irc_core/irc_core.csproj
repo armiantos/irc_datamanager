@@ -70,7 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataSources\DatabaseSource.cs" />
+    <Compile Include="DataSources\DatabaseCollection.cs" />
     <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="Dialogs\AddDatabaseSource.cs" />
     <Compile Include="Dialogs\Dialog.cs" />

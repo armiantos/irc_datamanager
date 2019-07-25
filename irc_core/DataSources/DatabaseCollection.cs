@@ -12,7 +12,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    class DatabaseSource : DataSource
+    class DatabaseCollection : DataSource
     {
         private string name;
 
@@ -22,7 +22,7 @@ namespace irc_core.DataSources
 
         private ICommand closeDataViewCommand;
 
-        public DatabaseSource(string type, string host, string username, string password)
+        public DatabaseCollection(string type, string host, string username, string password)
         {
             Plots = new ObservableCollection<PlotModel>();
             Name = RandomString(10);
