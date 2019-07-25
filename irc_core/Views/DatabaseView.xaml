@@ -9,30 +9,33 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             xmlns:ds="clr-namespace:irc_core.DataSources">
+             xmlns:ds="clr-namespace:irc_core.DataSources"
+             Margin="10 10 10 40">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="{Binding Label}"
-               Margin="10"
-               Grid.Row="0"></Label>
-        
+        <TextBlock Text="{Binding Label}"
+                   Margin="10"
+                   VerticalAlignment="Center"
+                   Grid.Row="0"></TextBlock>
+
         <ItemsControl ItemsSource="{Binding Collections}"
                       Grid.Row="1"
-                      Margin="0 0 0 40">
+                      Margin="40 0 0 0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <DataTemplate DataType="{x:Type ds:DatabaseCollection}">
-                <local:CollectionView/>
-            </DataTemplate>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type ds:DatabaseCollection}">
+                    <local:CollectionView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
-        <!-- options button -->
+
         <Button Style="{StaticResource MaterialDesignIconButton}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"

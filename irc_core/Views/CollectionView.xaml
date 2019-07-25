@@ -9,7 +9,7 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             Margin="20">
+             Margin="30 20 20 20">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -7,6 +7,7 @@
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         xmlns:viewModels="clr-namespace:irc_core.ViewModels"
+        xmlns:ds="clr-namespace:irc_core.DataSources"
         xmlns:views="clr-namespace:irc_core.Views"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -80,8 +81,8 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <views:CollectionView/>
+                                <DataTemplate DataType="{x:Type ds:DatabaseSource}">
+                                    <views:DatabaseView/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

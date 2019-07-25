@@ -25,5 +25,10 @@ namespace irc_core.DataSources
         }
 
         public ObservableCollection<DatabaseCollection> Collections { get; set; }
+
+        public DatabaseSource()
+        {
+            Collections = new ObservableCollection<DatabaseCollection>();
+        }
     }
 }
