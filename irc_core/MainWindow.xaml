@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:irc_core"
+        
+        xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         xmlns:viewModels="clr-namespace:irc_core.ViewModels"
         xmlns:views="clr-namespace:irc_core.Views"
+        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
         mc:Ignorable="d"
+        
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
@@ -19,7 +24,6 @@
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
     </Window.Resources>
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="7*"/>
@@ -53,30 +57,53 @@
 
 
         <Grid Grid.Column="1">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding DataSources}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <views:DataSourceView/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-            <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Margin="20"
-                    Command="{Binding AddDataSourceCommand}"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
-                <materialDesign:PackIcon
-                        Kind="Add"
-                        Height="24"
-                        Width="24" />
-            </Button>
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type dialogs:AddDatasourceDialog}">
+                    <views:AddDataSourceDialogView/>
+                </DataTemplate>
+            </Grid.Resources>
+            <materialDesign:DialogHost>
+                <Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding DataSources}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <views:DataSourceView/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Margin="20">
+                        <Button Command="{Binding AddDataSourceCommand}"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                            Margin="10">
+                            <materialDesign:PackIcon
+                                    Kind="Add"
+                                    Height="24"
+                                    Width="24"
+                                    />
+                        </Button>
+
+                        <Button Command="{Binding OpenDialogCommand}"
+                                CommandParameter="{Binding}"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                Margin="10">
+                                <materialDesign:PackIcon
+                                    Kind="Close"
+                                    Height="24"
+                                    Width="24"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost>
         </Grid>
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
 ﻿using irc_core.DataSources;
+using irc_core.Dialogs;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,13 +18,23 @@ namespace irc_core.ViewModels
 
         private ICommand addDataSourceCommand;
 
+        private ICommand openDialogCommand;
+
+        private ICommand closeDialogCommand;
+
         public ObservableCollection<IDataSource> DataSources { get; set; }
+
+        private AddDatasourceDialog addDatasourceDialog;
+
+        
                
         public AppViewModel()
         {
             PlotViewModel = new PlotViewModel();
 
             DataSources = new ObservableCollection<IDataSource>();
+
+            addDatasourceDialog = new AddDatasourceDialog();
         }
 
         public PlotViewModel PlotViewModel
@@ -49,11 +61,56 @@ namespace irc_core.ViewModels
             }
         }
 
+        public ICommand OpenDialogCommand
+        {
+            get
+            {
+                if (openDialogCommand == null)
+                    openDialogCommand = new CommandWrapper(param =>
+                    OpenDialog(param));
+                return openDialogCommand;
+            }
+        }
+
+        public ICommand CloseDialogCommand
+        {
+            get
+            {
+                if (closeDialogCommand == null)
+                    closeDialogCommand = new CommandWrapper(param =>
+                    CloseDialog(param));
+                return openDialogCommand;
+            }
+        }
+
+
+        public AddDatasourceDialog AddDatasourceDialog
+        {
+            get
+            {
+                return addDatasourceDialog;
+            }
+        }
+
         private void AddNewDataSource()
         {
             DatabaseSource dbSource = new DatabaseSource();
             DataSources.Add(dbSource);
             dbSource.Name = RandomString(7);
+        }
+
+        private async void OpenDialog(object param)
+        {
+            Console.WriteLine(param);
+            object x = await DialogHost.Show(addDatasourceDialog);
+            Console.WriteLine(x);
+        }
+
+        private async void CloseDialog(object param)
+        {
+            Console.WriteLine(param);
+            object x = await DialogHost.Show(addDatasourceDialog);
+            Console.WriteLine(x);
         }
 
         /// <summary>
