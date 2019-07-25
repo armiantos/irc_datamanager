@@ -15,8 +15,7 @@ namespace irc_core.Dialogs
         #region privates
         private List<string> supportedTypes;
         private string selectedType;
-        private object currentDataSource;
-        private ICommand dataSourceOKCommand;
+        private BaseDataSourceDialog currentDataSource;
         #endregion
 
         public AddDataSourceDialog()
@@ -53,11 +52,17 @@ namespace irc_core.Dialogs
             {
                 selectedType = value;
                 CurrentDataSource = DataSourceFactory.CreateDataSource(value);
+                CurrentDataSource.OnNewDataSource += NewDataSourcePropertyHandler;
                 OnPropertyChanged("SelectedType");
             }
         }
 
-        public object CurrentDataSource
+        private void NewDataSourcePropertyHandler(DataSource newDataSource)
+        {
+            OnNewDataSource(newDataSource);
+        }
+
+        public BaseDataSourceDialog CurrentDataSource
         {
             get
             {
@@ -70,36 +75,6 @@ namespace irc_core.Dialogs
             }
         }
 
-        public ICommand DataSourceOKCommand
-        {
-            get
-            {
-                if (dataSourceOKCommand == null)
-                {
-                    dataSourceOKCommand = new CommandWrapper(param =>
-                    {
-                        CreateNewDataSource();
-                        Close();
-                    });
-                }
-                return dataSourceOKCommand;
-            }
-        }
-        #endregion
-
-        #region methods
-        private void CreateNewDataSource()
-        {
-            if (CurrentDataSource is AddDatabaseSource)
-            {
-                AddDatabaseSource dbInfo = (AddDatabaseSource)CurrentDataSource;
-                DatabaseSource dbSource = new DatabaseSource
-                {
-                    Label = dbInfo.SelectedDb + " @ " + dbInfo.Host
-                };
-                OnNewDataSource(dbSource);
-            }
-        }
         #endregion
 
         #region events
@@ -111,7 +86,7 @@ namespace irc_core.Dialogs
 
     public static class DataSourceFactory
     {
-        public static object CreateDataSource(string type)
+        public static BaseDataSourceDialog CreateDataSource(string type)
         {
             if (type == "Databases")
             {

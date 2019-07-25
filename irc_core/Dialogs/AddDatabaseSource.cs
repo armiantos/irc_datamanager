@@ -1,18 +1,23 @@
-﻿using System;
+﻿using irc_core.DataSources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDatabaseSource : ObservableObject
+    public class AddDatabaseSource : BaseDataSourceDialog
     {
         private List<string> supportedDbs;
         private string selectedDb;
         private string host;
         private string username;
+
+        private ICommand createDatabaseSourceCommand;
 
         public AddDatabaseSource()
         {
@@ -76,6 +81,32 @@ namespace irc_core.Dialogs
                 username = value;
                 OnPropertyChanged("Username");
             }
+        }
+
+        public ICommand CreateDatabaseSourceCommand
+        {
+            get
+            {
+                if (createDatabaseSourceCommand == null)
+                {
+                    createDatabaseSourceCommand = new CommandWrapper(param =>
+                    {
+                        CreateDatabaseSource(SelectedDb, 
+                            Host, 
+                            Username, 
+                            ((PasswordBox)param).Password);
+                        Close();
+                    });
+                }
+                return createDatabaseSourceCommand;
+            }
+        }
+
+        private void CreateDatabaseSource(string type, string host, string username, string password)
+        {
+            DatabaseSource dbSource = new DatabaseSource { Label = type + " @ " + host };
+            Console.WriteLine(string.Join(", ", new string[] { type, host, username, password }));
+            NotifyNewDataSource(dbSource);
         }
     }
 }

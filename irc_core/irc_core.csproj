@@ -74,6 +74,7 @@
     <Compile Include="DataSources\DatabaseSource.cs" />
     <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="Dialogs\AddDatabaseSource.cs" />
+    <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Models\PlotModel.cs" />

@@ -32,13 +32,6 @@
             <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSource}"/>
         </Grid>
 
-        <Button HorizontalAlignment="Center"
-                Margin="20"
-                Command="{Binding DataSourceOKCommand}">
-            <materialDesign:PackIcon Kind="Check"
-                                        Width="24"
-                                        Height="24"/>
-        </Button>
 
     </StackPanel>
 
