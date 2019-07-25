@@ -71,13 +71,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataSources\DatabaseSource.cs" />
-    <Compile Include="DataSources\IDataSource.cs" />
+    <Compile Include="DataSources\DataSource.cs" />
     <Compile Include="Dialogs\AddDatasourceDialog.cs" />
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="Views\AddDataSourceDialogView.xaml.cs">
       <DependentUpon>AddDataSourceDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewDatabaseView.xaml.cs">
+      <DependentUpon>AddNewDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataSourceView.xaml.cs">
       <DependentUpon>DataSourceView.xaml</DependentUpon>
@@ -98,6 +101,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddDataSourceDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewDatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

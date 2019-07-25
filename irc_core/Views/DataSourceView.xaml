@@ -17,10 +17,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="{Binding Name}"
+        <Label Content="{Binding Label}"
                Margin="10"
                Grid.Row="0"></Label>
-        <ItemsControl ItemsSource="{Binding Plots}"
+        <ItemsControl ItemsSource="{Binding DataViews}"
                       Grid.Row="1"
                       Margin="0 0 0 40">
             <ItemsControl.ItemsPanel>
@@ -38,7 +38,7 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding AddDataViewCommand}">
-                <materialDesign:PackIcon Kind="Add"
+                <materialDesign:PackIcon Kind="DotsVertical"
                                          Height="24"
                                          Width="24"/></Button>
     </Grid>
