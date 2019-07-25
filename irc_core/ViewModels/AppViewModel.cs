@@ -91,13 +91,10 @@ namespace irc_core.ViewModels
             Console.WriteLine($"DataSourceEvent sender: {sender}");
             if (args.Type == DataSourceEventArgs.EventType.Database)
             {
-                if (args.MsgType == DataSourceEventArgs.MessageType.SpaceList)
-                {
-                    var itemList = (List<string>)args.Message;
-                    CurrentDialogHost = new ListDialog(sender, itemList);
-                    CurrentDialogHost.Show();
-                    ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
-                }
+                var itemList = (List<string>)args.Message;
+                CurrentDialogHost = new ListDialog(sender, itemList);
+                CurrentDialogHost.Show();
+                ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
             }
         }
 
