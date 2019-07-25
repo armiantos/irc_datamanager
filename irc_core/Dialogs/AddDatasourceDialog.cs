@@ -93,7 +93,10 @@ namespace irc_core.Dialogs
             if (CurrentDataSource is AddDatabaseSource)
             {
                 AddDatabaseSource dbInfo = (AddDatabaseSource)CurrentDataSource;
-                DatabaseSource dbSource = new DatabaseSource();
+                DatabaseSource dbSource = new DatabaseSource
+                {
+                    Label = dbInfo.SelectedDb + " @ " + dbInfo.Host
+                };
                 OnNewDataSource(dbSource);
             }
         }
