@@ -94,6 +94,7 @@
     <Compile Include="DataSources\DatabaseSource.cs" />
     <Compile Include="DataSources\DatabaseSpace.cs" />
     <Compile Include="DataSources\DataSource.cs" />
+    <Compile Include="DatabaseLibrary\IMongoDatabaseAdapter.cs" />
     <Compile Include="Dialogs\AddDatabaseSource.cs" />
     <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
     <Compile Include="Dialogs\Dialog.cs" />

@@ -83,16 +83,34 @@ namespace irc_core.ViewModels
         private void NewDataSourceHandler(DataSource newDataSource)
         {
             DataSources.Add(newDataSource);
-            newDataSource.OnDataSourceEvent += DataSourceEventHandler;
+            newDataSource.OnDataSourceEvent += DataSourceEventHandler; ;
         }
 
-        private void DataSourceEventHandler(DataSource sender, object message)
+        private void DataSourceEventHandler(object sender, DataSourceEventArgs args)
         {
-            if (message is List<string>)
+            Console.WriteLine($"DataSourceEvent sender: {sender}");
+            if (args.Type == DataSourceEventArgs.EventType.Database)
             {
-                var itemList = (List<string>)message;
-                CurrentDialogHost = new ListDialog(itemList);
-                CurrentDialogHost.Show();
+                if (args.MsgType == DataSourceEventArgs.MessageType.SpaceList)
+                {
+                    var itemList = (List<string>)args.Message;
+                    CurrentDialogHost = new ListDialog(sender, itemList);
+                    CurrentDialogHost.Show();
+                    ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
+                }
+            }
+        }
+
+        private void ListDialogEventHandler(object sender, ListDialogEventArgs e)
+        {
+            // handle select event
+            if (e.Type == ListDialogEventArgs.EventType.Select)
+            {
+                if (sender is DatabaseSource)
+                {
+                    var originalSender = (DatabaseSource)sender;
+                    originalSender.AddSpace((string)e.Message);
+                }
             }
         }
 

@@ -56,11 +56,15 @@ namespace irc_core.DataSources
         private async void AddSpace()
         {
             var spaces = await client.ListDatabases();
-            NotifyDataSourceEvent(this, spaces);
+            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Database,
+                DataSourceEventArgs.MessageType.SpaceList, spaces));
+        }
+
+        public void AddSpace(string name)
+        {
+            Spaces.Add(client.GetDatabase(name));
         }
 
 
     }
-
-
 }

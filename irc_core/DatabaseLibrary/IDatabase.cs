@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.DataSources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace irc_core.DatabaseLibrary
 
         Task<List<string>> ListDatabases();
 
-        Task<List<string>> ListCollections();
+        DatabaseSpace GetDatabase(string name);
     }
 }

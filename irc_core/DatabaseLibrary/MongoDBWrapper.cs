@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using irc_core.DataSources;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,9 @@ namespace irc_core.DatabaseLibrary
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> ListCollections()
+        public DatabaseSpace GetDatabase(string name)
         {
-            throw new NotImplementedException();
+            return new IMongoDatabaseAdapter(client.GetDatabase(name)) { Label = name };
         }
 
         public async Task<List<string>> ListDatabases()

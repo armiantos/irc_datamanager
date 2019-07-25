@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace irc_core.DatabaseLibrary
 {
-    public static class DbFactory
+    public class DbFactory
     {
         public static IDatabase CreateDatabase(string type)
         {
