@@ -76,18 +76,17 @@ namespace irc_core.DataSources
             throw new NotImplementedException();
         }
 
-        public void NotifyTableDialogEvent(TableDialogEventArgs e)
+        public async Task AddDataView(string type, List<string> tags)
         {
-            Console.WriteLine(e);
+            DataViews.Add(await GetDataModel(type, tags));
         }
 
-        private void AddDataView(string type, List<string> tags)
+        private static Random random = new Random();
+        public static string RandomString(int length)
         {
-            Console.WriteLine(type);
-            foreach (string tag in tags)
-            {
-                Console.WriteLine(tag);
-            }
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         private void RemoveDataView(object dataView)
