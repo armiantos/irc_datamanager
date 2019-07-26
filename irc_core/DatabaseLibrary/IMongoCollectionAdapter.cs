@@ -38,7 +38,7 @@ namespace irc_core.DatabaseLibrary
             {
                 DataRow r = dt.NewRow();
                 r["Tag"] = element.Name;
-                r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value);
+                r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
                 dt.Rows.Add(r);
             }
             return dt;
