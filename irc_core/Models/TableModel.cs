@@ -9,17 +9,17 @@ namespace irc_core.Models
 {
     public class TableModel : DataModel
     {
-        private DataTable data;
+        private DataView dataView;
 
-        public DataTable Data
+        public DataView DataView
         {
             get
             {
-                return data;
+                return dataView;
             }
             set
             {
-                data = value;
+                dataView = value;
                 OnPropertyChanged("Data");
             }
         }

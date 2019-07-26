@@ -50,7 +50,7 @@ namespace irc_core.ViewModels
 
         private void AddPlot(object param)
         {
-            PlotModel mdl = new PlotModel(RandomString(5));
+            PlotModel mdl = new PlotModel { Label = RandomString(5) };
             for (int i = 0; i < 2; i++)
             {
                 LineSeries line = new LineSeries();

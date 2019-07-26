@@ -59,7 +59,7 @@ namespace irc_core.DataSources
             {
                 if (closeDataViewCommand == null)
                     closeDataViewCommand = new CommandWrapper(param =>
-                    RemoveDataView(param));
+                    CloseDataView(param));
                 return closeDataViewCommand;
             }
         }
@@ -78,7 +78,9 @@ namespace irc_core.DataSources
 
         public async Task AddDataView(string type, List<string> tags)
         {
-            DataViews.Add(await GetDataModel(type, tags));
+            DataModel dataModel = await GetDataModel(type, tags);
+            dataModel.Label = string.Join(", ", tags);
+            DataViews.Add(dataModel);
         }
 
         private static Random random = new Random();
@@ -89,9 +91,10 @@ namespace irc_core.DataSources
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private void RemoveDataView(object dataView)
+        private void CloseDataView(object dataModel)
         {
-            throw new NotImplementedException();
+            DataViews.Remove(DataViews.FirstOrDefault(o =>
+                o == (DataModel)dataModel));
         }
 
         public abstract Task<DataTable> ListData();

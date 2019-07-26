@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace irc_core.Dialogs
 {
@@ -50,9 +46,6 @@ namespace irc_core.Dialogs
 
     public class ListDialogEventArgs
     {
-        private object message;
-        private EventType type;
-
         public enum EventType
         {
             Select,
@@ -60,30 +53,18 @@ namespace irc_core.Dialogs
 
         public ListDialogEventArgs(object message)
         {
-            this.message = message;
+            this.Message = message;
         }
 
         public ListDialogEventArgs(EventType type, object message)
         {
-            this.type = type;
-            this.message = message;
+            this.Type = type;
+            this.Message = message;
         }
 
-        public EventType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
+        public EventType Type { get; }
 
-        public object Message
-        {
-            get
-            {
-                return message;
-            }
-        }
-        
+        public object Message { get; }
+
     }
 }

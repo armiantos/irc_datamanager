@@ -95,7 +95,7 @@ namespace irc_core.Dialogs
                             Host, 
                             Username, 
                             ((PasswordBox)param).Password);
-                        Close();
+                        Close(true);
                     });
                 }
                 return createDatabaseSourceCommand;

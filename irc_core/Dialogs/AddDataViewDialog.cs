@@ -95,7 +95,7 @@ namespace irc_core.Dialogs
                     included.Add((string)r["Tag"]);
                 }
             }
-            Close();
+            Close(true);
         }
         #endregion
     }

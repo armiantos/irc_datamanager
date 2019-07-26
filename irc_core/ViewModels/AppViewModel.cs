@@ -1,6 +1,7 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
 using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -108,14 +109,17 @@ namespace irc_core.ViewModels
         }
 
 
-        public void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
+        public async void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             if (eventArgs.Session.Content is AddDataViewDialog)
             {
-                DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
-                AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
-                string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
-                originalSender.AddDataView(type, dialog.GetIncluded());
+                if(eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
+                {
+                    DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
+                    AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
+                    string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
+                    await originalSender.AddDataView(type, dialog.GetIncluded());                    
+                }
             }
         }
 

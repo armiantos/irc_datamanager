@@ -18,10 +18,10 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView}"/>
-                <Label Content="{Binding Name}"
-                       Grid.Row="1"
-                       Margin="20"/>
-            </Grid>
+                <TextBlock Text="{Binding Label}"
+                           Grid.Row="1"
+                           Margin="20"/>
+                </Grid>
         </materialDesign:Card>
         <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                     HorizontalAlignment="Right"

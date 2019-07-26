@@ -15,13 +15,20 @@ namespace irc_core
     /// </summary>
     public partial class App : Application
     {
+        private MainWindow mw;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow mw = new MainWindow();
+            mw = new MainWindow();
             AppViewModel avm = new AppViewModel();
             mw.DataContext = avm;
             mw.Show();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e.Exception.Message);
         }
     }
 }
