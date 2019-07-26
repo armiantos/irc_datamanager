@@ -4,6 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace irc_core.DatabaseLibrary
             this.mongoCollection = mongoCollection;
         }
 
-        public override async Task<DataModel> GetDataModel(string label)
+
+        public override Task<DataModel> GetDataModel(string type, List<string> labels)
         {
             throw new NotImplementedException();
         }
