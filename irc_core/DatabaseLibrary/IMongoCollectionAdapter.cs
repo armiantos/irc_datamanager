@@ -72,6 +72,7 @@ namespace irc_core.DatabaseLibrary
                 {
                     DataRow r = dt.NewRow();
                     labels.ForEach(label => r[label] = result[label]);
+                    dt.Rows.Add(r);
                 }
 
                 table.DataView = dt.AsDataView();
