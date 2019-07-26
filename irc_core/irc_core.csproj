@@ -107,7 +107,6 @@
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="Models\TableModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
-    <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="Views\AddDataSourceDialogView.xaml.cs">
       <DependentUpon>AddDataSourceDialogView.xaml</DependentUpon>
     </Compile>

@@ -15,8 +15,6 @@ namespace irc_core.ViewModels
     {
         #region privates
 
-        private PlotViewModel plotViewModel;
-
         private ICommand addDataSourceCommand;
 
         private Dialog currentDialogHost;
@@ -27,18 +25,6 @@ namespace irc_core.ViewModels
                
         #region public getters, setters
 
-        public PlotViewModel PlotViewModel
-        {
-            get
-            {
-                return plotViewModel;
-            }
-            set
-            {
-                plotViewModel = value;
-                OnPropertyChanged("PlotViewModel");
-            }
-        }
 
         public ICommand AddDataSourceCommand
         {
@@ -71,7 +57,6 @@ namespace irc_core.ViewModels
 
         public AppViewModel()
         {
-            PlotViewModel = new PlotViewModel();
 
             DataSources = new ObservableCollection<DataSource>();
         }
