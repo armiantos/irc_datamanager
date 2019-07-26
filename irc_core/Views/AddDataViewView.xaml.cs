@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace irc_core.Views
 {
     /// <summary>
-    /// Interaction logic for TableDialogView.xaml
+    /// Interaction logic for AddDataViewView.xaml
     /// </summary>
-    public partial class TableDialogView : UserControl
+    public partial class AddDataViewView : UserControl
     {
-        public TableDialogView()
+        public AddDataViewView()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="irc_core.Views.TableDialogView"
+﻿<UserControl x:Class="irc_core.Views.AddDataViewView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,6 +9,10 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
@@ -24,6 +28,23 @@
                   DataContext="{Binding DataView}"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"/>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="10">
+            <TextBlock>View type:</TextBlock>
+            <ItemsControl ItemsSource="{Binding SupportedViews}"
+                          Margin="10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding Label}"
+                                     GroupName="View type"
+                                     Margin="5"
+                                     IsChecked="{Binding Boolean}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
 
         <Button VerticalAlignment="Center"
                 HorizontalAlignment="Center"
