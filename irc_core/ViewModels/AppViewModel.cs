@@ -104,19 +104,20 @@ namespace irc_core.ViewModels
                     CurrentDialogHost.Show();
                     ((TableDialog)currentDialogHost).OnOkEvent += TableDialogEventHandler;
                 }
-                else
-                {
-                    List<string> dataViews = new List<string> { "Plot", "Table" };
-                    CurrentDialogHost = new ListDialog(sender, dataViews);
-                    CurrentDialogHost.Show();
-                    ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
-                }
             }
         }
 
         private void TableDialogEventHandler(object sender, TableDialogEventArgs e)
         {
-            Console.WriteLine(sender);
+            if (sender is DatabaseCollection)
+            {
+                var originalSender = (DatabaseCollection)sender;
+
+                List<string> dataViews = new List<string> { "Plot", "Table" };
+                CurrentDialogHost = new ListDialog(sender, dataViews);
+                CurrentDialogHost.Show();
+                ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
+            }
         }
 
         private void ListDialogEventHandler(object sender, ListDialogEventArgs e)

@@ -74,14 +74,32 @@ namespace irc_core.Dialogs
 
         private void AddTableView()
         {
-            OnOkEvent(originalSender, new TableDialogEventArgs());
+            List<string> selected = new List<string>();
+            foreach (DataRow r in dataView.Table.Rows)
+            {
+                if ((bool)r["Include"] == true)
+                {
+                    selected.Add((string)r["Tag"]);
+                }
+            }
             Close();
+            OnOkEvent(originalSender, new TableDialogEventArgs(selected));
         }
 
     }
 
     public class TableDialogEventArgs
     {
-        // todo
+        public List<string> SelectedTags { get; set; }
+
+        public TableDialogEventArgs()
+        {
+            
+        }
+
+        public TableDialogEventArgs(List<string> selectedTags)
+        {
+            SelectedTags = selectedTags;
+        }
     }
 }

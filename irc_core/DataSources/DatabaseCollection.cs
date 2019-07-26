@@ -1,4 +1,5 @@
-﻿using irc_core.Models;
+﻿using irc_core.Dialogs;
+using irc_core.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System;
@@ -63,21 +64,30 @@ namespace irc_core.DataSources
             }
         }
 
-        private void AddDataView()
-        {
-            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views, null));
-        }
-
-        public void AddDataView(string type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async void NotifyViewType(string type)
+        private async void AddDataView()
         {
             DataTable listData = await ListData();
             NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views,
                 DataSourceEventArgs.MessageType.DataTable, listData));
+        }
+
+        public void NotifyViewType(string type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NotifyTableDialogEvent(TableDialogEventArgs e)
+        {
+            Console.WriteLine(e);
+        }
+
+        private void AddDataView(string type, List<string> tags)
+        {
+            Console.WriteLine(type);
+            foreach (string tag in tags)
+            {
+                Console.WriteLine(tag);
+            }
         }
 
         private void RemoveDataView(object dataView)

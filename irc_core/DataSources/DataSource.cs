@@ -35,7 +35,8 @@ namespace irc_core.DataSources
         {
             SpaceList,
             CollectionList,
-            DataTable
+            DataTable,
+            DataList
         }
 
         public DataSourceEventArgs(object message)
