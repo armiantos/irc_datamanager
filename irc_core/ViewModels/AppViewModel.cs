@@ -118,7 +118,8 @@ namespace irc_core.ViewModels
                     DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
                     AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
                     string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
-                    await originalSender.AddDataView(type, dialog.GetIncluded());                    
+                    if (!string.IsNullOrEmpty(type))
+                        await originalSender.AddDataView(type, dialog.GetIncluded()); 
                 }
             }
         }
