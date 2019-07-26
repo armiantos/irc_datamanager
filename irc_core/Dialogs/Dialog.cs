@@ -16,6 +16,11 @@ namespace irc_core.Dialogs
             await DialogHost.Show(this);
         }
 
+        public async void Show(DialogClosingEventHandler dialogClosingEventHandler)
+        {
+            await DialogHost.Show(this, dialogClosingEventHandler);
+        }
+
         public void Close()
         {
             DialogHost.CloseDialogCommand.Execute(null, null);
