@@ -27,7 +27,8 @@ namespace irc_core.DataSources
 
         public enum EventType
         {
-            Database
+            Database,
+            Views
         }
 
         public enum MessageType
