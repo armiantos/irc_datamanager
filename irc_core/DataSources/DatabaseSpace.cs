@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace irc_core.DataSources
 
         private ICommand addCollectionCommand;
 
-        public ObservableCollection<DatabaseSpace> Collections { get; set; }
+        public ObservableCollection<DatabaseCollection> Collections { get; set; }
+
 
         public string Label
         {
@@ -32,7 +34,7 @@ namespace irc_core.DataSources
 
         public DatabaseSpace()
         {
-            Collections = new ObservableCollection<DatabaseSpace>();
+            Collections = new ObservableCollection<DatabaseCollection>();
         }
 
         public ICommand AddCollectionCommand
@@ -57,7 +59,16 @@ namespace irc_core.DataSources
 
         public void AddCollection(string name)
         {
-            Console.WriteLine(name);
+            DatabaseCollection dbCol = GetCollection(name);
+            dbCol.OnDataSourceEvent += RedirectDatabaseCollectionEvent;
+            Collections.Add(GetCollection(name));
         }
+
+        private void RedirectDatabaseCollectionEvent(object sender, DataSourceEventArgs args)
+        {
+            NotifyDataSourceEvent(sender, args);
+        }
+
+        public abstract DatabaseCollection GetCollection(string name);
     }
 }
