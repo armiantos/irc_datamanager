@@ -1,9 +1,10 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
-using System;
+using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -44,7 +45,7 @@ namespace irc_core.ViewModels
             {
                 if (addDataSourceCommand == null)
                     addDataSourceCommand = new CommandWrapper(param =>
-                    AddNewDataSource());
+                    AddDataSource());
                 return addDataSourceCommand;
             }
         }
@@ -74,7 +75,7 @@ namespace irc_core.ViewModels
             DataSources = new ObservableCollection<DataSource>();
         }
 
-        private void AddNewDataSource()
+        private void AddDataSource()
         {
             CurrentDialogHost = new AddDataSourceDialog();
             CurrentDialogHost.Show();
@@ -100,23 +101,21 @@ namespace irc_core.ViewModels
             {
                 if (args.MsgType == DataSourceEventArgs.MessageType.DataTable)
                 {
-                    CurrentDialogHost = new TableDialog(sender, (DataTable)args.Message);
-                    CurrentDialogHost.Show();
-                    ((TableDialog)currentDialogHost).OnOkEvent += TableDialogEventHandler;
+                    CurrentDialogHost = new AddDataViewDialog(sender, (DataTable)args.Message);
+                    CurrentDialogHost.Show(TableDialogClosingHandler);
                 }
             }
         }
 
-        private void TableDialogEventHandler(object sender, TableDialogEventArgs e)
-        {
-            if (sender is DatabaseCollection)
-            {
-                var originalSender = (DatabaseCollection)sender;
 
-                List<string> dataViews = new List<string> { "Plot", "Table" };
-                CurrentDialogHost = new ListDialog(sender, dataViews);
-                CurrentDialogHost.Show();
-                ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
+        public void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Session.Content is AddDataViewDialog)
+            {
+                DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
+                AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
+                string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
+                originalSender.AddDataView(type, dialog.GetIncluded());
             }
         }
 
