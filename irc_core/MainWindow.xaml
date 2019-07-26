@@ -32,7 +32,9 @@
 
         <DataTemplate DataType="{x:Type dialogs:ListDialog}">
             <ListView ItemsSource="{Binding ItemList}"
-                      SelectedValue="{Binding Selected}"/>
+                      SelectedValue="{Binding Selected}">
+                
+            </ListView>
         </DataTemplate>
     </Window.Resources>
     
@@ -46,7 +48,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -56,17 +58,12 @@
                 Grid.Column="0">
                 <StackPanel>
                     <StackPanel.Resources>
-                        <Style TargetType="Label">
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryHueDarkForegroundBrush}"/>
-                        </Style>
                     </StackPanel.Resources>
 
-                    <Button Margin="5" Height="40">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Gear"
-                                                 VerticalAlignment="Center"/>
-                            <Label VerticalAlignment="Center">Settings</Label>
-                        </StackPanel>
+                    <Button Margin="5" 
+                            Height="40"
+                            ToolTip="Settings">
+                        <materialDesign:PackIcon Kind="Gear" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Border>
@@ -97,7 +94,8 @@
                             Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                             Margin="20"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
+                            VerticalAlignment="Bottom"
+                            ToolTip="Add new data source">
                         <materialDesign:PackIcon
                                     Kind="Add"
                                     Height="24"

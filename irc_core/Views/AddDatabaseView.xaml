@@ -14,15 +14,15 @@
                   Margin="10"
                   HorizontalContentAlignment="Center"
                   SelectedValue="{Binding SelectedDb}"></ComboBox>
-            <TextBox Text="{Binding Host}"
+            <TextBlock Text="{Binding Host}"
                  HorizontalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Host"
-                 Margin="10"></TextBox>
+                 Margin="10"></TextBlock>
 
-            <TextBox Text="{Binding Username}"
+            <TextBlock Text="{Binding Username}"
                  HorizontalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Username"
-                 Margin="10"></TextBox>
+                 Margin="10"></TextBlock>
 
             <PasswordBox x:Name="PasswordField"
                      HorizontalContentAlignment="Center"
