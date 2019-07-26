@@ -19,7 +19,8 @@
         
         <TextBlock Text="{Binding Label}"
                    Margin="10"
-                   VerticalAlignment="Center"
+                   FontSize="18"
+                   FontWeight="Bold"
                    Grid.Row="0"></TextBlock>
         
 
@@ -48,15 +49,14 @@
                 Grid.Row="0">
             <StackPanel>
                 <Button Style="{StaticResource MaterialDesignToolButton}"
-                        Command="{Binding AddSpaceCommand}"
-                        ToolTip="Add collection">
+                        Command="{Binding AddSpaceCommand}">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Add"
                                                  Height="15"
                                                  Width="15" 
                                                  VerticalAlignment="Center"
                                                  Margin="10 0"/>
-                        <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
+                        <TextBlock VerticalAlignment="Center">Add database</TextBlock>
                     </StackPanel>
                 </Button>
             </StackPanel>
