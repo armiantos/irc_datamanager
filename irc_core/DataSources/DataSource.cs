@@ -51,6 +51,7 @@ namespace irc_core.DataSources
         {
             this.type = type;
             this.message = message;
+            this.msgType = msgType;
         }
 
 

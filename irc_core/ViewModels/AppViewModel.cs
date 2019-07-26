@@ -88,7 +88,6 @@ namespace irc_core.ViewModels
 
         private void DataSourceEventHandler(object sender, DataSourceEventArgs args)
         {
-            Console.WriteLine($"DataSourceEvent sender: {sender}");
             if (args.Type == DataSourceEventArgs.EventType.Database)
             {
                 var itemList = (List<string>)args.Message;
@@ -108,7 +107,13 @@ namespace irc_core.ViewModels
                     var originalSender = (DatabaseSource)sender;
                     originalSender.AddSpace((string)e.Message);
                 }
+                else if (sender is DatabaseSpace)
+                {
+                    var originalSender = (DatabaseSpace)sender;
+                    originalSender.AddCollection((string)e.Message);
+                }
             }
+
         }
 
         #endregion
