@@ -93,6 +93,7 @@
     <Compile Include="DataSourceWrappers\WinAppWrapper.cs" />
     <Compile Include="HelperClasses\Status.cs" />
     <Compile Include="Models\OpcDaModel.cs" />
+    <Compile Include="Models\OperationsModel.cs" />
     <Compile Include="Models\WinAppModel.cs" />
     <Compile Include="ViewModels\DbViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

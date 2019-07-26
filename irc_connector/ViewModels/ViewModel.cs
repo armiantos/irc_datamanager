@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfSharedLibrary;
 
 namespace irc_connector.ViewModels
 {
-    public abstract class ViewModel
+    public abstract class ViewModel : ObservableObject
     {
         public virtual string ViewModelName
         {
