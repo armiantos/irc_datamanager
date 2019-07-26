@@ -16,7 +16,8 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0"
-                 Text="{Binding SearchField}"/>
+                 Text="{Binding SearchField}"
+                 materialDesign:HintAssist.Hint="Search"/>
 
         <DataGrid Grid.Row="1" 
                   ItemsSource="{Binding}" 
