@@ -17,18 +17,19 @@ namespace irc_core.DatabaseLibrary
     {
         private IMongoCollection<BsonDocument> mongoCollection;
 
+        private DataTable listDataCache;
+
         public IMongoCollectionAdapter(IMongoCollection<BsonDocument> mongoCollection)
         {
             this.mongoCollection = mongoCollection;
         }
-
 
         public override async Task<DataModel> GetDataModel(string type, List<string> labels)
         {
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
             {
-                Limit = 70
+                Limit = 500
             };
 
             if (labels.Count > 0)
@@ -84,20 +85,24 @@ namespace irc_core.DatabaseLibrary
 
         public override async Task<DataTable> ListData()
         {
-            DataTable dt = new DataTable();
-            DataColumn includeCol = dt.Columns.Add("Include", typeof(bool));
-            includeCol.DefaultValue = false;
-            dt.Columns.Add("Tag");
-            dt.Columns.Add("Type");
-            var document = await mongoCollection.Find(new BsonDocument()).FirstOrDefaultAsync();
-            foreach (var element in document)
+            if (listDataCache == null)
             {
-                DataRow r = dt.NewRow();
-                r["Tag"] = element.Name;
-                r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
-                dt.Rows.Add(r);
+                listDataCache = new DataTable();
+                DataColumn includeCol = listDataCache.Columns.Add("Include", typeof(bool));
+                includeCol.DefaultValue = false;
+                listDataCache.Columns.Add("Tag");
+                listDataCache.Columns.Add("Type");
+                var document = await mongoCollection.Find(new BsonDocument()).Limit(1).FirstOrDefaultAsync();
+
+                foreach (var element in document)
+                {
+                    DataRow r = listDataCache.NewRow();
+                    r["Tag"] = element.Name;
+                    r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
+                    listDataCache.Rows.Add(r);
+                }
             }
-            return dt;
+            return listDataCache;
         }
     }
 }
