@@ -38,13 +38,29 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Button Style="{StaticResource MaterialDesignIconButton}"
+
+        <materialDesign:PopupBox
+                PlacementMode="BottomAndAlignCentres"
+                ToolTipService.Placement="Right"
+                ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Command="{Binding AddSpaceCommand}">
-            <materialDesign:PackIcon Kind="Add"
-                                         Height="24"
-                                         Width="24"/>
-        </Button>
+                VerticalAlignment="Center"
+                Grid.Row="0">
+            <StackPanel>
+                <Button Style="{StaticResource MaterialDesignToolButton}"
+                        Command="{Binding AddSpaceCommand}"
+                        ToolTip="Add collection">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Add"
+                                                 Height="15"
+                                                 Width="15" 
+                                                 VerticalAlignment="Center"
+                                                 Margin="10 0"/>
+                        <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </materialDesign:PopupBox>
+       
     </Grid>
 </UserControl>
