@@ -1,5 +1,7 @@
-﻿using System;
+﻿using irc_core.HelperClasses;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -9,20 +11,17 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class TableDialog : Dialog
+    public class AddDataViewDialog : Dialog
     {
         private DataView dataView;
-
-        private object originalSender;
 
         private string searchField;
 
         private ICommand addTableViewCommand;
 
-        public delegate void OkEventHandler(object sender, TableDialogEventArgs e);
+        private List<string> included;
 
-        public event OkEventHandler OnOkEvent;
-
+        #region public getters and setters
         public DataView DataView
         {
             get
@@ -60,32 +59,45 @@ namespace irc_core.Dialogs
             }
         }
 
-
-        public TableDialog(object originalSender)
+        public List<string> GetIncluded()
         {
-            this.originalSender = originalSender;
+            return included;
         }
 
-        public TableDialog(object originalSender, DataTable table)
+        public ObservableCollection<StringBool> SupportedViews { get; set; }
+        #endregion
+
+        #region methods
+        public AddDataViewDialog(object originalSender)
         {
-            this.originalSender = originalSender;
+            OriginalSender = originalSender;
+            SupportedViews = new ObservableCollection<StringBool>
+            {
+                new StringBool{Label = "Plot", Boolean = false},
+                new StringBool{Label = "Table", Boolean = false}
+            };
+            included = new List<string>();
+        }
+
+        public AddDataViewDialog(object originalSender, DataTable table) : this(originalSender)
+        {
             DataView = table.AsDataView();
         }
 
+        public object OriginalSender { get; }
+
         private void AddTableView()
         {
-            List<string> selected = new List<string>();
             foreach (DataRow r in dataView.Table.Rows)
             {
                 if ((bool)r["Include"] == true)
                 {
-                    selected.Add((string)r["Tag"]);
+                    included.Add((string)r["Tag"]);
                 }
             }
             Close();
-            OnOkEvent(originalSender, new TableDialogEventArgs(selected));
         }
-
+        #endregion
     }
 
     public class TableDialogEventArgs
