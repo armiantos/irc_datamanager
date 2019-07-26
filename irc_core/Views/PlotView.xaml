@@ -22,7 +22,9 @@
                 </Grid.RowDefinitions>
                 <lvc:CartesianChart Series="{Binding Series}"
                                     Grid.Row="0"
-                                    Margin="20"/>
+                                    Margin="20"
+                                    DisableAnimations="True"
+                                    Hoverable="False"/>
                 <TextBlock Text="{Binding Label}"
                            Grid.Row="1"
                            Margin="20"/>

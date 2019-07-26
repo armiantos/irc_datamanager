@@ -45,10 +45,11 @@ namespace irc_core.DatabaseLibrary
 
             if (type == "Plot")
             {
-                PlotModel plot = new PlotModel { Label = RandomString(5) };
+                PlotModel plot = new PlotModel();
                 labels.ForEach(labelName =>
                 {
                     LineSeries line = new LineSeries();
+                    line.Title = labelName;
                     ChartValues<double> values = new ChartValues<double>();
                     foreach (var result in resultsList)
                     {

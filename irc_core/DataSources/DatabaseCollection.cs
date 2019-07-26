@@ -64,6 +64,7 @@ namespace irc_core.DataSources
             }
         }
 
+        // called by button command to display list of data to add
         private async void AddDataView()
         {
             DataTable listData = await ListData();
@@ -76,6 +77,8 @@ namespace irc_core.DataSources
             throw new NotImplementedException();
         }
 
+        // called by mainviewmodel once type of plot has been given and tags to be 
+        // included
         public async Task AddDataView(string type, List<string> tags)
         {
             DataModel dataModel = await GetDataModel(type, tags);
