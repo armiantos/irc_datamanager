@@ -102,7 +102,7 @@ namespace irc_core.ViewModels
                 {
                     CurrentDialogHost = new TableDialog(sender, (DataTable)args.Message);
                     CurrentDialogHost.Show();
-
+                    ((TableDialog)currentDialogHost).OnOkEvent += TableDialogEventHandler;
                 }
                 else
                 {
@@ -112,6 +112,11 @@ namespace irc_core.ViewModels
                     ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
                 }
             }
+        }
+
+        private void TableDialogEventHandler(object sender, TableDialogEventArgs e)
+        {
+            Console.WriteLine(sender);
         }
 
         private void ListDialogEventHandler(object sender, ListDialogEventArgs e)

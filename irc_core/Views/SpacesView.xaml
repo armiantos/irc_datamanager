@@ -9,8 +9,7 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             xmlns:ds="clr-namespace:irc_core.DataSources"
-             Margin="10 10 10 40">
+             xmlns:ds="clr-namespace:irc_core.DataSources">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,11 +18,11 @@
         <TextBlock Text="{Binding Label}"
                    VerticalAlignment="Center"
                    Grid.Row="0"
-                   FontSize="18"></TextBlock>
+                   FontSize="16"></TextBlock>
 
         <ItemsControl ItemsSource="{Binding Collections}"
                       Grid.Row="1"
-                      Margin="40 0 0 0">
+                      Margin="10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel/>
@@ -50,8 +49,7 @@
                         <materialDesign:PackIcon Kind="Add"
                                                  Height="15"
                                                  Width="15" 
-                                                 VerticalAlignment="Center"
-                                                 Margin="10 0"/>
+                                                 VerticalAlignment="Center"/>
                         <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
                     </StackPanel>
                 </Button>

@@ -28,7 +28,20 @@ namespace irc_core.DatabaseLibrary
 
         public override async Task<DataTable> ListData()
         {
-            throw new NotImplementedException();
+            DataTable dt = new DataTable();
+            DataColumn includeCol = dt.Columns.Add("Include", typeof(bool));
+            includeCol.DefaultValue = false;
+            dt.Columns.Add("Tag");
+            dt.Columns.Add("Type");
+            var document = await mongoCollection.Find(new BsonDocument()).FirstOrDefaultAsync();
+            foreach (var element in document)
+            {
+                DataRow r = dt.NewRow();
+                r["Tag"] = element.Name;
+                r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value);
+                dt.Rows.Add(r);
+            }
+            return dt;
         }
     }
 }

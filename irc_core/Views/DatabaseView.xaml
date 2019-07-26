@@ -9,24 +9,22 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             xmlns:ds="clr-namespace:irc_core.DataSources"
-             Margin="10 10 10 40">
+             xmlns:ds="clr-namespace:irc_core.DataSources">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock Text="{Binding Label}"
                    Margin="10"
                    FontSize="18"
                    FontWeight="Bold"
                    Grid.Row="0"></TextBlock>
-        
 
         <ItemsControl ItemsSource="{Binding Spaces}"
                       Grid.Row="1"
-                      Margin="40 0 0 0">
+                      Margin="10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel/>
@@ -54,8 +52,7 @@
                         <materialDesign:PackIcon Kind="Add"
                                                  Height="15"
                                                  Width="15" 
-                                                 VerticalAlignment="Center"
-                                                 Margin="10 0"/>
+                                                 VerticalAlignment="Center"/>
                         <TextBlock VerticalAlignment="Center">Add database</TextBlock>
                     </StackPanel>
                 </Button>

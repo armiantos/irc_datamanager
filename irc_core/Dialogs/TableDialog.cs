@@ -4,12 +4,24 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
     public class TableDialog : Dialog
     {
         private DataView dataView;
+
+        private object originalSender;
+
+        private string searchField;
+
+        private ICommand addTableViewCommand;
+
+        public delegate void OkEventHandler(object sender, TableDialogEventArgs e);
+
+        public event OkEventHandler OnOkEvent;
 
         public DataView DataView
         {
@@ -24,7 +36,30 @@ namespace irc_core.Dialogs
             }
         }
 
-        private object originalSender;
+        public string SearchField
+        {
+            get
+            {
+                return searchField;
+            }
+            set
+            {
+                searchField = value;
+                OnPropertyChanged("SearchField");
+            }
+        }
+
+        public ICommand AddTableViewCommand
+        {
+            get
+            {
+                if (addTableViewCommand == null)
+                    addTableViewCommand = new CommandWrapper(param =>
+                    AddTableView());
+                return addTableViewCommand;
+            }
+        }
+
 
         public TableDialog(object originalSender)
         {
@@ -37,13 +72,15 @@ namespace irc_core.Dialogs
             DataView = table.AsDataView();
         }
 
-        public delegate void OkEventHandler(object sender, TableDialogEventArgs e);
+        private void AddTableView()
+        {
+            OnOkEvent(originalSender, new TableDialogEventArgs());
+        }
 
-        public event OkEventHandler OnSelectEvent;
     }
 
     public class TableDialogEventArgs
     {
-
+        // todo
     }
 }
