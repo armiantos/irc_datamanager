@@ -21,7 +21,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}">
-    
+
     <Window.Resources>
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
         
@@ -37,8 +37,8 @@
         </DataTemplate>
 
 
-        <DataTemplate DataType="{x:Type dialogs:TableDialog}">
-            <views:TableDialogView/>
+        <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
+            <views:AddDataViewView/>
         </DataTemplate>
     </Window.Resources>
     
