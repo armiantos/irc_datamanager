@@ -3,6 +3,7 @@ using irc_core.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -95,6 +96,22 @@ namespace irc_core.ViewModels
                 CurrentDialogHost.Show();
                 ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
             }
+            else if (args.Type == DataSourceEventArgs.EventType.Views)
+            {
+                if (args.MsgType == DataSourceEventArgs.MessageType.DataTable)
+                {
+                    CurrentDialogHost = new TableDialog(sender, (DataTable)args.Message);
+                    CurrentDialogHost.Show();
+
+                }
+                else
+                {
+                    List<string> dataViews = new List<string> { "Plot", "Table" };
+                    CurrentDialogHost = new ListDialog(sender, dataViews);
+                    CurrentDialogHost.Show();
+                    ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
+                }
+            }
         }
 
         private void ListDialogEventHandler(object sender, ListDialogEventArgs e)
@@ -112,8 +129,12 @@ namespace irc_core.ViewModels
                     var originalSender = (DatabaseSpace)sender;
                     originalSender.AddCollection((string)e.Message);
                 }
+                else if (sender is DatabaseCollection)
+                {
+                    var originalSender = (DatabaseCollection)sender;
+                    originalSender.NotifyViewType((string)e.Message);
+                }
             }
-
         }
 
         #endregion

@@ -34,7 +34,8 @@ namespace irc_core.DataSources
         public enum MessageType
         {
             SpaceList,
-            CollectionList
+            CollectionList,
+            DataTable
         }
 
         public DataSourceEventArgs(object message)

@@ -68,10 +68,16 @@ namespace irc_core.DataSources
             NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views, null));
         }
 
-        public async void AddDataView(string dataLabel)
+        public void AddDataView(string type)
         {
-            DataModel dataModel = await GetDataModel(dataLabel);
-            DataViews.Add(dataModel);
+            throw new NotImplementedException();
+        }
+
+        public async void NotifyViewType(string type)
+        {
+            DataTable listData = await ListData();
+            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views,
+                DataSourceEventArgs.MessageType.DataTable, listData));
         }
 
         private void RemoveDataView(object dataView)
@@ -81,6 +87,6 @@ namespace irc_core.DataSources
 
         public abstract Task<DataTable> ListData();
 
-        public abstract Task<DataModel> GetDataModel(string label);
+        public abstract Task<DataModel> GetDataModel(string type, List<string> labels);
     }
 }
