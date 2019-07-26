@@ -62,9 +62,14 @@ namespace irc_core.DataSources
 
         public void AddSpace(string name)
         {
-            Spaces.Add(client.GetDatabase(name));
+            DatabaseSpace dbSpace = client.GetDatabase(name);
+            dbSpace.OnDataSourceEvent += NewCollectionEventHandler;
+            Spaces.Add(dbSpace);
         }
 
-
+        private void NewCollectionEventHandler(object sender, DataSourceEventArgs args)
+        {
+            NotifyDataSourceEvent(sender, args);
+        }
     }
 }

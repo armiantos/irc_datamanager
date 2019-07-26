@@ -4,12 +4,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
     public abstract class DatabaseSpace : DataSource
     {
         private string label;
+
+        private ICommand addCollectionCommand;
 
         public ObservableCollection<DatabaseSpace> Collections { get; set; }
 
@@ -31,6 +35,29 @@ namespace irc_core.DataSources
             Collections = new ObservableCollection<DatabaseSpace>();
         }
 
+        public ICommand AddCollectionCommand
+        {
+            get
+            {
+                if (addCollectionCommand == null)
+                    addCollectionCommand = new CommandWrapper(param =>
+                        AddCollection());
+                return addCollectionCommand;
+            }
+        }
+
         public abstract Task<List<string>> ListCollections();
+
+        private async void AddCollection()
+        {
+            var collections = await ListCollections();
+            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Database,
+                DataSourceEventArgs.MessageType.CollectionList, collections));
+        }
+
+        public void AddCollection(string name)
+        {
+            Console.WriteLine(name);
+        }
     }
 }

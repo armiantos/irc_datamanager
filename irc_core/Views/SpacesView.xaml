@@ -39,8 +39,8 @@
         <Button Style="{StaticResource MaterialDesignIconButton}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Command="{Binding ConfigureSpacesCommand}">
-            <materialDesign:PackIcon Kind="DotsVertical"
+                Command="{Binding AddCollectionCommand}">
+            <materialDesign:PackIcon Kind="Add"
                                          Height="24"
                                          Width="24"/>
         </Button>
