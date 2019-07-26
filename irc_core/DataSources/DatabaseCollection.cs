@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,11 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    public class DatabaseCollection : DataSource
+    public abstract class DatabaseCollection : DataSource
     {
         private string label;
 
-        public ObservableCollection<PlotModel> Plots { get; set; }
+        public ObservableCollection<DataModel> DataViews { get; set; }
 
         private ICommand addDataViewCommand;
 
@@ -24,9 +25,7 @@ namespace irc_core.DataSources
 
         public DatabaseCollection()
         {
-            Plots = new ObservableCollection<PlotModel>();
-            Label = RandomString(10);
-            // handle new database connection
+            DataViews = new ObservableCollection<DataModel>();
         }
 
         public string Label
@@ -48,7 +47,7 @@ namespace irc_core.DataSources
             {
                 if (addDataViewCommand == null)
                     addDataViewCommand = new CommandWrapper(param =>
-                    AddNewDataView());
+                    AddDataView());
                 return addDataViewCommand;
             }
         }
@@ -64,39 +63,24 @@ namespace irc_core.DataSources
             }
         }
 
-        private void AddNewDataView()
+        private void AddDataView()
         {
-            PlotModel mdl = new PlotModel(RandomString(5));
-            for(int i = 0; i < random.Next(3) + 1; i++)
-            {
-                LineSeries line = new LineSeries();
-                ChartValues<int> values = new ChartValues<int>();
-                for (int j = 0; j < 20; j++)
-                {
-                    values.Add(random.Next(100));
-                }
-                line.Values = values;
-                mdl.Series.Add(line);
-            }
-            Plots.Add(mdl);
+            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views, null));
+        }
+
+        public async void AddDataView(string dataLabel)
+        {
+            DataModel dataModel = await GetDataModel(dataLabel);
+            DataViews.Add(dataModel);
         }
 
         private void RemoveDataView(object dataView)
         {
-            Plots.Remove((PlotModel)dataView);
+            throw new NotImplementedException();
         }
 
+        public abstract Task<DataTable> ListData();
 
-        /// <summary>
-        /// temporary - generate random string
-        /// </summary>
-        private static Random random = new Random();
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-
+        public abstract Task<DataModel> GetDataModel(string label);
     }
 }
