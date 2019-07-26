@@ -61,7 +61,7 @@ namespace irc_core.DataSources
         {
             DatabaseCollection dbCol = GetCollection(name);
             dbCol.OnDataSourceEvent += RedirectDatabaseCollectionEvent;
-            Collections.Add(GetCollection(name));
+            Collections.Add(dbCol);
         }
 
         private void RedirectDatabaseCollectionEvent(object sender, DataSourceEventArgs args)
