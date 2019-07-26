@@ -75,6 +75,7 @@ namespace irc_core.Dialogs
         private void AddTableView()
         {
             OnOkEvent(originalSender, new TableDialogEventArgs());
+            Close();
         }
 
     }
