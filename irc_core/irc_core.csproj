@@ -89,6 +89,7 @@
     </ApplicationDefinition>
     <Compile Include="DatabaseLibrary\DbFactory.cs" />
     <Compile Include="DatabaseLibrary\IDatabase.cs" />
+    <Compile Include="DatabaseLibrary\IMongoCollectionAdapter.cs" />
     <Compile Include="DatabaseLibrary\MongoDBWrapper.cs" />
     <Compile Include="DataSources\DatabaseCollection.cs" />
     <Compile Include="DataSources\DatabaseSource.cs" />
@@ -100,7 +101,9 @@
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Dialogs\ListDialog.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\PlotModel.cs" />
+    <Compile Include="Models\TableModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="Views\AddDataSourceDialogView.xaml.cs">
@@ -120,6 +123,9 @@
     </Compile>
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
