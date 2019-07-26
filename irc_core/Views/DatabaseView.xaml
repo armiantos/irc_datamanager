@@ -17,10 +17,10 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="{Binding Label}"
-                   Margin="10"
                    FontSize="18"
                    FontWeight="Bold"
-                   Grid.Row="0"></TextBlock>
+                   Grid.Row="0"
+                   VerticalAlignment="Center"></TextBlock>
 
         <ItemsControl ItemsSource="{Binding Spaces}"
                       Grid.Row="1"
