@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.DataSources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,75 +10,89 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDatasourceDialog : ObservableObject
+    public class AddDataSourceDialog : Dialog
     {
-        private string host;
-        private string username;
-        private string selectedDb;
+        #region privates
+        private List<string> supportedTypes;
+        private string selectedType;
+        private BaseDataSourceDialog currentDataSource;
+        #endregion
 
-        private List<string> supportedDbs;
-
-        public AddDatasourceDialog()
+        public AddDataSourceDialog()
         {
-            SupportedDbs = new List<string>
-                {
-                    "Cassandra",
-                    "mongoDB",
-                    "MySQL",
-                };
-            SelectedDb = supportedDbs[0];
+            SupportedTypes = new List<string>
+            {
+                "Databases",
+            };
+
+            SelectedType = SupportedTypes[0];
         }
 
-        public string Host
+        #region public getters, setters
+        public List<string> SupportedTypes
         {
             get
             {
-                return host;
+                return supportedTypes;
             }
             set
             {
-                host = value;
-                OnPropertyChanged("Host");
+                supportedTypes = value;
+                OnPropertyChanged("SupportedTypes");
             }
         }
 
-        public string Username
+        public string SelectedType
         {
             get
             {
-                return username;
+                return selectedType;
             }
             set
             {
-                username = value;
-                OnPropertyChanged("Username");
+                selectedType = value;
+                CurrentDataSource = DataSourceFactory.CreateDataSource(value);
+                CurrentDataSource.OnNewDataSource += NewDataSourcePropertyHandler;
+                OnPropertyChanged("SelectedType");
             }
         }
 
-        public string SelectedDb
+        private void NewDataSourcePropertyHandler(DataSource newDataSource)
+        {
+            OnNewDataSource(newDataSource);
+        }
+
+        public BaseDataSourceDialog CurrentDataSource
         {
             get
             {
-                return selectedDb;
+                return currentDataSource;
             }
             set
             {
-                selectedDb = value;
-                OnPropertyChanged("SelectedDb");
+                currentDataSource = value;
+                OnPropertyChanged("CurrentDataSource");
             }
         }
 
-        public List<string> SupportedDbs
+        #endregion
+
+        #region events
+        public delegate void NewDataSourceEventHandler(DataSource newDataSource);
+
+        public event NewDataSourceEventHandler OnNewDataSource;
+        #endregion
+    }
+
+    public static class DataSourceFactory
+    {
+        public static BaseDataSourceDialog CreateDataSource(string type)
         {
-            get
+            if (type == "Databases")
             {
-                return supportedDbs;
+                return new AddDatabaseSource();
             }
-            set
-            {
-                supportedDbs = value;
-                OnPropertyChanged("SupportedDbs");
-            }
+            throw new NotImplementedException();
         }
     }
 }

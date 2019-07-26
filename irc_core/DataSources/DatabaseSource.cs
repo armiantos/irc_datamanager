@@ -1,6 +1,4 @@
-﻿using irc_core.Models;
-using LiveCharts;
-using LiveCharts.Wpf;
+﻿using irc_core.DatabaseLibrary;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,91 +10,66 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    class DatabaseSource : ObservableObject, IDataSource
+    public class DatabaseSource : DataSource
     {
-        private string name;
+        private IDatabase client;
 
-        public ObservableCollection<PlotModel> Plots { get; set; }
+        private string label;
 
-        private ICommand addDataViewCommand;
+        private ICommand addSpaceCommand;
 
-        private ICommand closeDataViewCommand;
-
-        public DatabaseSource(string type, string host, string username, string password)
-        {
-            Plots = new ObservableCollection<PlotModel>();
-            Name = RandomString(10);
-            // handle new database connection
-        }
-
-        public string Name
+        public string Label
         {
             get
             {
-                return name;
+                return label;
             }
             set
             {
-                name = value;
-                OnPropertyChanged("Name");
+                label = value;
+                OnPropertyChanged("Label");
             }
         }
 
-        public ICommand AddDataViewCommand
+        public ObservableCollection<DatabaseSpace> Spaces { get; set; }
+
+        public ICommand AddSpaceCommand
         {
             get
             {
-                if (addDataViewCommand == null)
-                    addDataViewCommand = new CommandWrapper(param =>
-                    AddNewDataView());
-                return addDataViewCommand;
+                if (addSpaceCommand == null)
+                    addSpaceCommand = new CommandWrapper(param =>
+                    {
+                        AddSpace();
+                    });
+                return addSpaceCommand;
             }
         }
 
-        public ICommand CloseDataViewCommand
+        public DatabaseSource(string type, string host, string username, string password)
         {
-            get
-            {
-                if (closeDataViewCommand == null)
-                    closeDataViewCommand = new CommandWrapper(param =>
-                    RemoveDataView(param));
-                return closeDataViewCommand;
-            }
+            Spaces = new ObservableCollection<DatabaseSpace>();
+            client = DbFactory.CreateDatabase(type);
+            client.Connect(host, username, password);
         }
 
-        private void AddNewDataView()
+        private async void AddSpace()
         {
-            PlotModel mdl = new PlotModel(RandomString(5));
-            for(int i = 0; i < random.Next(3) + 1; i++)
-            {
-                LineSeries line = new LineSeries();
-                ChartValues<int> values = new ChartValues<int>();
-                for (int j = 0; j < 20; j++)
-                {
-                    values.Add(random.Next(100));
-                }
-                line.Values = values;
-                mdl.Series.Add(line);
-            }
-            Plots.Add(mdl);
+            var spaces = await client.ListDatabases();
+            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Database,
+                DataSourceEventArgs.MessageType.SpaceList, spaces));
         }
 
-        private void RemoveDataView(object dataView)
+        public void AddSpace(string name)
         {
-            Plots.Remove((PlotModel)dataView);
+            DatabaseSpace dbSpace = client.GetDatabase(name);
+            dbSpace.OnDataSourceEvent += RedirectDataSourceEvent;
+            Spaces.Add(dbSpace);
         }
 
-
-        /// <summary>
-        /// temporary - generate random string
-        /// </summary>
-        private static Random random = new Random();
-        public static string RandomString(int length)
+        private void RedirectDataSourceEvent(object sender, DataSourceEventArgs args)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            NotifyDataSourceEvent(sender, args);
         }
-
     }
 }

@@ -41,8 +41,8 @@
                     </Style>
                 </StackPanel.Resources>
                 <Label Visibility="{Binding SamplingRateVisibility}">Sampling rate</Label>
-                <TextBox Text="{Binding SamplingRate}"
-                         Visibility="{Binding SamplingRateVisibility}"></TextBox>
+                <TextBlock Text="{Binding SamplingRate}"
+                         Visibility="{Binding SamplingRateVisibility}"></TextBlock>
 
                 <Separator/>
                 

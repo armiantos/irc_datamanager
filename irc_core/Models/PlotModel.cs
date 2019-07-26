@@ -8,9 +8,8 @@ using WpfSharedLibrary;
 
 namespace irc_core.Models
 {
-    public class PlotModel : ObservableObject
+    public class PlotModel : DataModel
     {
-        private string name;
         private SeriesCollection series;
 
         public SeriesCollection Series
@@ -26,24 +25,6 @@ namespace irc_core.Models
                 series = value;
                 OnPropertyChanged("Series");
             }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
-
-        public PlotModel(string name)
-        {
-            this.name = name;
         }
     }
 }

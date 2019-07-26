@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DnsClient, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
+      <HintPath>..\packages\DnsClient.1.2.0\lib\net471\DnsClient.dll</HintPath>
+    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -47,11 +50,25 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="ShowMeTheXAML, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ShowMeTheXAML.1.0.12\lib\net45\ShowMeTheXAML.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.8.1\lib\net452\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.8.1\lib\net452\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.8.1\lib\net452\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,20 +87,49 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DatabaseLibrary\DbFactory.cs" />
+    <Compile Include="DatabaseLibrary\IDatabase.cs" />
+    <Compile Include="DatabaseLibrary\IMongoCollectionAdapter.cs" />
+    <Compile Include="DatabaseLibrary\MongoDBWrapper.cs" />
+    <Compile Include="DataSources\DatabaseCollection.cs" />
     <Compile Include="DataSources\DatabaseSource.cs" />
-    <Compile Include="DataSources\IDataSource.cs" />
-    <Compile Include="Dialogs\AddDatasourceDialog.cs" />
+    <Compile Include="DataSources\DatabaseSpace.cs" />
+    <Compile Include="DataSources\DataSource.cs" />
+    <Compile Include="DatabaseLibrary\IMongoDatabaseAdapter.cs" />
+    <Compile Include="Dialogs\AddDatabaseSource.cs" />
+    <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
+    <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\AddDataSourceDialog.cs" />
+    <Compile Include="Dialogs\ListDialog.cs" />
+    <Compile Include="Dialogs\AddDataViewDialog.cs" />
+    <Compile Include="HelperClasses\StringBool.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\PlotModel.cs" />
+    <Compile Include="Models\TableModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
-    <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="Views\AddDataSourceDialogView.xaml.cs">
       <DependentUpon>AddDataSourceDialogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DataSourceView.xaml.cs">
-      <DependentUpon>DataSourceView.xaml</DependentUpon>
+    <Compile Include="Views\AddDatabaseView.xaml.cs">
+      <DependentUpon>AddDatabaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CollectionView.xaml.cs">
+      <DependentUpon>CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpacesView.xaml.cs">
+      <DependentUpon>SpacesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseView.xaml.cs">
+      <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddDataViewView.xaml.cs">
+      <DependentUpon>AddDataViewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -101,11 +147,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DataSourceView.xaml">
+    <Page Include="Views\AddDatabaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpacesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddDataViewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,5 +209,6 @@
       <Name>WpfSharedLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

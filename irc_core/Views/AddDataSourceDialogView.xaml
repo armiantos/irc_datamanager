@@ -9,41 +9,29 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
+             xmlns:dialogs="clr-namespace:irc_core.Dialogs"
+             
              Padding="40">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type dialogs:AddDatabaseSource}">
+            <local:AddDatabaseView/>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <StackPanel Width="300">
         <TextBlock HorizontalAlignment="Center"
                    FontSize="18"
-                   Margin="10">Add new database source</TextBlock>
-        <ComboBox ItemsSource="{Binding SupportedDbs}"
-                  Margin="10"
-                  HorizontalContentAlignment="Center"
-                  SelectedValue="{Binding SelectedDb}"></ComboBox>
-        <TextBox Text="{Binding Host}"
-                 HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Host"
-                 Margin="10"></TextBox>
+                   Margin="10">Add new datasource</TextBlock>
+        
+        <ComboBox ItemsSource="{Binding SupportedTypes}"
+                  SelectedValue="{Binding SelectedType}"
+                  Margin="20"></ComboBox>
+        
+        <Grid Height="Auto"
+              Width="Auto">
+            <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSource}"/>
+        </Grid>
 
-        <TextBox Text="{Binding Username}"
-                 HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Username"
-                 Margin="10"></TextBox>
-
-        <PasswordBox x:Name="PasswordField"
-                     HorizontalContentAlignment="Center"
-                     Width="280"
-                     materialDesign:HintAssist.Hint="Password"
-                     Margin="10"></PasswordBox>
-
-        <Button HorizontalAlignment="Center"
-                Margin="20"
-                Command="{Binding CloseDialogCommand}"
-                CommandParameter="{Binding ElementName=PasswordField}"
-                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
-            <materialDesign:PackIcon Kind="Check"
-                                        Width="24"
-                                        Height="24"/>
-        </Button>
 
     </StackPanel>
 

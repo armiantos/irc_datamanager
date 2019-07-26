@@ -4,11 +4,8 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -16,41 +13,18 @@ namespace irc_core.ViewModels
 {
     public class AppViewModel : ObservableObject
     {
-        private PlotViewModel plotViewModel;
+        #region privates
 
         private ICommand addDataSourceCommand;
 
-        private ICommand openDialogCommand;
+        private Dialog currentDialogHost;
 
-        private ICommand closeDialogCommand;
+        public ObservableCollection<DataSource> DataSources { get; set; }
 
-        private string isDialogHostOpen;
+        #endregion
+               
+        #region public getters, setters
 
-        public ObservableCollection<IDataSource> DataSources { get; set; }
-
-        private AddDatasourceDialog addDatasourceDialog;
-
-        public AppViewModel()
-        {
-            PlotViewModel = new PlotViewModel();
-
-            DataSources = new ObservableCollection<IDataSource>();
-
-            isDialogHostOpen = "False";
-        }
-
-        public PlotViewModel PlotViewModel
-        {
-            get
-            {
-                return plotViewModel;
-            }
-            set
-            {
-                plotViewModel = value;
-                OnPropertyChanged("PlotViewModel");
-            }
-        }
 
         public ICommand AddDataSourceCommand
         {
@@ -58,83 +32,106 @@ namespace irc_core.ViewModels
             {
                 if (addDataSourceCommand == null)
                     addDataSourceCommand = new CommandWrapper(param =>
-                    AddNewDataSource());
+                    AddDataSource());
                 return addDataSourceCommand;
             }
         }
 
-        public ICommand OpenDialogCommand
+
+        public Dialog CurrentDialogHost
         {
             get
             {
-                if (openDialogCommand == null)
-                    openDialogCommand = new CommandWrapper(param =>
-                    OpenDialog());
-                return openDialogCommand;
-            }
-        }
-
-        public ICommand CloseDialogCommand
-        {
-            get
-            {
-                if (closeDialogCommand == null)
-                    closeDialogCommand = new CommandWrapper(param =>
-                    CloseDialog(((PasswordBox)param).Password));
-                return closeDialogCommand;
-            }
-        }
-
-
-        public string IsDialogHostOpen
-        {
-            get
-            {
-                return isDialogHostOpen;
+                return currentDialogHost;
             }
             set
             {
-                if (isDialogHostOpen != value)
-                {
-                    isDialogHostOpen = value;
-                    OnPropertyChanged("IsDialogHostOpen");
-                }
-            }
-        }
-
-        public AddDatasourceDialog CurrentDialogHost
-        {
-            get
-            {
-                return addDatasourceDialog;
-            }
-            set
-            {
-                addDatasourceDialog = value;
+                currentDialogHost = value;
                 OnPropertyChanged("CurrentDialogHost");
             }
         }
 
-        private void AddNewDataSource()
+        #endregion
+
+        #region methods
+
+        public AppViewModel()
         {
-            CurrentDialogHost = new AddDatasourceDialog();
-            OpenDialog();
+
+            DataSources = new ObservableCollection<DataSource>();
         }
 
-        private void OpenDialog()
+        private void AddDataSource()
         {
-            IsDialogHostOpen = "True";
+            CurrentDialogHost = new AddDataSourceDialog();
+            CurrentDialogHost.Show();
+            ((AddDataSourceDialog)CurrentDialogHost).OnNewDataSource += NewDataSourceHandler;
         }
 
-        private void CloseDialog(string password)
+        private void NewDataSourceHandler(DataSource newDataSource)
         {
-            IsDialogHostOpen = "False";
-
-            DatabaseSource dbSource = new DatabaseSource(addDatasourceDialog.SelectedDb,
-                addDatasourceDialog.Host,
-                addDatasourceDialog.Username,
-                password);
-            DataSources.Add(dbSource);
+            DataSources.Add(newDataSource);
+            newDataSource.OnDataSourceEvent += DataSourceEventHandler; ;
         }
+
+        private void DataSourceEventHandler(object sender, DataSourceEventArgs args)
+        {
+            if (args.Type == DataSourceEventArgs.EventType.Database)
+            {
+                var itemList = (List<string>)args.Message;
+                CurrentDialogHost = new ListDialog(sender, itemList);
+                CurrentDialogHost.Show();
+                ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
+            }
+            else if (args.Type == DataSourceEventArgs.EventType.Views)
+            {
+                if (args.MsgType == DataSourceEventArgs.MessageType.DataTable)
+                {
+                    CurrentDialogHost = new AddDataViewDialog(sender, (DataTable)args.Message);
+                    CurrentDialogHost.Show(TableDialogClosingHandler);
+                }
+            }
+        }
+
+
+        public async void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Session.Content is AddDataViewDialog)
+            {
+                if(eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
+                {
+                    DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
+                    AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
+                    string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
+                    if (!string.IsNullOrEmpty(type))
+                        await originalSender.AddDataView(type, dialog.GetIncluded()); 
+                }
+            }
+        }
+
+        private void ListDialogEventHandler(object sender, ListDialogEventArgs e)
+        {
+            // handle select event
+            if (e.Type == ListDialogEventArgs.EventType.Select)
+            {
+                if (sender is DatabaseSource)
+                {
+                    var originalSender = (DatabaseSource)sender;
+                    originalSender.AddSpace((string)e.Message);
+                }
+                else if (sender is DatabaseSpace)
+                {
+                    var originalSender = (DatabaseSpace)sender;
+                    originalSender.AddCollection((string)e.Message);
+                }
+                else if (sender is DatabaseCollection)
+                {
+                    var originalSender = (DatabaseCollection)sender;
+                    originalSender.NotifyViewType((string)e.Message);
+                }
+            }
+        }
+
+        #endregion
     }
 }

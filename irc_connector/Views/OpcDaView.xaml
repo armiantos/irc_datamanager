@@ -45,11 +45,11 @@
                 <StackPanel Orientation="Horizontal"
                             Visibility="{Binding ItemsViewVisibility}"
                             HorizontalAlignment="Stretch">
-                    <TextBox Text="{Binding SearchField}"
+                    <TextBlock Text="{Binding SearchField}"
                              Margin="{StaticResource CommonMargin}"
                              Padding="{StaticResource CommonPadding}"
                              MinWidth="150"
-                             HorizontalAlignment="Center"></TextBox>
+                             HorizontalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <DataGrid ItemsSource="{Binding}"
                           Visibility="{Binding DataContext.ItemsViewVisibility,

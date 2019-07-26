@@ -7,66 +7,78 @@
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         xmlns:viewModels="clr-namespace:irc_core.ViewModels"
+        xmlns:ds="clr-namespace:irc_core.DataSources"
         xmlns:views="clr-namespace:irc_core.Views"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
         mc:Ignorable="d"
+        Title="IRC Core" Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
         
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="IRC Core" Height="450" Width="800"
-        MinHeight="450" MinWidth="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}">
+
     <Window.Resources>
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
-    </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="7*"/>
-        </Grid.ColumnDefinitions>
+        
+        <!-- hook views to dialog windows -->
+        <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
+            <views:AddDataSourceDialogView/>
+        </DataTemplate>
 
-        <Border Padding="{StaticResource CommonMargin}"
+        <DataTemplate DataType="{x:Type dialogs:ListDialog}">
+            <ListView ItemsSource="{Binding ItemList}"
+                      SelectedValue="{Binding Selected}">
+            </ListView>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
+            <views:AddDataViewView/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <materialDesign:DialogHost CloseOnClickAway="True">
+        <!-- whole application popup -->
+        <materialDesign:DialogHost.DialogContent>
+            <Grid>
+                <ContentControl Content="{Binding}" DataContext="{Binding CurrentDialogHost}"/>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- sidepanel buttons -->
+            <Border Padding="{StaticResource CommonMargin}"
                 Background="{DynamicResource PrimaryHueDarkBrush}"
                 Grid.Column="0">
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="Foreground" Value="{StaticResource PrimaryHueDarkForegroundBrush}"/>
-                    </Style>
-                </StackPanel.Resources>
-                <Button Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Database"
-                                                 VerticalAlignment="Center"/>
-                        <Label VerticalAlignment="Center">Data sources</Label>
-                    </StackPanel>
-                </Button>
-                <Button Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Gear"
-                                                 VerticalAlignment="Center"/>
-                        <Label VerticalAlignment="Center">Settings</Label>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </Border>
+                <StackPanel>
+                    <StackPanel.Resources>
+                    </StackPanel.Resources>
 
+                    <Button Margin="5" 
+                            Height="40"
+                            ToolTip="Settings">
+                        <materialDesign:PackIcon Kind="Gear" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Border>
 
-        <Grid Grid.Column="1">
-            <Grid.Resources>
-                <DataTemplate DataType="{x:Type dialogs:AddDatasourceDialog}">
-                    <views:AddDataSourceDialogView/>
-                </DataTemplate>
-            </Grid.Resources>
-            <materialDesign:DialogHost IsOpen="{Binding IsDialogHostOpen}">
-                <materialDesign:DialogHost.DialogContent>
-                    <ContentControl Content="{Binding}" 
-                                    DataContext="{Binding CurrentDialogHost}"/>
-                </materialDesign:DialogHost.DialogContent>
+            <!-- main view -->
+            <Grid Grid.Column="1">
+                <Grid.Resources>
+                    <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
+                        <views:AddDataSourceDialogView/>
+                    </DataTemplate>
+                </Grid.Resources>
                 <Grid>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding DataSources}">
@@ -76,8 +88,8 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <views:DataSourceView/>
+                                <DataTemplate DataType="{x:Type ds:DatabaseSource}">
+                                    <views:DatabaseView/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -86,16 +98,16 @@
                             Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                             Margin="20"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
-                            <materialDesign:PackIcon
+                            VerticalAlignment="Bottom"
+                            ToolTip="Add new data source">
+                        <materialDesign:PackIcon
                                     Kind="Add"
                                     Height="24"
-                                    Width="24"
-                                    />
+                                    Width="24"/>
                     </Button>
-
                 </Grid>
-            </materialDesign:DialogHost>
+            </Grid>
         </Grid>
-    </Grid>
+
+    </materialDesign:DialogHost>
 </Window>
