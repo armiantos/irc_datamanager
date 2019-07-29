@@ -13,8 +13,6 @@ namespace irc_core.ViewModels
 
         private ICommand addDataSourceCommand;
 
-        private Dialog currentDialogHost;
-
         public ObservableCollection<DataSource> DataSources { get; set; }
 
         #endregion
@@ -33,20 +31,6 @@ namespace irc_core.ViewModels
             }
         }
 
-
-        public Dialog CurrentDialogHost
-        {
-            get
-            {
-                return currentDialogHost;
-            }
-            set
-            {
-                currentDialogHost = value;
-                OnPropertyChanged("CurrentDialogHost");
-            }
-        }
-
         #endregion
 
         #region methods
@@ -59,9 +43,17 @@ namespace irc_core.ViewModels
 
         private void AddDataSource()
         {
-            CurrentDialogHost = new AddDataSourceDialog();
-            throw new NotImplementedException();
-            //CurrentDialogHost.Show(ListDialogClosingHandler);
+            AddDataSourceDialog dialog = new AddDataSourceDialog();
+            Dialog.Show(dialog, DialogClosingEventHandler);
+        }
+
+        private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
+        {
+            if (sender is AddDataSourceDialog)
+            {
+                AddDataSourceDialog originalSender = (AddDataSourceDialog)sender;
+
+            }
         }
 
         //private void ListDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)

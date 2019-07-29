@@ -1,4 +1,5 @@
 ﻿using irc_core.DataSources;
+using irc_core.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,7 @@ namespace irc_core.Dialogs
         private BaseDataSourceDialog currentDataSource;
         #endregion
 
-        public AddDataSourceDialog()
+        public AddDataSourceDialog() : base()
         {
             SupportedTypes = new List<string>
             {

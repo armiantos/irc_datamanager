@@ -104,6 +104,9 @@
     <Compile Include="Views\CollectionView.xaml.cs">
       <DependentUpon>CollectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DialogView.xaml.cs">
+      <DependentUpon>DialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpacesView.xaml.cs">
       <DependentUpon>SpacesView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
