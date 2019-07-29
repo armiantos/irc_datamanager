@@ -30,5 +30,10 @@ namespace irc_core.Dialogs
         {
             DialogHost.CloseDialogCommand.Execute(success, null);
         }
+
+        public void Close(object param)
+        {
+            DialogHost.CloseDialogCommand.Execute(param, null);
+        }
     }
 }

@@ -16,10 +16,9 @@ namespace irc_core.Dialogs
         private string selectedDb;
         private string host;
         private string username;
+        private ICommand addDatabaseSourceCommand;
 
-        private ICommand createDatabaseSourceCommand;
-
-        public AddDatabaseSource()
+        public AddDatabaseSource(AddDataSourceDialog mainDialog) : base(mainDialog)
         {
             supportedDbs = new List<string>
             {
@@ -83,30 +82,18 @@ namespace irc_core.Dialogs
             }
         }
 
-        public ICommand CreateDatabaseSourceCommand
+        public ICommand AddDatabaseSourceCommand
         {
             get
             {
-                if (createDatabaseSourceCommand == null)
-                {
-                    createDatabaseSourceCommand = new CommandWrapper(param =>
+                if (addDatabaseSourceCommand == null)
+                    addDatabaseSourceCommand = new CommandWrapper(param =>
                     {
-                        CreateDatabaseSource(SelectedDb, 
-                            Host, 
-                            Username, 
-                            ((PasswordBox)param).Password);
-                        Close(true);
+                        object[] args = new object[] { this, param };
+                        mainDialog.Close(args);
                     });
-                }
-                return createDatabaseSourceCommand;
+                return addDatabaseSourceCommand;
             }
-        }
-
-        private void CreateDatabaseSource(string type, string host, string username, string password)
-        {
-            DatabaseSource dbSource = new DatabaseSource(type, host, username, password) { Label = type + " @ " + host };
-            // don't know if user credentials are correct
-            NotifyNewDataSource(dbSource);
         }
     }
 }
