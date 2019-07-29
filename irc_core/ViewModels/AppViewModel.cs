@@ -91,22 +91,6 @@ namespace irc_core.ViewModels
                 }
             }           
         }
-
-        public async void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Session.Content is AddDataViewDialog)
-            {
-                if(eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
-                {
-                    DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
-                    AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
-                    string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
-                    if (!string.IsNullOrEmpty(type))
-                        await originalSender.AddDataView(type, dialog.GetIncluded()); 
-                }
-            }
-        }
-
         #endregion
     }
 }

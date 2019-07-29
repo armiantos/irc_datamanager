@@ -64,13 +64,17 @@ namespace irc_core.Dialogs
             return included;
         }
 
+        public string GetSelectedType()
+        {
+            return SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
+        }
+
         public ObservableCollection<StringBool> SupportedViews { get; set; }
         #endregion
 
         #region methods
-        public AddDataViewDialog(object originalSender)
+        public AddDataViewDialog()
         {
-            OriginalSender = originalSender;
             SupportedViews = new ObservableCollection<StringBool>
             {
                 new StringBool{Label = "Plot", Boolean = false},
@@ -79,12 +83,10 @@ namespace irc_core.Dialogs
             included = new List<string>();
         }
 
-        public AddDataViewDialog(object originalSender, DataTable table) : this(originalSender)
+        public AddDataViewDialog( DataTable table) : this()
         {
             DataView = table.AsDataView();
         }
-
-        public object OriginalSender { get; }
 
         private void AddTableView()
         {

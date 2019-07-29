@@ -60,8 +60,7 @@ namespace irc_core.DataSources
             }
             else
             {
-                DatabaseCollection dbCol = GetCollection(collectionName);
-                Collections.Add(dbCol);
+                Collections.Add(GetCollection(collectionName));
             }
         }
 
