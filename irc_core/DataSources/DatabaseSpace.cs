@@ -1,11 +1,7 @@
 ﻿using irc_core.Dialogs;
-using irc_core.Models;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -56,7 +52,8 @@ namespace irc_core.DataSources
             {
                 var collections = await Task.Run(() => ListCollections());
                 ListDialog listDialog = new ListDialog(this, collections);
-                listDialog.Show(DialogClosingEventHandler);
+                throw new NotImplementedException();
+                //listDialog.Show(DialogClosingEventHandler);
             }
             else
             {
@@ -64,14 +61,14 @@ namespace irc_core.DataSources
             }
         }
 
-        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
-            {
-                string param = (string)eventArgs.Parameter;
-                AddCollection(param);
-            }
-        }
+        //private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+        //    {
+        //        string param = (string)eventArgs.Parameter;
+        //        AddCollection(param);
+        //    }
+        //}
 
         public abstract Task<List<string>> ListCollections();
 

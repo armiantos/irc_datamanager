@@ -9,36 +9,29 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
-        <materialDesign:Card MinWidth="300"
-                         Margin="20">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView, Mode=OneWay}"
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView, Mode=OneWay}"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           CanUserReorderColumns="True"    
                           ColumnWidth="200"/>
-                
-                <TextBlock Text="{Binding Label}"
+
+            <TextBlock Text="{Binding Label}"
                            Grid.Row="1"
                            Margin="20"/>
-                </Grid>
-        </materialDesign:Card>
-        <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Command="{Binding DataContext.CloseDataViewCommand,
+        </Grid>
+        <Button HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding DataContext.CloseDataViewCommand,
                 RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
                     CommandParameter="{Binding}">
-            <materialDesign:PackIcon
-                    Kind="Minus"
-                    Height="24"
-                    Width="24"/>
+            <TextBlock Margin="10">-</TextBlock>
         </Button>
     </Grid>
 </UserControl>

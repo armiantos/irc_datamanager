@@ -1,17 +1,12 @@
 ﻿using irc_core.Dialogs;
 using irc_core.Models;
-using LiveCharts;
-using LiveCharts.Wpf;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
 using WpfSharedLibrary;
 
 namespace irc_core.DataSources
@@ -72,7 +67,8 @@ namespace irc_core.DataSources
             {
                 DataTable listData = await Task.Run(() => ListData());
                 AddDataViewDialog addDataViewDialog = new AddDataViewDialog(listData);
-                addDataViewDialog.Show(DialogClosingEventHandler);
+                throw new NotImplementedException();
+                //addDataViewDialog.Show(DialogClosingEventHandler);
             }
             else
             {
@@ -82,14 +78,14 @@ namespace irc_core.DataSources
             }
         }
 
-        private  void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
-            {
-                AddDataViewDialog addDataViewDialog = (AddDataViewDialog)eventArgs.Session.Content;
-                AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
-            }
-        }
+        //private  void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    if (eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
+        //    {
+        //        AddDataViewDialog addDataViewDialog = (AddDataViewDialog)eventArgs.Session.Content;
+        //        AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
+        //    }
+        //}
 
 
         private void CloseDataView(object dataModel)

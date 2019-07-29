@@ -1,14 +1,10 @@
 ﻿using irc_core.DataSources;
 using irc_core.Models;
-using LiveCharts;
-using LiveCharts.Wpf;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace irc_core.DatabaseLibrary
@@ -46,20 +42,21 @@ namespace irc_core.DatabaseLibrary
 
             if (type == "Plot")
             {
-                PlotModel plot = new PlotModel();
-                labels.ForEach(labelName =>
-                {
-                    LineSeries line = new LineSeries();
-                    line.Title = labelName;
-                    ChartValues<double> values = new ChartValues<double>();
-                    foreach (var result in resultsList)
-                    {
-                        values.Add((double)result[labelName]);
-                    }
-                    line.Values = values;
-                    plot.Series.Add(line);
-                });
-                return plot;
+                throw new NotImplementedException();
+                //PlotModel plot = new PlotModel();
+                //labels.ForEach(labelName =>
+                //{
+                //    LineSeries line = new LineSeries();
+                //    line.Title = labelName;
+                //    ChartValues<double> values = new ChartValues<double>();
+                //    foreach (var result in resultsList)
+                //    {
+                //        values.Add((double)result[labelName]);
+                //    }
+                //    line.Values = values;
+                //    plot.Series.Add(line);
+                //});
+                //return plot;
             }
 
             else if (type == "Table")

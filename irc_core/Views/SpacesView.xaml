@@ -35,25 +35,14 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <materialDesign:PopupBox
-                PlacementMode="BottomAndAlignCentres"
-                ToolTipService.Placement="Right"
-                ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Grid.Row="0">
-            <StackPanel>
-                <Button Style="{StaticResource MaterialDesignToolButton}"
-                        Command="{Binding AddCollectionCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Add"
-                                                 Height="15"
-                                                 Width="15" 
-                                                 VerticalAlignment="Center"/>
-                        <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </materialDesign:PopupBox>
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="5">
+            <Button Command="{Binding AddCollectionCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

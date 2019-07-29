@@ -1,11 +1,7 @@
 ﻿using irc_core.DatabaseLibrary;
 using irc_core.Dialogs;
-using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -62,7 +58,8 @@ namespace irc_core.DataSources
             {
                 var spaces = await Task.Run(() => client.ListDatabases());
                 ListDialog listDialog = new ListDialog(this, spaces);
-                listDialog.Show(DialogClosingEventHandler);
+                throw new NotImplementedException();
+                //listDialog.Show(DialogClosingEventHandler);
             }
             else
             {
@@ -71,13 +68,13 @@ namespace irc_core.DataSources
             }
         }
 
-        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
-            {
-                string param = (string)eventArgs.Parameter;
-                AddSpace(param);
-            }
-        }
+        //private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+        //    {
+        //        string param = (string)eventArgs.Parameter;
+        //        AddSpace(param);
+        //    }
+        //}
     }
 }

@@ -20,8 +20,7 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0"
-                 Text="{Binding SearchField}"
-                 materialDesign:HintAssist.Hint="Search"/>
+                 Text="{Binding SearchField}"></TextBox>
 
         <DataGrid Grid.Row="1" 
                   ItemsSource="{Binding}" 
@@ -53,7 +52,7 @@
                 Grid.Row="2"
                 Margin="10"
                 Command="{Binding AddTableViewCommand}">
-            <materialDesign:PackIcon Kind="Add"/>
+            <TextBlock Margin="5">Add DataView</TextBlock>
         </Button>
     </Grid>
 </UserControl>

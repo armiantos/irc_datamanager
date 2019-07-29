@@ -1,12 +1,7 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
-using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -65,32 +60,33 @@ namespace irc_core.ViewModels
         private void AddDataSource()
         {
             CurrentDialogHost = new AddDataSourceDialog();
-            CurrentDialogHost.Show(ListDialogClosingHandler);
+            throw new NotImplementedException();
+            //CurrentDialogHost.Show(ListDialogClosingHandler);
         }
 
-        private void ListDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Session.Content is AddDataSourceDialog)
-            {
-                if (eventArgs.Parameter != null)
-                {
-                    if (eventArgs.Parameter is object[])
-                    {
-                        object[] param = (object[])eventArgs.Parameter;
-                        if (param[0] is AddDatabaseSource)
-                        {
-                            AddDatabaseSource dbSource = (AddDatabaseSource)param[0];
-                            PasswordBox pwdBox = (PasswordBox)param[1];
-                            DataSources.Add(new DatabaseSource(dbSource.SelectedDb,
-                                dbSource.Host,
-                                dbSource.Username,
-                                pwdBox.Password)
-                                { Label = $"{dbSource.SelectedDb} @ {dbSource.Host}" });
-                        }
-                    }
-                }
-            }           
-        }
+        //private void ListDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
+        //{
+        //    if (eventArgs.Session.Content is AddDataSourceDialog)
+        //    {
+        //        if (eventArgs.Parameter != null)
+        //        {
+        //            if (eventArgs.Parameter is object[])
+        //            {
+        //                object[] param = (object[])eventArgs.Parameter;
+        //                if (param[0] is AddDatabaseSource)
+        //                {
+        //                    AddDatabaseSource dbSource = (AddDatabaseSource)param[0];
+        //                    PasswordBox pwdBox = (PasswordBox)param[1];
+        //                    DataSources.Add(new DatabaseSource(dbSource.SelectedDb,
+        //                        dbSource.Host,
+        //                        dbSource.Username,
+        //                        pwdBox.Password)
+        //                        { Label = $"{dbSource.SelectedDb} @ {dbSource.Host}" });
+        //                }
+        //            }
+        //        }
+        //    }           
+        //}
         #endregion
     }
 }

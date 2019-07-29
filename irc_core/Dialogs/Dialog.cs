@@ -1,10 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
@@ -13,27 +7,31 @@ namespace irc_core.Dialogs
     {
         public async void Show()
         {
-            await DialogHost.Show(this);
+            throw new NotImplementedException();
+            //await DialogHost.Show(this);
         }
 
-        public async void Show(DialogClosingEventHandler dialogClosingEventHandler)
-        {
-            await DialogHost.Show(this, dialogClosingEventHandler);
-        }
+        //public async void Show(DialogClosingEventHandler dialogClosingEventHandler)
+        //{
+        //    await DialogHost.Show(this, dialogClosingEventHandler);
+        //}
 
         public void Close()
         {
-            DialogHost.CloseDialogCommand.Execute(null, null);
+            throw new NotImplementedException();
+            //DialogHost.CloseDialogCommand.Execute(null, null);
         }
 
         public void Close(bool success)
         {
-            DialogHost.CloseDialogCommand.Execute(success, null);
+            throw new NotImplementedException();
+            //DialogHost.CloseDialogCommand.Execute(success, null);
         }
 
         public void Close(object param)
         {
-            DialogHost.CloseDialogCommand.Execute(param, null);
+            throw new NotImplementedException();
+            //DialogHost.CloseDialogCommand.Execute(param, null);
         }
     }
 }
