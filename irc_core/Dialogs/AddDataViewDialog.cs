@@ -99,19 +99,4 @@ namespace irc_core.Dialogs
         }
         #endregion
     }
-
-    public class TableDialogEventArgs
-    {
-        public List<string> SelectedTags { get; set; }
-
-        public TableDialogEventArgs()
-        {
-            
-        }
-
-        public TableDialogEventArgs(List<string> selectedTags)
-        {
-            SelectedTags = selectedTags;
-        }
-    }
 }

@@ -37,28 +37,4 @@ namespace irc_core.Dialogs
             ItemList = new ObservableCollection<string>(itemList);
         }
     }
-
-    public class ListDialogEventArgs
-    {
-        public enum EventType
-        {
-            Select,
-        }
-
-        public ListDialogEventArgs(object message)
-        {
-            Message = message;
-        }
-
-        public ListDialogEventArgs(EventType type, object message)
-        {
-            Type = type;
-            Message = message;
-        }
-
-        public EventType Type { get; }
-
-        public object Message { get; }
-
-    }
 }
