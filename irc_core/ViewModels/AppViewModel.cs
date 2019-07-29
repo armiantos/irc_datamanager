@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -64,74 +65,32 @@ namespace irc_core.ViewModels
         private void AddDataSource()
         {
             CurrentDialogHost = new AddDataSourceDialog();
-            CurrentDialogHost.Show();
-            ((AddDataSourceDialog)CurrentDialogHost).OnNewDataSource += NewDataSourceHandler;
+            CurrentDialogHost.Show(ListDialogClosingHandler);
         }
 
-        private void NewDataSourceHandler(DataSource newDataSource)
+        private void ListDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            DataSources.Add(newDataSource);
-            newDataSource.OnDataSourceEvent += DataSourceEventHandler; ;
-        }
-
-        private void DataSourceEventHandler(object sender, DataSourceEventArgs args)
-        {
-            if (args.Type == DataSourceEventArgs.EventType.Database)
+            if (eventArgs.Session.Content is AddDataSourceDialog)
             {
-                var itemList = (List<string>)args.Message;
-                CurrentDialogHost = new ListDialog(sender, itemList);
-                CurrentDialogHost.Show();
-                ((ListDialog)CurrentDialogHost).OnSelectEvent += ListDialogEventHandler;
-            }
-            else if (args.Type == DataSourceEventArgs.EventType.Views)
-            {
-                if (args.MsgType == DataSourceEventArgs.MessageType.DataTable)
+                if (eventArgs.Parameter != null)
                 {
-                    CurrentDialogHost = new AddDataViewDialog(sender, (DataTable)args.Message);
-                    CurrentDialogHost.Show(TableDialogClosingHandler);
+                    if (eventArgs.Parameter is object[])
+                    {
+                        object[] param = (object[])eventArgs.Parameter;
+                        if (param[0] is AddDatabaseSource)
+                        {
+                            AddDatabaseSource dbSource = (AddDatabaseSource)param[0];
+                            PasswordBox pwdBox = (PasswordBox)param[1];
+                            DataSources.Add(new DatabaseSource(dbSource.SelectedDb,
+                                dbSource.Host,
+                                dbSource.Username,
+                                pwdBox.Password)
+                                { Label = $"{dbSource.SelectedDb} @ {dbSource.Host}" });
+                        }
+                    }
                 }
-            }
+            }           
         }
-
-
-        public async void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (eventArgs.Session.Content is AddDataViewDialog)
-            {
-                if(eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
-                {
-                    DatabaseCollection originalSender = (DatabaseCollection)((AddDataViewDialog)eventArgs.Session.Content).OriginalSender;
-                    AddDataViewDialog dialog = (AddDataViewDialog)eventArgs.Session.Content;
-                    string type = dialog.SupportedViews.FirstOrDefault(obj => obj.Boolean == true).Label;
-                    if (!string.IsNullOrEmpty(type))
-                        await originalSender.AddDataView(type, dialog.GetIncluded()); 
-                }
-            }
-        }
-
-        private void ListDialogEventHandler(object sender, ListDialogEventArgs e)
-        {
-            // handle select event
-            if (e.Type == ListDialogEventArgs.EventType.Select)
-            {
-                if (sender is DatabaseSource)
-                {
-                    var originalSender = (DatabaseSource)sender;
-                    originalSender.AddSpace((string)e.Message);
-                }
-                else if (sender is DatabaseSpace)
-                {
-                    var originalSender = (DatabaseSpace)sender;
-                    originalSender.AddCollection((string)e.Message);
-                }
-                else if (sender is DatabaseCollection)
-                {
-                    var originalSender = (DatabaseCollection)sender;
-                    originalSender.NotifyViewType((string)e.Message);
-                }
-            }
-        }
-
         #endregion
     }
 }

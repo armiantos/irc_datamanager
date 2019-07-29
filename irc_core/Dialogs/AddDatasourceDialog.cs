@@ -51,15 +51,9 @@ namespace irc_core.Dialogs
             set
             {
                 selectedType = value;
-                CurrentDataSource = DataSourceFactory.CreateDataSource(value);
-                CurrentDataSource.OnNewDataSource += NewDataSourcePropertyHandler;
+                CurrentDataSource = DataSourceFactory.CreateDataSource(value, this);
                 OnPropertyChanged("SelectedType");
             }
-        }
-
-        private void NewDataSourcePropertyHandler(DataSource newDataSource)
-        {
-            OnNewDataSource(newDataSource);
         }
 
         public BaseDataSourceDialog CurrentDataSource
@@ -76,21 +70,15 @@ namespace irc_core.Dialogs
         }
 
         #endregion
-
-        #region events
-        public delegate void NewDataSourceEventHandler(DataSource newDataSource);
-
-        public event NewDataSourceEventHandler OnNewDataSource;
-        #endregion
     }
 
     public static class DataSourceFactory
     {
-        public static BaseDataSourceDialog CreateDataSource(string type)
+        public static BaseDataSourceDialog CreateDataSource(string type, AddDataSourceDialog mainDialog)
         {
             if (type == "Databases")
             {
-                return new AddDatabaseSource();
+                return new AddDatabaseSource(mainDialog);
             }
             throw new NotImplementedException();
         }

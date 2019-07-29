@@ -2,6 +2,7 @@
 using irc_core.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WpfSharedLibrary;
 
 namespace irc_core.DataSources
@@ -48,7 +50,7 @@ namespace irc_core.DataSources
             {
                 if (addDataViewCommand == null)
                     addDataViewCommand = new CommandWrapper(param =>
-                    AddDataView());
+                    AddDataView(null, null));
                 return addDataViewCommand;
             }
         }
@@ -64,35 +66,31 @@ namespace irc_core.DataSources
             }
         }
 
-        // called by button command to display list of data to add
-        private async void AddDataView()
+        public async void AddDataView(string type, List<string> tags)
         {
-            DataTable listData = await ListData();
-            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views,
-                DataSourceEventArgs.MessageType.DataTable, listData));
+            if (string.IsNullOrEmpty(type))
+            {
+                DataTable listData = await Task.Run(() => ListData());
+                AddDataViewDialog addDataViewDialog = new AddDataViewDialog(listData);
+                addDataViewDialog.Show(DialogClosingEventHandler);
+            }
+            else
+            {
+                DataModel dataModel = await GetDataModel(type, tags);
+                dataModel.Label = string.Join(", ", tags);
+                DataViews.Add(dataModel);
+            }
         }
 
-        public void NotifyViewType(string type)
+        private  void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            throw new NotImplementedException();
+            if (eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
+            {
+                AddDataViewDialog addDataViewDialog = (AddDataViewDialog)eventArgs.Session.Content;
+                AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
+            }
         }
 
-        // called by mainviewmodel once type of plot has been given and tags to be 
-        // included
-        public async Task AddDataView(string type, List<string> tags)
-        {
-            DataModel dataModel = await GetDataModel(type, tags);
-            dataModel.Label = string.Join(", ", tags);
-            DataViews.Add(dataModel);
-        }
-
-        private static Random random = new Random();
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
 
         private void CloseDataView(object dataModel)
         {
@@ -104,4 +102,5 @@ namespace irc_core.DataSources
 
         public abstract Task<DataModel> GetDataModel(string type, List<string> labels);
     }
+
 }

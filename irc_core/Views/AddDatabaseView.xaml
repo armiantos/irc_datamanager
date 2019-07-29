@@ -28,11 +28,12 @@
                      HorizontalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Password"
                      Margin="10"></PasswordBox>
-            
+
+
             <Button HorizontalAlignment="Center"
-                    Margin="20"
-                    Command="{Binding CreateDatabaseSourceCommand}"
-                    CommandParameter="{Binding ElementName=PasswordField}">
+                Margin="20"
+                Command="{Binding AddDatabaseSourceCommand}"
+                CommandParameter="{Binding ElementName=PasswordField}">
                 <materialDesign:PackIcon Kind="Add"
                                         Width="24"
                                         Height="24"/>

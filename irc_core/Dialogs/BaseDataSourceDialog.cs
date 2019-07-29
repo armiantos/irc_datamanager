@@ -9,14 +9,11 @@ namespace irc_core.Dialogs
 {
     abstract public class BaseDataSourceDialog : Dialog
     {
-        public delegate void NewDataSourceEventHandler(DataSource newDataSource);
+        protected AddDataSourceDialog mainDialog;
 
-        public event NewDataSourceEventHandler OnNewDataSource;
-
-        public void NotifyNewDataSource(DataSource newDataSource)
+        protected BaseDataSourceDialog(AddDataSourceDialog mainDialog)
         {
-            Close();
-            OnNewDataSource(newDataSource);
+            this.mainDialog = mainDialog;
         }
     }
 }

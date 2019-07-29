@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:irc_core"
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
-        xmlns:viewModels="clr-namespace:irc_core.ViewModels"
         xmlns:ds="clr-namespace:irc_core.DataSources"
         xmlns:views="clr-namespace:irc_core.Views"
         
@@ -44,11 +43,11 @@
     
     <materialDesign:DialogHost CloseOnClickAway="True">
         <!-- whole application popup -->
-        <materialDesign:DialogHost.DialogContent>
-            <Grid>
-                <ContentControl Content="{Binding}" DataContext="{Binding CurrentDialogHost}"/>
-            </Grid>
-        </materialDesign:DialogHost.DialogContent>
+        <!--<materialDesign:DialogHost.DialogContent>-->
+            <!--<Grid>-->
+                <!--<ContentControl Content="{Binding}" DataContext="{Binding CurrentDialogHost}"/>
+            </Grid>-->
+        <!--</materialDesign:DialogHost.DialogContent>-->
 
         <Grid>
             <Grid.ColumnDefinitions>

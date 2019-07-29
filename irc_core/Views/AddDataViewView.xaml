@@ -27,7 +27,9 @@
                   ItemsSource="{Binding}" 
                   DataContext="{Binding DataView}"
                   CanUserAddRows="False"
-                  CanUserDeleteRows="False"/>
+                  CanUserDeleteRows="False"
+                  ColumnWidth="200"
+                  />
 
         <StackPanel Grid.Row="1"
                     Grid.Column="1"

@@ -64,7 +64,8 @@ namespace irc_core.DatabaseLibrary
 
             else if (type == "Table")
             {
-                TableModel table = new TableModel { Label = RandomString(5) };
+                TableModel table = new TableModel();
+
                 DataTable dt = new DataTable();
                 
                 labels.ForEach(labelName => dt.Columns.Add(labelName, 

@@ -26,12 +26,13 @@
         <ComboBox ItemsSource="{Binding SupportedTypes}"
                   SelectedValue="{Binding SelectedType}"
                   Margin="20"></ComboBox>
-        
+
         <Grid Height="Auto"
               Width="Auto">
-            <ContentControl Content="{Binding}" DataContext="{Binding CurrentDataSource}"/>
+            <ContentControl x:Name="contentControl"
+                            Content="{Binding}" 
+                            DataContext="{Binding CurrentDataSource}"/>
         </Grid>
-
 
     </StackPanel>
 

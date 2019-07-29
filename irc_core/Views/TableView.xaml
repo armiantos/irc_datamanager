@@ -20,7 +20,9 @@
                 
                 <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView, Mode=OneWay}"
                           CanUserAddRows="False"
-                          CanUserDeleteRows="False"/>
+                          CanUserDeleteRows="False"
+                          CanUserReorderColumns="True"    
+                          ColumnWidth="200"/>
                 
                 <TextBlock Text="{Binding Label}"
                            Grid.Row="1"

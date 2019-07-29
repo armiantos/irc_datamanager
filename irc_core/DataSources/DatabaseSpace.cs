@@ -1,4 +1,6 @@
-﻿using irc_core.Models;
+﻿using irc_core.Dialogs;
+using irc_core.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,31 +45,35 @@ namespace irc_core.DataSources
             {
                 if (addCollectionCommand == null)
                     addCollectionCommand = new CommandWrapper(param =>
-                        AddCollection());
+                        AddCollection(null));
                 return addCollectionCommand;
             }
         }
 
+        private async void AddCollection(string collectionName)
+        {
+            if (string.IsNullOrEmpty(collectionName))
+            {
+                var collections = await Task.Run(() => ListCollections());
+                ListDialog listDialog = new ListDialog(this, collections);
+                listDialog.Show(DialogClosingEventHandler);
+            }
+            else
+            {
+                Collections.Add(GetCollection(collectionName));
+            }
+        }
+
+        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+            {
+                string param = (string)eventArgs.Parameter;
+                AddCollection(param);
+            }
+        }
+
         public abstract Task<List<string>> ListCollections();
-
-        private async void AddCollection()
-        {
-            var collections = await ListCollections();
-            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Database,
-                DataSourceEventArgs.MessageType.CollectionList, collections));
-        }
-
-        public void AddCollection(string name)
-        {
-            DatabaseCollection dbCol = GetCollection(name);
-            dbCol.OnDataSourceEvent += RedirectDatabaseCollectionEvent;
-            Collections.Add(dbCol);
-        }
-
-        private void RedirectDatabaseCollectionEvent(object sender, DataSourceEventArgs args)
-        {
-            NotifyDataSourceEvent(sender, args);
-        }
 
         public abstract DatabaseCollection GetCollection(string name);
     }
