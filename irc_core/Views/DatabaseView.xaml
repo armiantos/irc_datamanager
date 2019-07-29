@@ -9,7 +9,16 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             xmlns:ds="clr-namespace:irc_core.DataSources">
+             xmlns:ds="clr-namespace:irc_core.DataSources"
+             
+             
+            xmlns:dialogs="clr-namespace:irc_core.Dialogs">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type dialogs:ListDialog}">
+            <ListView ItemsSource="{Binding ItemList}"
+                      SelectedItem="{Binding Selected}"/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -58,6 +67,6 @@
                 </Button>
             </StackPanel>
         </materialDesign:PopupBox>
-       
+
     </Grid>
 </UserControl>

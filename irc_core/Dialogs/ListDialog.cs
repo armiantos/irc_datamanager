@@ -20,10 +20,8 @@ namespace irc_core.Dialogs
             set
             {
                 selected = value;
-                OnSelectEvent(originalSender, new ListDialogEventArgs(ListDialogEventArgs.EventType.Select,
-                    value));
                 OnPropertyChanged("Selected");
-                Close();
+                Close(selected);
             }
         }
 
@@ -38,10 +36,6 @@ namespace irc_core.Dialogs
             this.originalSender = originalSender;
             ItemList = new ObservableCollection<string>(itemList);
         }
-
-        public delegate void SelectEventHandler(object sender, ListDialogEventArgs e);
-
-        public event SelectEventHandler OnSelectEvent;
     }
 
     public class ListDialogEventArgs
@@ -53,13 +47,13 @@ namespace irc_core.Dialogs
 
         public ListDialogEventArgs(object message)
         {
-            this.Message = message;
+            Message = message;
         }
 
         public ListDialogEventArgs(EventType type, object message)
         {
-            this.Type = type;
-            this.Message = message;
+            Type = type;
+            Message = message;
         }
 
         public EventType Type { get; }

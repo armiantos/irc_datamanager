@@ -1,4 +1,6 @@
 ﻿using irc_core.DatabaseLibrary;
+using irc_core.Dialogs;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +42,7 @@ namespace irc_core.DataSources
                 if (addSpaceCommand == null)
                     addSpaceCommand = new CommandWrapper(param =>
                     {
-                        AddSpace();
+                        AddSpace(null);
                     });
                 return addSpaceCommand;
             }
@@ -53,23 +55,29 @@ namespace irc_core.DataSources
             client.Connect(host, username, password);
         }
 
-        private async void AddSpace()
+
+        private async void AddSpace(string name)
         {
-            var spaces = await client.ListDatabases();
-            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Database,
-                DataSourceEventArgs.MessageType.SpaceList, spaces));
+            if (string.IsNullOrEmpty(name))
+            {
+                var spaces = await Task.Run(() => client.ListDatabases());
+                ListDialog listDialog = new ListDialog(this, spaces);
+                listDialog.Show(DialogClosingEventHandler);
+            }
+            else
+            {
+                DatabaseSpace dbSpace = client.GetDatabase(name);
+                Spaces.Add(dbSpace);
+            }
         }
 
-        public void AddSpace(string name)
+        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
-            DatabaseSpace dbSpace = client.GetDatabase(name);
-            dbSpace.OnDataSourceEvent += RedirectDataSourceEvent;
-            Spaces.Add(dbSpace);
-        }
-
-        private void RedirectDataSourceEvent(object sender, DataSourceEventArgs args)
-        {
-            NotifyDataSourceEvent(sender, args);
+            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+            {
+                string param = (string)eventArgs.Parameter;
+                AddSpace(param);
+            }
         }
     }
 }

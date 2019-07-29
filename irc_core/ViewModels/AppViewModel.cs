@@ -89,8 +89,7 @@ namespace irc_core.ViewModels
                         }
                     }
                 }
-            }
-           
+            }           
         }
 
         public async void TableDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)

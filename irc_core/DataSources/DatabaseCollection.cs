@@ -68,8 +68,7 @@ namespace irc_core.DataSources
         private async void AddDataView()
         {
             DataTable listData = await ListData();
-            NotifyDataSourceEvent(this, new DataSourceEventArgs(DataSourceEventArgs.EventType.Views,
-                DataSourceEventArgs.MessageType.DataTable, listData));
+            throw new NotImplementedException();
         }
 
         public void NotifyViewType(string type)
