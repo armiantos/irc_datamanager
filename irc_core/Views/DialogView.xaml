@@ -9,20 +9,25 @@
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs">
     <Window.Resources>
+        <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
+            <local:AddDataSourceDialogView/>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type dialogs:AddDatabaseSource}">
             <local:AddDatabaseView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
-            <local:AddDataSourceDialogView/>
+        <DataTemplate DataType="{x:Type dialogs:ListDialog}">
+            <ListView ItemsSource="{Binding ItemList}"
+                      SelectedValue="{Binding Selected}"></ListView>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
             <local:AddDataViewView/>
         </DataTemplate>
-        
+
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding}"/>
+        <ContentControl x:Name="ContentControl" Content="{Binding}"/>
     </Grid>
 </Window>

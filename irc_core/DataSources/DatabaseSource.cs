@@ -58,8 +58,7 @@ namespace irc_core.DataSources
             {
                 var spaces = await Task.Run(() => client.ListDatabases());
                 ListDialog listDialog = new ListDialog(this, spaces);
-                throw new NotImplementedException();
-                //listDialog.Show(DialogClosingEventHandler);
+                Dialog.Show(listDialog, DialogClosingEventHandler);
             }
             else
             {
@@ -68,13 +67,14 @@ namespace irc_core.DataSources
             }
         }
 
-        //private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        //{
-        //    if (eventArgs.Parameter != null && eventArgs.Parameter is string)
-        //    {
-        //        string param = (string)eventArgs.Parameter;
-        //        AddSpace(param);
-        //    }
-        //}
+        private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
+        {
+            if (args.Parameter != null && args.Parameter is string)
+            {
+                string param = (string)args.Parameter;
+                AddSpace(param);
+            }
+        }
+
     }
 }

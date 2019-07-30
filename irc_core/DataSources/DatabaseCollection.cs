@@ -67,8 +67,7 @@ namespace irc_core.DataSources
             {
                 DataTable listData = await Task.Run(() => ListData());
                 AddDataViewDialog addDataViewDialog = new AddDataViewDialog(listData);
-                throw new NotImplementedException();
-                //addDataViewDialog.Show(DialogClosingEventHandler);
+                Dialog.Show(addDataViewDialog, DialogClosingEventHandler);
             }
             else
             {
@@ -78,15 +77,15 @@ namespace irc_core.DataSources
             }
         }
 
-        //private  void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        //{
-        //    if (eventArgs.Parameter != null && (bool)eventArgs.Parameter == true)
-        //    {
-        //        AddDataViewDialog addDataViewDialog = (AddDataViewDialog)eventArgs.Session.Content;
-        //        AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
-        //    }
-        //}
-
+        private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
+        {
+            if (args.Parameter != null && (bool)args.Parameter == true)
+            {
+                Console.WriteLine(args.Content);
+                AddDataViewDialog addDataViewDialog = (AddDataViewDialog)args.Content;
+                AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
+            }
+        }
 
         private void CloseDataView(object dataModel)
         {

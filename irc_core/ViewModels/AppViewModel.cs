@@ -2,6 +2,7 @@
 using irc_core.Dialogs;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSharedLibrary;
 
@@ -49,10 +50,18 @@ namespace irc_core.ViewModels
 
         private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
         {
-            if (sender is AddDataSourceDialog)
+            if (args.Parameter is object[])
             {
-                AddDataSourceDialog originalSender = (AddDataSourceDialog)sender;
-
+                object[] parameters = (object[])args.Parameter;
+                if(parameters[0] is AddDatabaseSource)
+                {
+                    AddDatabaseSource o = (AddDatabaseSource)parameters[0];
+                    PasswordBox p = (PasswordBox)parameters[1];
+                    DataSources.Add(new DatabaseSource(o.SelectedDb, o.Host, o.Username, p.Password)
+                    {
+                        Label = $"{o.SelectedDb} @ {o.Host}"
+                    });
+                }
             }
         }
 
