@@ -114,7 +114,7 @@ namespace irc_core.DatabaseLibrary
                     {
                         try
                         {
-                            line.Points.Add(new OxyPlot.DataPoint(i, (double)results[i][tag]));
+                            line.Points.Add(new OxyPlot.DataPoint(results.Count - i, results[i][tag].ToDouble()));
                         }
                         catch (Exception e)
                         {
