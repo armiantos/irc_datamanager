@@ -1,22 +1,21 @@
-﻿namespace irc_core.Models
+﻿using OxyPlot;
+
+namespace irc_core.Models
 {
     public class PlotModel : DataModel
     {
-        //private SeriesCollection series;
+        private OxyPlot.PlotModel model;
 
-        //public SeriesCollection Series
-        //{
-        //    get
-        //    {
-        //        if (series == null)
-        //            series = new SeriesCollection();
-        //        return series;
-        //    }
-        //    set
-        //    {
-        //        series = value;
-        //        OnPropertyChanged("Series");
-        //    }
-        //}
+        public OxyPlot.PlotModel Model
+        {
+            get
+            {
+                if (model == null)
+                {
+                    model = new OxyPlot.PlotModel();
+                }
+                return model;
+            }
+            set => model = value; }
     }
 }

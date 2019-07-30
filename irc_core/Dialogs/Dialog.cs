@@ -27,6 +27,19 @@ namespace irc_core.Dialogs
             dialogView.DataContext = context;
             Dialog.context = context;
             dialogView.Show();
+            dialogView.Deactivated += DialogView_Deactivated;
+        }
+
+        private static void DialogView_Deactivated(object sender, EventArgs e)
+        {
+            try
+            {
+                dialogView.Close();
+            }
+            catch
+            {
+
+            }
         }
 
         public static void Show(Dialog context, ClosingEventHandler handler) 

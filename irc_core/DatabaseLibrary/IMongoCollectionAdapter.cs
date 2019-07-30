@@ -2,6 +2,7 @@
 using irc_core.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,21 +43,19 @@ namespace irc_core.DatabaseLibrary
 
             if (type == "Plot")
             {
-                throw new NotImplementedException();
-                //PlotModel plot = new PlotModel();
-                //labels.ForEach(labelName =>
-                //{
-                //    LineSeries line = new LineSeries();
-                //    line.Title = labelName;
-                //    ChartValues<double> values = new ChartValues<double>();
-                //    foreach (var result in resultsList)
-                //    {
-                //        values.Add((double)result[labelName]);
-                //    }
-                //    line.Values = values;
-                //    plot.Series.Add(line);
-                //});
-                //return plot;
+                PlotModel plot = new PlotModel();
+                labels.ForEach(labelName =>
+                {
+                    LineSeries line = new LineSeries();
+                    line.Title = labelName;
+                    
+                    for (int i = 0; i < resultsList.Count; i++)
+                    {
+                        line.Points.Add(new OxyPlot.DataPoint(i, (double)resultsList[i][labelName]));
+                    }
+                    plot.Model.Series.Add(line);
+                });
+                return plot;
             }
 
             else if (type == "Table")
