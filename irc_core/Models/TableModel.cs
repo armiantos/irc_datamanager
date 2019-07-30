@@ -20,7 +20,7 @@ namespace irc_core.Models
             set
             {
                 dataView = value;
-                OnPropertyChanged("Data");
+                OnPropertyChanged("DataView");
             }
         }
     }
