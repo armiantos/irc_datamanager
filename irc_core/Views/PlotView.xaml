@@ -19,9 +19,6 @@
 
             <oxy:PlotView Model="{Binding Model}"
                           Margin="20"/>
-            <TextBlock Text="{Binding Label}"
-                           Grid.Row="1"
-                           Margin="20"/>
         </Grid>
         <Button HorizontalAlignment="Right"
                 VerticalAlignment="Top"

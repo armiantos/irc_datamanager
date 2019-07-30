@@ -21,10 +21,6 @@
                           CanUserDeleteRows="False"
                           CanUserReorderColumns="True"    
                           ColumnWidth="200"/>
-
-            <TextBlock Text="{Binding Label}"
-                           Grid.Row="1"
-                           Margin="20"/>
         </Grid>
         <Button HorizontalAlignment="Right"
                 VerticalAlignment="Top"

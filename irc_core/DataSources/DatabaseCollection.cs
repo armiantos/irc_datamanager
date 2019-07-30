@@ -85,7 +85,6 @@ namespace irc_core.DataSources
             else
             {
                 DataModel dataModel = await GetDataModel(type, tags);
-                dataModel.Label = string.Join(", ", tags);
                 DataViews.Add(dataModel);
             }
         }
