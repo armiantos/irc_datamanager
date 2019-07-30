@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -24,6 +25,18 @@ namespace irc_core.DataSources
         public DatabaseCollection()
         {
             DataViews = new ObservableCollection<DataModel>();
+
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    foreach (var dataView in DataViews)
+                    {
+                        Update(dataView);
+                    }
+                    Thread.Sleep(1000);
+                }
+            }) { IsBackground = true }.Start();
         }
 
         public string Label
@@ -95,7 +108,9 @@ namespace irc_core.DataSources
 
         public abstract Task<DataTable> ListData();
 
-        public abstract Task<DataModel> GetDataModel(string type, List<string> labels);
+        public abstract Task<DataModel> GetDataModel(string type, List<string> tags);
+
+        protected abstract Task Update(DataModel model);
     }
 
 }

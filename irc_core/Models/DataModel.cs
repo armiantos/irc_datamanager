@@ -23,5 +23,8 @@ namespace irc_core.Models
                 OnPropertyChanged("Label");
             }
         }
+
+        public List<string> Tags { get; set; }
+
     }
 }

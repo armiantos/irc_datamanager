@@ -16,68 +16,34 @@ namespace irc_core.DatabaseLibrary
 
         private DataTable listDataCache;
 
+        private string timeTag;
+
         public IMongoCollectionAdapter(IMongoCollection<BsonDocument> mongoCollection)
         {
             this.mongoCollection = mongoCollection;
         }
 
-        public override async Task<DataModel> GetDataModel(string type, List<string> labels)
+        public override async Task<DataModel> GetDataModel(string type, List<string> tags)
         {
-            FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
-            FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
-            {
-                Limit = 500
-            };
-
-            if (labels.Count > 0)
-            {
-                string projectionBuilder = "{";
-                labels.ForEach(label => projectionBuilder += $"\"{label}\" : 1, ");
-                projectionBuilder = projectionBuilder.Remove(projectionBuilder.Length - 2);
-                projectionBuilder += "}";
-                options.Projection = projectionBuilder;
-            }
-
-            var results = await mongoCollection.FindAsync(filter, options);
-            var resultsList = await results.ToListAsync();
-
+            DataModel datamodel;
             if (type == "Plot")
             {
-                PlotModel plot = new PlotModel();
-                labels.ForEach(labelName =>
-                {
-                    LineSeries line = new LineSeries();
-                    line.Title = labelName;
-                    
-                    for (int i = 0; i < resultsList.Count; i++)
-                    {
-                        line.Points.Add(new OxyPlot.DataPoint(i, (double)resultsList[i][labelName]));
-                    }
-                    plot.Model.Series.Add(line);
-                });
-                return plot;
+                datamodel = new PlotModel();
             }
-
             else if (type == "Table")
             {
-                TableModel table = new TableModel();
-
-                DataTable dt = new DataTable();
-                
-                labels.ForEach(labelName => dt.Columns.Add(labelName, 
-                    BsonTypeMapper.MapToDotNetValue(resultsList[0][labelName]).GetType()));
-
-                foreach (var result in resultsList)
-                {
-                    DataRow r = dt.NewRow();
-                    labels.ForEach(label => r[label] = result[label]);
-                    dt.Rows.Add(r);
-                }
-
-                table.DataView = dt.AsDataView();
-                return table;
+                datamodel = new TableModel();
             }
-            throw new NotImplementedException();
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            datamodel.Tags = tags;
+
+            await Update(datamodel);
+
+            return datamodel;
         }
 
         public override async Task<DataTable> ListData()
@@ -96,10 +62,90 @@ namespace irc_core.DatabaseLibrary
                     DataRow r = listDataCache.NewRow();
                     r["Tag"] = element.Name;
                     r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
+
+                    if (element.Name.ToLower().Contains("time") && r["Type"] is DateTime)
+                    {
+                        timeTag = element.Name;
+                    }
+
                     listDataCache.Rows.Add(r);
                 }
             }
             return listDataCache;
         }
+
+        private async Task<List<BsonDocument>> GetData(List<string> labels)
+        {
+            FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
+            FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
+            {
+                Limit = 100,
+                Sort = "{_id : -1}"
+            };
+
+
+            if (labels.Count > 0)
+            {
+                string projectionBuilder = "{";
+                labels.ForEach(label => projectionBuilder += $"\"{label}\" : 1, ");
+                projectionBuilder = projectionBuilder.Remove(projectionBuilder.Length - 2);
+                projectionBuilder += "}";
+                options.Projection = projectionBuilder;
+            }
+
+            var results = await mongoCollection.FindAsync(filter, options);
+            return await results.ToListAsync();
+        }
+
+        protected override async Task Update(DataModel model)
+        {
+            List<BsonDocument> results = await GetData(model.Tags);
+
+            if (model is PlotModel)
+            {
+                PlotModel actualModel = (PlotModel)model;
+                actualModel.Model.Series.Clear();
+                actualModel.Tags.ForEach(tag =>
+                {
+                    LineSeries line = new LineSeries();
+                    line.Title = tag;
+
+                    for (int i = 0; i < results.Count; i++)
+                    {
+                        try
+                        {
+                            line.Points.Add(new OxyPlot.DataPoint(i, (double)results[i][tag]));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            Console.WriteLine(e.StackTrace);
+                        }
+                    }
+                    actualModel.Model.Series.Add(line);
+                    actualModel.Model.InvalidatePlot(true);
+                });
+            }
+
+            else if (model is TableModel)
+            {
+                TableModel actualModel = (TableModel)model;
+                DataTable dt = new DataTable();
+
+                model.Tags.ForEach(labelName => dt.Columns.Add(labelName,
+                    BsonTypeMapper.MapToDotNetValue(results[0][labelName]).GetType()));
+
+                foreach (var result in results)
+                {
+                    DataRow r = dt.NewRow();
+                    actualModel.Tags.ForEach(label => r[label] = result[label]);
+                    dt.Rows.Add(r);
+                }
+
+                actualModel.DataView = dt.AsDataView();
+            }
+
+        }
+
     }
 }
