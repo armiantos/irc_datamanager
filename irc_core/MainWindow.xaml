@@ -11,7 +11,13 @@
         
         mc:Ignorable="d"
         Title="IRC Core" Height="450" Width="800"
-        MinHeight="450" MinWidth="800">
+        MinHeight="450" MinWidth="800"
+        
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
 
     <Window.Resources>
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
