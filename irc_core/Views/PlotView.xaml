@@ -27,8 +27,8 @@
                 VerticalAlignment="Top"
                 Command="{Binding DataContext.CloseDataViewCommand,
                 RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
-                CommandParameter="{Binding}">
-            <TextBlock Margin="5">-</TextBlock>
+                    CommandParameter="{Binding}">
+            <TextBlock Margin="10">-</TextBlock>
         </Button>
     </Grid>
 </UserControl>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:irc_core.Views"
         mc:Ignorable="d"
         Title="DialogView" Height="450" Width="800"
+        WindowStyle="None"
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         
@@ -25,7 +26,14 @@
 
         <DataTemplate DataType="{x:Type dialogs:ListDialog}">
             <ListView ItemsSource="{Binding ItemList}"
-                      SelectedValue="{Binding Selected}"></ListView>
+                      SelectedValue="{Binding Selected}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Content="{Binding}" 
+                                      HorizontalContentAlignment="Center"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
