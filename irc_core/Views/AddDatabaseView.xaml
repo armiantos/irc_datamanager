@@ -13,20 +13,22 @@
             <ComboBox ItemsSource="{Binding SupportedDbs}"
                   Margin="10"
                   HorizontalContentAlignment="Center"
+                      materialDesign:HintAssist.Hint="Database Type"
                   SelectedValue="{Binding SelectedDb}"></ComboBox>
             <TextBox Text="{Binding Host}"
                  HorizontalContentAlignment="Center"
-                     ToolTip="Host"
+                     materialDesign:HintAssist.Hint="Host"
                  Margin="10"></TextBox>
 
             <TextBox Text="{Binding Username}"
                  HorizontalContentAlignment="Center"
+                     materialDesign:HintAssist.Hint="Username"
                      ToolTip="Username"
                  Margin="10"></TextBox>
 
             <PasswordBox x:Name="PasswordField"
                      HorizontalContentAlignment="Center"
-                         ToolTip="Password"
+                         materialDesign:HintAssist.Hint="Password"
                      Margin="10"></PasswordBox>
 
 
@@ -34,7 +36,7 @@
                 Margin="20"
                 Command="{Binding AddDatabaseSourceCommand}"
                 CommandParameter="{Binding ElementName=PasswordField}">
-                <TextBlock Margin="5">Add Database Source</TextBlock>
+                <materialDesign:PackIcon Kind="Add"/>
             </Button>
 
         </StackPanel>
