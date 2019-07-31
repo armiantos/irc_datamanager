@@ -9,25 +9,28 @@
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="300"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <materialDesign:Card Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView, Mode=OneWay}"
+                <DataGrid Grid.Row="0" ItemsSource="{Binding}" DataContext="{Binding DataView, Mode=OneWay}"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           CanUserReorderColumns="True"    
                           ColumnWidth="200"/>
-        </Grid>
+            </Grid>
+        </materialDesign:Card>
+
         <Button HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding DataContext.CloseDataViewCommand,
                 RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
                     CommandParameter="{Binding}">
-            <TextBlock Margin="10">-</TextBlock>
+            <materialDesign:PackIcon Kind="Minus"/>
         </Button>
     </Grid>
 </UserControl>
