@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
+using System.Linq;
 
 namespace irc_core.DataSources
 {
@@ -56,7 +57,10 @@ namespace irc_core.DataSources
             }
             else
             {
-                Collections.Add(GetCollection(collectionName));
+                if (Collections.FirstOrDefault(collection => collection.Label == collectionName) == null)
+                {
+                    Collections.Add(GetCollection(collectionName));
+                }
             }
         }
 

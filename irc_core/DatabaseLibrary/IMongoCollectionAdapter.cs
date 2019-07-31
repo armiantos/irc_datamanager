@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using System.Linq;
+using OxyPlot.Axes;
 
 namespace irc_core.DatabaseLibrary
 {
@@ -63,24 +65,35 @@ namespace irc_core.DatabaseLibrary
                     r["Tag"] = element.Name;
                     r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
 
-                    if (element.Name.ToLower().Contains("time") && r["Type"] is DateTime)
+                    if (string.IsNullOrEmpty(timeTag))
                     {
-                        timeTag = element.Name;
+                        if (r["Type"] is DateTime || element.Name.ToLower().Contains("time"))
+                        {
+                            timeTag = element.Name;
+                        }
                     }
 
                     listDataCache.Rows.Add(r);
                 }
+            }
+            foreach (DataRow row in listDataCache.Rows)
+            {
+                row["Include"] = false;
             }
             return listDataCache;
         }
 
         private async Task<List<BsonDocument>> GetData(List<string> labels)
         {
+            if (!string.IsNullOrEmpty(timeTag) && !labels.Contains(timeTag))
+            {
+                labels.Add(timeTag);
+            }
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
             {
-                Limit = 100,
-                Sort = "{_id : -1}"
+                Limit = 200,
+                Sort = "{$natural:-1}" // get latest data 
             };
 
 
@@ -100,13 +113,22 @@ namespace irc_core.DatabaseLibrary
         protected override async Task Update(DataModel model)
         {
             List<BsonDocument> results = await GetData(model.Tags);
-
+            
             if (model is PlotModel)
             {
                 PlotModel actualModel = (PlotModel)model;
-                actualModel.Model.Series.Clear();
-                actualModel.Tags.ForEach(tag =>
+
+                if (!string.IsNullOrEmpty(timeTag))
                 {
+                    if (actualModel.Model.Axes.FirstOrDefault(axis => axis is DateTimeAxis) == null)
+                        actualModel.Model.Axes.Add(new DateTimeAxis());
+                }
+
+                actualModel.Model.Series.Clear();
+                foreach (string tag in actualModel.Tags)
+                {
+                    if (tag == timeTag)
+                        continue;
                     LineSeries line = new LineSeries();
                     line.Title = tag;
 
@@ -114,16 +136,27 @@ namespace irc_core.DatabaseLibrary
                     {
                         try
                         {
-                            line.Points.Add(new OxyPlot.DataPoint(results.Count - i, results[i][tag].ToDouble()));
+                            if (!string.IsNullOrEmpty(timeTag))
+                            {
+                                line.Points.Add(new OxyPlot.DataPoint(
+                                    Axis.ToDouble(results[i][timeTag].ToUniversalTime()),
+                                    results[i][tag].ToDouble()));
+                            }
+                            else
+                            {
+                                line.Points.Add(new OxyPlot.DataPoint(results.Count - i, results[i][tag].ToDouble()));
+                            }
                         }
-                        catch (Exception e)
+                        catch 
                         {
-                            Console.WriteLine(e.Message);
-                            Console.WriteLine(e.StackTrace);
                         }
                     }
                     actualModel.Model.Series.Add(line);
                     actualModel.Model.InvalidatePlot(true);
+                }
+                actualModel.Tags.ForEach(tag =>
+                {
+                    
                 });
             }
 
