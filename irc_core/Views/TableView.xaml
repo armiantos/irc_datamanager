@@ -25,7 +25,8 @@
             </Grid>
         </materialDesign:Card>
 
-        <Button HorizontalAlignment="Right"
+        <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding DataContext.CloseDataViewCommand,
                 RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"

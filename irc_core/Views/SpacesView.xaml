@@ -38,7 +38,8 @@
         <StackPanel HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Margin="5">
-            <Button Command="{Binding AddCollectionCommand}">
+            <Button Command="{Binding AddCollectionCommand}"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>

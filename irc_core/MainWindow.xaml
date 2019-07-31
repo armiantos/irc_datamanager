@@ -90,7 +90,8 @@
                         Margin="20"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        ToolTip="Add new data source">
+                        ToolTip="Add new data source"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                     <materialDesign:PackIcon Kind="Add"></materialDesign:PackIcon>
                 </Button>
             </Grid>

@@ -50,7 +50,8 @@
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top"
                     Margin="5">
-            <Button Command="{Binding AddSpaceCommand}">
+            <Button Command="{Binding AddSpaceCommand}"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>
