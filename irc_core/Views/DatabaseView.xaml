@@ -12,6 +12,7 @@
              xmlns:ds="clr-namespace:irc_core.DataSources"
              
              
+             
             xmlns:dialogs="clr-namespace:irc_core.Dialogs">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type dialogs:ListDialog}">
@@ -51,7 +52,7 @@
                     Margin="5">
             <Button Command="{Binding AddSpaceCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center">Add database</TextBlock>
+                    <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>
             </Button>
         </StackPanel>

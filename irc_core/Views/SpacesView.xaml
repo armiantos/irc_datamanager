@@ -40,7 +40,7 @@
                     Margin="5">
             <Button Command="{Binding AddCollectionCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center">Add collection</TextBlock>
+                    <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>
             </Button>
         </StackPanel>

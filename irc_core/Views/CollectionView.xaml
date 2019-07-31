@@ -41,7 +41,7 @@
             <Button
                         Command="{Binding AddDataViewCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center">Add data view</TextBlock>
+                    <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>
             </Button>
         </StackPanel>
