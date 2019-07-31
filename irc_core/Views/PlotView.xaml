@@ -14,7 +14,7 @@
     <Grid>
 
         <materialDesign:Card Margin="10">
-            <Grid>
+            <Grid MinWidth="400">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="300"/>
                     <RowDefinition Height="*"/>
