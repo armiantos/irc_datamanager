@@ -26,6 +26,7 @@ namespace irc_core.DataSources
         {
             DataViews = new ObservableCollection<DataModel>();
 
+            // runs in separate thread to update in the background 
             new Thread(() =>
             {
                 while (true)
@@ -106,10 +107,39 @@ namespace irc_core.DataSources
                 o == (DataModel)dataModel));
         }
 
+        /// <summary>
+        /// Returns a table containing 3 columns: Included (bool), Tag (string), Type (type as string).
+        /// To be displayed in a window to allow users to select a subset of data from.
+        /// 
+        /// e.g. :
+        /// +---------+---------------------------------------------+---------------+
+        /// | Include |                     Tag                     |     Type      |
+        /// +---------+---------------------------------------------+---------------+
+        /// | false   | FluidMech_BNOT_SecondaryTankEmpty_EnableIn  | System.Int32  |
+        /// | false   | FluidMech_BNOT_SecondaryTankEmpty_EnableOut | System.Int32  |
+        /// | false   | FluidMech_SuctionPIDECveuOutput             | System.Double |
+        /// +---------+---------------------------------------------+---------------+
+        /// 
+        /// The type column can be filled with GetType() method from objects.
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public abstract Task<DataTable> ListData();
 
+        /// <summary>
+        /// Returns the appropriate data model given the type (e.g. plot or table view) of the 
+        /// corresponding tags.
+        /// </summary>
+        /// <param name="type">string containing information about view type</param>
+        /// <param name="tags">list of tags or columns to be retrieved from database</param>
+        /// <returns></returns>
         public abstract Task<DataModel> GetDataModel(string type, List<string> tags);
 
+        /// <summary>
+        /// Updates dataviews with the latest data.
+        /// </summary>
+        /// <param name="model">data view to be updated</param>
+        /// <returns></returns>
         protected abstract Task Update(DataModel model);
     }
 

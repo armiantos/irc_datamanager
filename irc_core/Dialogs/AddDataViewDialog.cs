@@ -66,7 +66,12 @@ namespace irc_core.Dialogs
 
         public string GetSelectedType()
         {
-            return SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
+            string selectedType = SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
+            if (!string.IsNullOrEmpty(selectedType))
+            {
+                return selectedType;
+            }
+            throw new InvalidOperationException();
         }
 
         public ObservableCollection<StringBool> SupportedViews { get; set; }
