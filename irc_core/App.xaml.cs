@@ -26,9 +26,16 @@ namespace irc_core
             mw.Show();
         }
 
+        /// <summary>
+        /// Application wide exception handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             Console.WriteLine(e.Exception.Message);
+            Console.WriteLine(e.Exception.StackTrace);
+            e.Handled = true;
         }
     }
 }
