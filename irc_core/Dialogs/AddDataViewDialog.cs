@@ -18,6 +18,8 @@ namespace irc_core.Dialogs
         private string searchField;
 
         private ICommand addTableViewCommand;
+        private ICommand searchTextboxCommand;
+        
 
         private List<string> included;
 
@@ -56,6 +58,27 @@ namespace irc_core.Dialogs
                     addTableViewCommand = new CommandWrapper(param =>
                     AddTableView());
                 return addTableViewCommand;
+            }
+        }
+
+        public ICommand SearchTextboxCommand
+        {
+            get
+            {
+                if (searchTextboxCommand == null)
+                {
+                    searchTextboxCommand = new CommandWrapper(param =>
+                    {
+                        if (dataView != null)
+                        {
+                            DataTable dt = dataView.Table;
+                            DataView = dt.AsEnumerable().Where(row => row["Tag"].ToString()
+                                .ToLower().Contains(searchField))
+                                .AsDataView();
+                        }
+                    });
+                }
+                return searchTextboxCommand;
             }
         }
 
