@@ -58,7 +58,8 @@
 
                 <Button Margin="5" 
                         Height="40"
-                        ToolTip="Settings">
+                        ToolTip="Settings"
+                        Style="{StaticResource MaterialDesignRaisedAccentButton}">
                     <materialDesign:PackIcon Kind="Gear"></materialDesign:PackIcon>
                 </Button>
             </StackPanel>
@@ -92,7 +93,9 @@
                         VerticalAlignment="Bottom"
                         ToolTip="Add new data source"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-                    <materialDesign:PackIcon Kind="Add"></materialDesign:PackIcon>
+                    <materialDesign:PackIcon Kind="Add"
+                                             Height="24"
+                                             Width="24"></materialDesign:PackIcon>
                 </Button>
             </Grid>
         </Grid>

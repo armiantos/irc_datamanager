@@ -32,7 +32,8 @@
                      Margin="10"></PasswordBox>
 
 
-            <Button HorizontalAlignment="Center"
+            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                HorizontalAlignment="Center"
                 Margin="20"
                 Command="{Binding AddDatabaseSourceCommand}"
                 CommandParameter="{Binding ElementName=PasswordField}">
