@@ -125,12 +125,12 @@ namespace irc_core.Dialogs
 
         private void AddTableView()
         {
-            foreach (DataRow r in dataView.Table.Rows)
+            var o = dataView.Table.AsEnumerable().Where(p => (bool)p["Include"]);
+
+            foreach (DataRow r in o)
             {
-                if ((bool)r["Include"] == true)
-                {
-                    included.Add((string)r["Tag"]);
-                }
+                included.Add((string)r["Tag"]);
+                
             }
             Close(true);
         }
