@@ -50,6 +50,9 @@ namespace irc_core.Dialogs
             }
         }
 
+        /// <summary>
+        /// Triggered when the add button is clicked on the dialog.
+        /// </summary>
         public ICommand AddTableViewCommand
         {
             get
@@ -61,6 +64,10 @@ namespace irc_core.Dialogs
             }
         }
 
+        /// <summary>
+        /// Triggered when enter key is pressed in search box. Updates data view in
+        /// datagrid to only show rows that contain the given substring.
+        /// </summary>
         public ICommand SearchTextboxCommand
         {
             get
@@ -87,7 +94,7 @@ namespace irc_core.Dialogs
             return included;
         }
 
-        public string GetSelectedType()
+        public string GetSelectedViewType()
         {
             string selectedType = SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
             if (!string.IsNullOrEmpty(selectedType))
