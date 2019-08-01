@@ -11,5 +11,11 @@ namespace irc_core.Models
     {
         public List<string> Tags { get; set; }
 
+        public bool IsLive { get; set; }
+
+        public DataModel()
+        {
+            IsLive = true;
+        }
     }
 }
