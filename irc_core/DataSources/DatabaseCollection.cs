@@ -16,7 +16,7 @@ namespace irc_core.DataSources
     {
         private string label;
 
-        public ObservableCollection<DataModel> DataViews { get; set; }
+        public ObservableCollection<DataModel> DataModels { get; set; }
 
         private ICommand addDataViewCommand;
 
@@ -24,16 +24,19 @@ namespace irc_core.DataSources
 
         public DatabaseCollection()
         {
-            DataViews = new ObservableCollection<DataModel>();
+            DataModels = new ObservableCollection<DataModel>();
 
             // runs in separate thread to update in the background 
             new Thread(() =>
             {
                 while (true)
                 {
-                    foreach (var dataView in DataViews)
+                    foreach (DataModel model in DataModels)
                     {
-                        Update(dataView);
+                        if (model.IsLive)
+                        {
+                            Update(model);
+                        }
                     }
                     Thread.Sleep(1000);
                 }
@@ -86,7 +89,7 @@ namespace irc_core.DataSources
             else
             {
                 DataModel dataModel = await GetDataModel(type, tags);
-                DataViews.Add(dataModel);
+                DataModels.Add(dataModel);
             }
         }
 
@@ -101,7 +104,7 @@ namespace irc_core.DataSources
 
         private void CloseDataView(object dataModel)
         {
-            DataViews.Remove(DataViews.FirstOrDefault(o =>
+            DataModels.Remove(DataModels.FirstOrDefault(o =>
                 o == (DataModel)dataModel));
         }
 
