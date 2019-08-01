@@ -19,7 +19,7 @@
                    Grid.Row="0"
                    VerticalAlignment="Center"></TextBlock>
         
-        <ItemsControl ItemsSource="{Binding DataViews}"
+        <ItemsControl ItemsSource="{Binding DataModels}"
                       Grid.Row="1"
                       Margin="10">
             <ItemsControl.ItemsPanel>
@@ -37,13 +37,36 @@
             </ItemsControl.Resources>
         </ItemsControl>
 
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5">
-            <Button Style="{StaticResource MaterialDesignIconButton}"
-                        Command="{Binding AddDataViewCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Add"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
+        <materialDesign:PopupBox VerticalAlignment="Top"
+                                 HorizontalAlignment="Right"
+                                 Margin="5">
+            <StackPanel Orientation="Vertical">
+
+                <Button Command="{Binding AddDataViewCommand}"
+                        Grid.Column="1"
+                        Grid.Row="0">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                        <materialDesign:PackIcon Kind="Graphql"
+                                                 Margin="5"
+                                                 VerticalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center">Add data view</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding SaveDataToFileCommand}"
+                        Grid.Column="1"
+                        Grid.Row="1">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                        <materialDesign:PackIcon Kind="Download" Margin="5"
+                                                 VerticalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center">Save data to file</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </materialDesign:PopupBox>
     </Grid>
 </UserControl>
