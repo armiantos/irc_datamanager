@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:irc_core.Views"
         mc:Ignorable="d"
-        Title="DialogView" Height="450" Width="800"
-        WindowStyle="None"
+        Height="600" Width="400"
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         
@@ -14,7 +13,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        WindowStyle="ToolWindow">
     <Window.Resources>
         <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
             <local:AddDataSourceDialogView/>

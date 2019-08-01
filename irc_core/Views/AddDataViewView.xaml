@@ -20,7 +20,8 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0"
-                 Text="{Binding SearchField, UpdateSourceTrigger=PropertyChanged}">
+                 Text="{Binding SearchField, UpdateSourceTrigger=PropertyChanged}"
+                 materialDesign:HintAssist.Hint="Enter to search">
             <TextBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding SearchTextboxCommand}"/>
             </TextBox.InputBindings>

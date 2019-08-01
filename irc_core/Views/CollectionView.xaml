@@ -38,7 +38,7 @@
         </ItemsControl>
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5">
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+            <Button Style="{StaticResource MaterialDesignIconButton}"
                         Command="{Binding AddDataViewCommand}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Add"/>
