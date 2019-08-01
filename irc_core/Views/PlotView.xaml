@@ -24,17 +24,36 @@
                 <oxy:PlotView Model="{Binding Model}"
                                 Margin="20"
                                 Background="Transparent"/>
+
+                <materialDesign:PopupBox VerticalAlignment="Top"
+                                         HorizontalAlignment="Right"
+                                         Margin="10"
+                                         StaysOpen="True">
+                    <StackPanel Orientation="Vertical"
+                                Margin="10">
+                        <TextBlock FontWeight="Bold">Options</TextBlock>
+                        
+                        <!-- live or not -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="10"
+                                       VerticalAlignment="Center">Live</TextBlock>
+                            <ToggleButton Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                          IsChecked="{Binding IsLive}"/>
+                        </StackPanel>
+                        
+                        <Separator/>
+
+                        <Button Command="{Binding DataContext.CloseDataViewCommand,
+                                RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
+
+                                CommandParameter="{Binding}">
+                            <TextBlock materialDesign:ColorZoneAssist.Mode="Accent">Remove dataview</TextBlock>
+                        </Button>
+
+                        <!--RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=5}}"-->
+                    </StackPanel>
+                </materialDesign:PopupBox>
             </Grid>
         </materialDesign:Card>
-
-        <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Command="{Binding DataContext.CloseDataViewCommand,
-                RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
-                    CommandParameter="{Binding}">
-            <materialDesign:PackIcon Kind="Minus"></materialDesign:PackIcon>
-        </Button>
-
     </Grid>
 </UserControl>
