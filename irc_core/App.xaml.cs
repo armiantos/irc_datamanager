@@ -33,8 +33,7 @@ namespace irc_core
         /// <param name="e"></param>
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            Console.WriteLine(e.Exception.Message);
-            Console.WriteLine(e.Exception.StackTrace);
+            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
         }
     }
