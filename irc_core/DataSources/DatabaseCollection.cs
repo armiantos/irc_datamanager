@@ -94,9 +94,8 @@ namespace irc_core.DataSources
         {
             if (args.Parameter != null && (bool)args.Parameter == true)
             {
-                Console.WriteLine(args.Content);
                 AddDataViewDialog addDataViewDialog = (AddDataViewDialog)args.Content;
-                AddDataView(addDataViewDialog.GetSelectedType(), addDataViewDialog.GetIncluded());
+                AddDataView(addDataViewDialog.GetSelectedViewType(), addDataViewDialog.GetIncluded());
             }
         }
 
@@ -141,5 +140,4 @@ namespace irc_core.DataSources
         /// <returns></returns>
         protected abstract Task Update(DataModel model);
     }
-
 }
