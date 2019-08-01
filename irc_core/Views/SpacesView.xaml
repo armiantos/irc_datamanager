@@ -39,7 +39,7 @@
                     VerticalAlignment="Top"
                     Margin="5">
             <Button Command="{Binding AddCollectionCommand}"
-                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Add"/>
                 </StackPanel>
