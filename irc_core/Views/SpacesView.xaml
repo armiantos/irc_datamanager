@@ -40,9 +40,7 @@
                     Margin="5">
             <Button Command="{Binding AddCollectionCommand}"
                     Style="{StaticResource MaterialDesignIconButton}">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Add"/>
-                </StackPanel>
+                <materialDesign:PackIcon Kind="Add"/>
             </Button>
         </StackPanel>
     </Grid>
