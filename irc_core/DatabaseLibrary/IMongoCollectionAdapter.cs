@@ -41,6 +41,7 @@ namespace irc_core.DatabaseLibrary
                 throw new NotImplementedException();
             }
 
+            // set up data model
             datamodel.Tags = tags;
 
             await Update(datamodel);
@@ -83,36 +84,37 @@ namespace irc_core.DatabaseLibrary
             return listDataCache;
         }
 
-        private async Task<List<BsonDocument>> GetData(List<string> labels)
+        private async Task<List<BsonDocument>> GetData(DataModel model)
         {
-            if (!string.IsNullOrEmpty(timeTag) && !labels.Contains(timeTag))
+            if (!string.IsNullOrEmpty(timeTag) && !model.Tags.Contains(timeTag))
             {
-                labels.Add(timeTag);
+                model.Tags.Add(timeTag);
             }
+
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
             {
-                Limit = 200,
+                Limit = 500,
                 Sort = "{$natural:-1}" // get latest data 
-            };
+            }; 
 
-
-            if (labels.Count > 0)
+            if (model.Tags.Count > 0)
             {
                 string projectionBuilder = "{";
-                labels.ForEach(label => projectionBuilder += $"\"{label}\" : 1, ");
+                model.Tags.ForEach(label => projectionBuilder += $"\"{label}\" : 1, ");
                 projectionBuilder = projectionBuilder.Remove(projectionBuilder.Length - 2);
                 projectionBuilder += "}";
                 options.Projection = projectionBuilder;
             }
 
             var results = await mongoCollection.FindAsync(filter, options);
+
             return await results.ToListAsync();
         }
 
         protected override async Task Update(DataModel model)
         {
-            List<BsonDocument> results = await GetData(model.Tags);
+            List<BsonDocument> results = await GetData(model);
             
             if (model is PlotModel)
             {
