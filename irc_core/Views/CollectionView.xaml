@@ -37,36 +37,13 @@
             </ItemsControl.Resources>
         </ItemsControl>
 
-        <materialDesign:PopupBox VerticalAlignment="Top"
-                                 HorizontalAlignment="Right"
-                                 Margin="5">
-            <StackPanel Orientation="Vertical">
+        <Button Command="{Binding AddDataViewCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="5"
+                        Style="{StaticResource MaterialDesignIconButton}">
+            <materialDesign:PackIcon Kind="Add"/>
+        </Button>
 
-                <Button Command="{Binding AddDataViewCommand}"
-                        Grid.Column="1"
-                        Grid.Row="0">
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                        <materialDesign:PackIcon Kind="Graphql"
-                                                 Margin="5"
-                                                 VerticalAlignment="Center"/>
-                        <TextBlock VerticalAlignment="Center">Add data view</TextBlock>
-                    </StackPanel>
-                </Button>
-
-                <Button Command="{Binding SaveDataToFileCommand}"
-                        Grid.Column="1"
-                        Grid.Row="1">
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                        <materialDesign:PackIcon Kind="Download" Margin="5"
-                                                 VerticalAlignment="Center"/>
-                        <TextBlock VerticalAlignment="Center">Save data to file</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </materialDesign:PopupBox>
     </Grid>
 </UserControl>
