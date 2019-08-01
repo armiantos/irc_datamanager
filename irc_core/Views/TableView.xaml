@@ -25,13 +25,35 @@
             </Grid>
         </materialDesign:Card>
 
-        <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Command="{Binding DataContext.CloseDataViewCommand,
-                RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=2}}"
-                    CommandParameter="{Binding}">
-            <materialDesign:PackIcon Kind="Minus"/>
-        </Button>
+        <materialDesign:PopupBox VerticalAlignment="Top"
+                                         HorizontalAlignment="Right"
+                                         Margin="10"
+                                         StaysOpen="True">
+            <StackPanel Orientation="Vertical"
+                                Margin="10">
+                <TextBlock FontWeight="Bold">Options</TextBlock>
+
+                <!-- live or not -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="10"
+                                       VerticalAlignment="Center">Live</TextBlock>
+                    <ToggleButton Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                          IsChecked="{Binding IsLive}"/>
+                </StackPanel>
+
+                <Separator/>
+
+                <Button Command="{Binding DataContext.CloseDataViewCommand,
+                                RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
+                                CommandParameter="{Binding}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Minus" Margin="5" VerticalAlignment="Center" Height="15" Width="15"/>
+                        <TextBlock>Remove dataview</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <!--RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=5}}"-->
+            </StackPanel>
+        </materialDesign:PopupBox>
     </Grid>
 </UserControl>

@@ -45,9 +45,11 @@
 
                         <Button Command="{Binding DataContext.CloseDataViewCommand,
                                 RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
-
                                 CommandParameter="{Binding}">
-                            <TextBlock materialDesign:ColorZoneAssist.Mode="Accent">Remove dataview</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Minus" Margin="5" VerticalAlignment="Center" Height="15" Width="15"/>
+                                <TextBlock>Remove dataview</TextBlock>
+                            </StackPanel>
                         </Button>
 
                         <!--RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=5}}"-->
