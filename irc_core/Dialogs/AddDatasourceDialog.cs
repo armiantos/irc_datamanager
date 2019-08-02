@@ -19,7 +19,7 @@ namespace irc_core.Dialogs
         private BaseDataSourceDialog currentDataSource;
         #endregion
 
-        public AddDataSourceDialog() : base()
+        public AddDataSourceDialog() 
         {
             SupportedTypes = new List<string>
             {
