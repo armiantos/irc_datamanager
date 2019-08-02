@@ -36,14 +36,26 @@
                 </DataTemplate>
             </ItemsControl.Resources>
         </ItemsControl>
-
-        <Button Command="{Binding AddDataViewCommand}"
+        <StackPanel Orientation="Horizontal"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+            <Button Command="{Binding ExportDataCommand}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="5"
                         Style="{StaticResource MaterialDesignIconButton}">
-            <materialDesign:PackIcon Kind="Add"/>
-        </Button>
+                <materialDesign:PackIcon Kind="Download"/>
+            </Button>
+            <Button Command="{Binding AddDataViewCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="5"
+                        Style="{StaticResource MaterialDesignIconButton}">
+                <materialDesign:PackIcon Kind="Add"/>
+            </Button>
 
+        </StackPanel>
+        
     </Grid>
 </UserControl>
