@@ -17,20 +17,6 @@ namespace irc_core.DataSources
 
         public ObservableCollection<DatabaseCollection> Collections { get; set; }
 
-
-        public string Label
-        {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Label");
-            }
-        }
-
         public DatabaseSpace()
         {
             Collections = new ObservableCollection<DatabaseCollection>();

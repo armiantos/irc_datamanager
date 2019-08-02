@@ -43,19 +43,6 @@ namespace irc_core.DataSources
             }) { IsBackground = true }.Start();
         }
 
-        public string Label
-        {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Name");
-            }
-        }
-
         public ICommand AddDataViewCommand
         {
             get
