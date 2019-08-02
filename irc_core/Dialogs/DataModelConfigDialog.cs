@@ -11,13 +11,14 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDataViewDialog : Dialog
+    public class DataModelConfigDialog : Dialog
     {
         private DataView dataView;
 
         private string searchField;
 
-        private ICommand addTableViewCommand;
+        private ICommand addDataViewCommand;
+
         private ICommand searchTextboxCommand;
         
 
@@ -53,14 +54,14 @@ namespace irc_core.Dialogs
         /// <summary>
         /// Triggered when the add button is clicked on the dialog.
         /// </summary>
-        public ICommand AddTableViewCommand
+        public ICommand AddDataViewCommand
         {
             get
             {
-                if (addTableViewCommand == null)
-                    addTableViewCommand = new RelayCommand(param =>
+                if (addDataViewCommand == null)
+                    addDataViewCommand = new RelayCommand(param =>
                     AddTableView());
-                return addTableViewCommand;
+                return addDataViewCommand;
             }
         }
 
@@ -108,7 +109,7 @@ namespace irc_core.Dialogs
         #endregion
 
         #region methods
-        public AddDataViewDialog()
+        public DataModelConfigDialog()
         {
             SupportedViews = new ObservableCollection<StringBool>
             {
@@ -118,7 +119,7 @@ namespace irc_core.Dialogs
             included = new List<string>();
         }
 
-        public AddDataViewDialog( DataTable table) : this()
+        public DataModelConfigDialog( DataTable table) : this()
         {
             DataView = table.AsDataView();
         }
@@ -130,7 +131,6 @@ namespace irc_core.Dialogs
             foreach (DataRow r in o)
             {
                 included.Add((string)r["Tag"]);
-                
             }
             Close(true);
         }

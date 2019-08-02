@@ -101,7 +101,7 @@
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Dialogs\ListDialog.cs" />
-    <Compile Include="Dialogs\AddDataViewDialog.cs" />
+    <Compile Include="Dialogs\DataModelConfigDialog.cs" />
     <Compile Include="HelperClasses\StringBool.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\PlotModel.cs" />
@@ -128,8 +128,8 @@
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AddDataViewView.xaml.cs">
-      <DependentUpon>AddDataViewView.xaml</DependentUpon>
+    <Compile Include="Views\DataModelConfigView.xaml.cs">
+      <DependentUpon>DataModelConfigView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
@@ -174,7 +174,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AddDataViewView.xaml">
+    <Page Include="Views\DataModelConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
