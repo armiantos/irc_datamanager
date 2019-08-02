@@ -20,7 +20,10 @@ namespace irc_core.Dialogs
         private ICommand addDataViewCommand;
 
         private ICommand searchTextboxCommand;
-        
+
+        private ICommand saveDataCommand;
+
+        public enum Action { AddDataView, SaveData}       
 
         private List<string> included;
 
@@ -60,8 +63,19 @@ namespace irc_core.Dialogs
             {
                 if (addDataViewCommand == null)
                     addDataViewCommand = new RelayCommand(param =>
-                    AddTableView());
+                        CloseDataModelConfigDialog(Action.AddDataView));
                 return addDataViewCommand;
+            }
+        }
+
+        public ICommand SaveDataCommand
+        {
+            get
+            {
+                if (saveDataCommand == null)
+                    saveDataCommand = new RelayCommand(param =>
+                        CloseDataModelConfigDialog(Action.SaveData));
+                return saveDataCommand;
             }
         }
 
@@ -89,6 +103,7 @@ namespace irc_core.Dialogs
                 return searchTextboxCommand;
             }
         }
+
 
         public List<string> GetIncluded()
         {
@@ -124,7 +139,7 @@ namespace irc_core.Dialogs
             DataView = table.AsDataView();
         }
 
-        private void AddTableView()
+        private void CloseDataModelConfigDialog(Action action)
         {
             var o = dataView.Table.AsEnumerable().Where(p => (bool)p["Include"]);
 
@@ -132,7 +147,7 @@ namespace irc_core.Dialogs
             {
                 included.Add((string)r["Tag"]);
             }
-            Close(true);
+            Close(action);
         }
         #endregion
     }

@@ -19,8 +19,6 @@ namespace irc_core.DataSources
 
         private ICommand closeDataViewCommand;
 
-        private ICommand exportDataCommand;
-
         public DatabaseCollection()
         {
             DataModels = new ObservableCollection<DataModel>();
@@ -64,18 +62,6 @@ namespace irc_core.DataSources
             }
         }
 
-        public ICommand ExportDataCommand
-        {
-            get
-            {
-                if (exportDataCommand == null)
-                    exportDataCommand = new RelayCommand(param =>
-                    {
-                        ExportData(null);
-                    });
-                return exportDataCommand;
-            }
-        }
 
         #region methods 
 
@@ -96,10 +82,17 @@ namespace irc_core.DataSources
 
         private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
         {
-            if (args.Parameter != null && (bool)args.Parameter == true)
+            if (args.Parameter != null)
             {
-                DataModelConfigDialog DataModelConfigDialog = (DataModelConfigDialog)args.Content;
-                AddDataView(DataModelConfigDialog.GetSelectedViewType(), DataModelConfigDialog.GetIncluded());
+                if ((DataModelConfigDialog.Action)args.Parameter == DataModelConfigDialog.Action.AddDataView)
+                {
+                    DataModelConfigDialog DataModelConfigDialog = (DataModelConfigDialog)args.Content;
+                    AddDataView(DataModelConfigDialog.GetSelectedViewType(), DataModelConfigDialog.GetIncluded());
+                }
+                else if ((DataModelConfigDialog.Action)args.Parameter == DataModelConfigDialog.Action.SaveData)
+                {
+
+                }
             }
         }
 
@@ -148,12 +141,6 @@ namespace irc_core.DataSources
         /// <returns></returns>
         protected abstract Task Update(DataModel model);
 
-        /// <summary>
-        /// Fills the file with data according to the filter arguments given.
-        /// </summary>
-        /// <param name="fs">Filestream to write to</param>
-        /// <param name="filterArgs"></param>
-        protected abstract void ExportData(object filterArgs);
 
         #endregion
     }

@@ -40,13 +40,6 @@
                     Margin="5"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
-            <Button Command="{Binding ExportDataCommand}"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="5"
-                        Style="{StaticResource MaterialDesignIconButton}">
-                <materialDesign:PackIcon Kind="Download"/>
-            </Button>
             <Button Command="{Binding AddDataViewCommand}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"

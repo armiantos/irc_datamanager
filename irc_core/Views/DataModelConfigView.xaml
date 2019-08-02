@@ -56,13 +56,22 @@
                           Margin="10">
             </ItemsControl>
         </StackPanel>
-        
-        <Button VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Grid.Row="2"
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button VerticalAlignment="Center"
                 Margin="10"
                 Command="{Binding AddDataViewCommand}">
-            <materialDesign:PackIcon Kind="Add"/>
-        </Button>
+                <materialDesign:PackIcon Kind="Add"/>
+            </Button>
+            <Button VerticalAlignment="Center"
+                Margin="10"
+                Command="{Binding SaveDataCommand}">
+                <materialDesign:PackIcon Kind="Floppy"/>
+            </Button>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

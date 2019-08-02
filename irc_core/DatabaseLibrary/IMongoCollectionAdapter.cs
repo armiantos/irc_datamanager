@@ -182,9 +182,5 @@ namespace irc_core.DatabaseLibrary
 
         }
 
-        protected override void ExportData(object filterArgs)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
