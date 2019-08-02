@@ -14,8 +14,6 @@ namespace irc_core.DataSources
 {
     public abstract class DatabaseCollection : DataSource
     {
-        private string label;
-
         public ObservableCollection<DataModel> DataModels { get; set; }
 
         private ICommand addDataViewCommand;
