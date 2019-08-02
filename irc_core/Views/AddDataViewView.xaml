@@ -8,10 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800"
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Margin="10">
+    <Grid Margin="30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -50,8 +50,13 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <Separator/>
+            <TextBlock Margin="0 5">Filters:</TextBlock>
+            <ItemsControl ItemsSource="{Binding Filters}"
+                          Margin="10">
+            </ItemsControl>
         </StackPanel>
-
+        
         <Button VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Grid.Row="2"
