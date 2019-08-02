@@ -45,7 +45,8 @@
 
                 <Button Command="{Binding DataContext.CloseDataViewCommand,
                                 RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
-                                CommandParameter="{Binding}">
+                                CommandParameter="{Binding}"
+                                Style="{StaticResource MaterialDesignRaisedButton}">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Minus" Margin="5" VerticalAlignment="Center" Height="15" Width="15"/>
                         <TextBlock>Remove dataview</TextBlock>
