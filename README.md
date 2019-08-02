@@ -110,3 +110,31 @@ A DatabaseSource would be a single connection to a server, and each child (space
 Most database connections can be established by establishing: the address of the server and the appropriate user credentials that can be used to access that database. For database servers like mongoDB and MySQL where users are uniquely identified by the source (e.g. authentication database or IP address), this information can be passed on in the username column and parsed within the API wrapper. For example in mongoDB, the authentication database associated with the user is required, so I have decided to parse the username input as `<authentication database>/<username>`.
 
 ##### DatabaseSpace
+A database space refers to a single database in a database server. It is responsible for generating collection or table handles contained in this database. 
+
+##### DatabaseCollection
+A database collection refers to a single collection inside a database. It is reponsible for retrieving data through API's and generating data models to be displayed in the user interface. For an API to implement a DatabaseCollection, the wrapper must implement:
+| Methods          | Function                                                                                                                                                                                                                                                                                                                                                    | Return    |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `ListData()`     | Retrieves a table containing the columns: Include(bool), Tag(string), Type(type or string). The type column value should be the .NET equivalent type (e.g. System32.Int32) for an integer which can be found using the `.GetType()` method.                                                                                                                 | DataTable |
+| `GetDataModel()` | Returns a new DataModel with the specifications given as the argument. E.g. build a plot model for the following tags: FluidMech_Output_TempFlow, FluidMech_Output_TempTank. Ideally the data model should be showing the latest data therefore try to look up how to retrieve the latest data using the API (for mongoDB, it was `.sort({$natural: -1})`). | DataModel |
+| `Update()`       | This updates the data held by the data model with the latest data. The `GetDataModel()` doesn't have to call update, as each DataModel in the database collection is automatically updated every second in the code section given below.                                                                                                                    | void      |
+```c#
+// runs in separate thread to update in the background 
+new Thread(() =>
+{
+    while (true)
+    {
+        foreach (DataModel model in DataModels)
+        {
+            if (model.IsLive)
+            {
+                Update(model);
+            }
+        }
+        Thread.Sleep(1000);
+    }
+}) { IsBackground = true }.Start();
+```
+The IsBackground option for the Thread is to allow the program to terminate and release resources when it is the only living thread, i.e. when the window is closed, the program won't run in the background.
+These methods should be implemented as asynchronous functions (hence the _Task_ return objects). Whenever possible, if the API supports asynchronous queries, then use them as the data size may be big and not fit in memory.
