@@ -18,7 +18,7 @@ namespace irc_core.Dialogs
         private string username;
         private ICommand addDatabaseSourceCommand;
 
-        public AddDatabaseSource(AddDataSourceDialog mainDialog) : base(mainDialog)
+        public AddDatabaseSource()
         {
             supportedDbs = new List<string>
             {

@@ -9,11 +9,5 @@ namespace irc_core.Dialogs
 {
     abstract public class BaseDataSourceDialog : Dialog
     {
-        protected AddDataSourceDialog mainDialog;
-
-        protected BaseDataSourceDialog(AddDataSourceDialog mainDialog)
-        {
-            this.mainDialog = mainDialog;
-        }
     }
 }

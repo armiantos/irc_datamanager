@@ -52,7 +52,7 @@ namespace irc_core.Dialogs
             set
             {
                 selectedType = value;
-                CurrentDataSource = DataSourceFactory.CreateDataSource(value, this);
+                CurrentDataSource = DataSourceFactory.CreateDataSource(value);
                 OnPropertyChanged("SelectedType");
             }
         }
@@ -75,11 +75,11 @@ namespace irc_core.Dialogs
 
     public static class DataSourceFactory
     {
-        public static BaseDataSourceDialog CreateDataSource(string type, AddDataSourceDialog mainDialog)
+        public static BaseDataSourceDialog CreateDataSource(string type)
         {
             if (type == "Databases")
             {
-                return new AddDatabaseSource(mainDialog);
+                return new AddDatabaseSource();
             }
             throw new NotImplementedException();
         }
