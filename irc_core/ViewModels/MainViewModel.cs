@@ -8,7 +8,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.ViewModels
 {
-    public class AppViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
         #region privates
 
@@ -26,7 +26,7 @@ namespace irc_core.ViewModels
             get
             {
                 if (addDataSourceCommand == null)
-                    addDataSourceCommand = new CommandWrapper(param =>
+                    addDataSourceCommand = new RelayCommand(param =>
                     AddDataSource());
                 return addDataSourceCommand;
             }
@@ -36,7 +36,7 @@ namespace irc_core.ViewModels
 
         #region methods
 
-        public AppViewModel()
+        public MainViewModel()
         {
 
             DataSources = new ObservableCollection<DataSource>();

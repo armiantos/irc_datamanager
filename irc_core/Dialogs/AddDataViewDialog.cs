@@ -58,7 +58,7 @@ namespace irc_core.Dialogs
             get
             {
                 if (addTableViewCommand == null)
-                    addTableViewCommand = new CommandWrapper(param =>
+                    addTableViewCommand = new RelayCommand(param =>
                     AddTableView());
                 return addTableViewCommand;
             }
@@ -74,7 +74,7 @@ namespace irc_core.Dialogs
             {
                 if (searchTextboxCommand == null)
                 {
-                    searchTextboxCommand = new CommandWrapper(param =>
+                    searchTextboxCommand = new RelayCommand(param =>
                     {
                         if (dataView != null)
                         {

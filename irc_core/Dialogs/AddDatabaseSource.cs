@@ -87,7 +87,7 @@ namespace irc_core.Dialogs
             get
             {
                 if (addDatabaseSourceCommand == null)
-                    addDatabaseSourceCommand = new CommandWrapper(param =>
+                    addDatabaseSourceCommand = new RelayCommand(param =>
                     {
                         object[] arr_param = new object[] { this, param };
                         Close(arr_param);

@@ -24,22 +24,6 @@
 
     <Window.Resources>
         <Thickness x:Key="CommonMargin" Left="10" Top="10" Right="10" Bottom="10"/>
-        
-        <!-- hook views to dialog windows -->
-        <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
-            <views:AddDataSourceDialogView/>
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type dialogs:ListDialog}">
-            <ListView ItemsSource="{Binding ItemList}"
-                      SelectedValue="{Binding Selected}">
-            </ListView>
-        </DataTemplate>
-
-
-        <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
-            <views:AddDataViewView/>
-        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -67,11 +51,6 @@
 
         <!-- main view -->
         <Grid Grid.Column="1">
-            <Grid.Resources>
-                <DataTemplate DataType="{x:Type dialogs:AddDataSourceDialog}">
-                    <views:AddDataSourceDialogView/>
-                </DataTemplate>
-            </Grid.Resources>
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding DataSources}">

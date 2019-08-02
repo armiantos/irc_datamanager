@@ -70,7 +70,7 @@ namespace irc_connector.ViewModels
             {
                 if (listServersCommand == null)
                 {
-                    listServersCommand = new CommandWrapper(param =>
+                    listServersCommand = new RelayCommand(param =>
                     {
                         ConnectToHost();
                     });

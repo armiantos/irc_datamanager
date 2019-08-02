@@ -12,22 +12,7 @@ namespace irc_core.DataSources
     {
         private IDatabase client;
 
-        private string label;
-
         private ICommand addSpaceCommand;
-
-        public string Label
-        {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Label");
-            }
-        }
 
         public ObservableCollection<DatabaseSpace> Spaces { get; set; }
 
@@ -36,7 +21,7 @@ namespace irc_core.DataSources
             get
             {
                 if (addSpaceCommand == null)
-                    addSpaceCommand = new CommandWrapper(param =>
+                    addSpaceCommand = new RelayCommand(param =>
                     {
                         AddSpace(null);
                     });

@@ -21,7 +21,7 @@ namespace irc_connector.ViewModels
             get
             {
                 if (uploadCommand == null)
-                    uploadCommand = new CommandWrapper(param =>
+                    uploadCommand = new RelayCommand(param =>
                     StartUpload());
                 return uploadCommand;
             }

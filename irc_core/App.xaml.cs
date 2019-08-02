@@ -21,8 +21,8 @@ namespace irc_core
         {
             base.OnStartup(e);
             mw = new MainWindow();
-            AppViewModel avm = new AppViewModel();
-            mw.DataContext = avm;
+            MainViewModel mvm = new MainViewModel();
+            mw.DataContext = mvm;
             mw.Show();
         }
 

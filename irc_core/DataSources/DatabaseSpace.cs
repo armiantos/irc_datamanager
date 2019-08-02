@@ -41,7 +41,7 @@ namespace irc_core.DataSources
             get
             {
                 if (addCollectionCommand == null)
-                    addCollectionCommand = new CommandWrapper(param =>
+                    addCollectionCommand = new RelayCommand(param =>
                         AddCollection(null));
                 return addCollectionCommand;
             }

@@ -61,7 +61,7 @@ namespace irc_core.DataSources
             get
             {
                 if (addDataViewCommand == null)
-                    addDataViewCommand = new CommandWrapper(param =>
+                    addDataViewCommand = new RelayCommand(param =>
                     AddDataView(null, null));
                 return addDataViewCommand;
             }
@@ -72,7 +72,7 @@ namespace irc_core.DataSources
             get
             {
                 if (closeDataViewCommand == null)
-                    closeDataViewCommand = new CommandWrapper(param =>
+                    closeDataViewCommand = new RelayCommand(param =>
                     CloseDataView(param));
                 return closeDataViewCommand;
             }
