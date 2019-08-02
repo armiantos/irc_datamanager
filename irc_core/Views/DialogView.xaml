@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:irc_core.Views"
         mc:Ignorable="d"
-        Height="600" Width="400"
+        Height="600" Width="800"
         
         xmlns:dialogs="clr-namespace:irc_core.Dialogs"
         
