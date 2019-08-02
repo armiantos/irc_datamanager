@@ -1,6 +1,5 @@
 ﻿using irc_core.Dialogs;
 using irc_core.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -19,6 +18,8 @@ namespace irc_core.DataSources
         private ICommand addDataViewCommand;
 
         private ICommand closeDataViewCommand;
+
+        private ICommand exportDataCommand;
 
         public DatabaseCollection()
         {
@@ -63,13 +64,28 @@ namespace irc_core.DataSources
             }
         }
 
+        public ICommand ExportDataCommand
+        {
+            get
+            {
+                if (exportDataCommand == null)
+                    exportDataCommand = new RelayCommand(param =>
+                    {
+                        ExportData(null);
+                    });
+                return exportDataCommand;
+            }
+        }
+
+        #region methods 
+
         public async void AddDataView(string type, List<string> tags)
         {
             if (string.IsNullOrEmpty(type))
             {
                 DataTable listData = await Task.Run(() => ListData());
-                AddDataViewDialog addDataViewDialog = new AddDataViewDialog(listData);
-                Dialog.Show(addDataViewDialog, DialogClosingEventHandler);
+                DataModelConfigDialog DataModelConfigDialog = new DataModelConfigDialog(listData);
+                Dialog.Show(DataModelConfigDialog, DialogClosingEventHandler);
             }
             else
             {
@@ -82,8 +98,8 @@ namespace irc_core.DataSources
         {
             if (args.Parameter != null && (bool)args.Parameter == true)
             {
-                AddDataViewDialog addDataViewDialog = (AddDataViewDialog)args.Content;
-                AddDataView(addDataViewDialog.GetSelectedViewType(), addDataViewDialog.GetIncluded());
+                DataModelConfigDialog DataModelConfigDialog = (DataModelConfigDialog)args.Content;
+                AddDataView(DataModelConfigDialog.GetSelectedViewType(), DataModelConfigDialog.GetIncluded());
             }
         }
 
@@ -92,6 +108,10 @@ namespace irc_core.DataSources
             DataModels.Remove(DataModels.FirstOrDefault(o =>
                 o == (DataModel)dataModel));
         }
+
+        #endregion
+
+        #region abstract methods
 
         /// <summary>
         /// Returns a table containing 3 columns: Included (bool), Tag (string), Type (type as string).
@@ -127,5 +147,14 @@ namespace irc_core.DataSources
         /// <param name="model">data view to be updated</param>
         /// <returns></returns>
         protected abstract Task Update(DataModel model);
+
+        /// <summary>
+        /// Fills the file with data according to the filter arguments given.
+        /// </summary>
+        /// <param name="fs">Filestream to write to</param>
+        /// <param name="filterArgs"></param>
+        protected abstract void ExportData(object filterArgs);
+
+        #endregion
     }
 }
