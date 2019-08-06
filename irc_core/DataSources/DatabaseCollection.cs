@@ -70,8 +70,8 @@ namespace irc_core.DataSources
             if (string.IsNullOrEmpty(type))
             {
                 DataTable listData = await Task.Run(() => ListData());
-                DataModelConfigDialog DataModelConfigDialog = new DataModelConfigDialog(listData);
-                Dialog.Show(DataModelConfigDialog, DialogClosingEventHandler);
+                AddDataViewDialog AddDataViewDialogView = new AddDataViewDialog(listData);
+                Dialog.Show(AddDataViewDialogView, DialogClosingEventHandler);
             }
             else
             {
@@ -84,14 +84,10 @@ namespace irc_core.DataSources
         {
             if (args.Parameter != null)
             {
-                if ((DataModelConfigDialog.Action)args.Parameter == DataModelConfigDialog.Action.AddDataView)
+                if ((AddDataViewDialog.Action)args.Parameter == AddDataViewDialog.Action.AddDataView)
                 {
-                    DataModelConfigDialog DataModelConfigDialog = (DataModelConfigDialog)args.Content;
-                    AddDataView(DataModelConfigDialog.GetSelectedViewType(), DataModelConfigDialog.GetIncluded());
-                }
-                else if ((DataModelConfigDialog.Action)args.Parameter == DataModelConfigDialog.Action.SaveData)
-                {
-
+                    AddDataViewDialog AddDataViewDialogView = (AddDataViewDialog)args.Content;
+                    AddDataView(AddDataViewDialogView.GetSelectedViewType(), AddDataViewDialogView.GetIncluded());
                 }
             }
         }

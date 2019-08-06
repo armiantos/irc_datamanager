@@ -11,7 +11,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class DataModelConfigDialog : Dialog
+    public class AddDataViewDialog : Dialog
     {
         private DataView dataView;
 
@@ -20,8 +20,6 @@ namespace irc_core.Dialogs
         private ICommand addDataViewCommand;
 
         private ICommand searchTextboxCommand;
-
-        private ICommand saveDataCommand;
 
         public enum Action { AddDataView, SaveData}       
 
@@ -63,21 +61,11 @@ namespace irc_core.Dialogs
             {
                 if (addDataViewCommand == null)
                     addDataViewCommand = new RelayCommand(param =>
-                        CloseDataModelConfigDialog(Action.AddDataView));
+                        CloseAddDataViewDialogView(Action.AddDataView));
                 return addDataViewCommand;
             }
         }
 
-        public ICommand SaveDataCommand
-        {
-            get
-            {
-                if (saveDataCommand == null)
-                    saveDataCommand = new RelayCommand(param =>
-                        CloseDataModelConfigDialog(Action.SaveData));
-                return saveDataCommand;
-            }
-        }
 
         /// <summary>
         /// Triggered when enter key is pressed in search box. Updates data view in
@@ -124,7 +112,7 @@ namespace irc_core.Dialogs
         #endregion
 
         #region methods
-        public DataModelConfigDialog()
+        public AddDataViewDialog()
         {
             SupportedViews = new ObservableCollection<StringBool>
             {
@@ -134,12 +122,12 @@ namespace irc_core.Dialogs
             included = new List<string>();
         }
 
-        public DataModelConfigDialog( DataTable table) : this()
+        public AddDataViewDialog( DataTable table) : this()
         {
             DataView = table.AsDataView();
         }
 
-        private void CloseDataModelConfigDialog(Action action)
+        private void CloseAddDataViewDialogView(Action action)
         {
             var o = dataView.Table.AsEnumerable().Where(p => (bool)p["Include"]);
 

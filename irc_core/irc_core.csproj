@@ -101,7 +101,7 @@
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Dialogs\ListDialog.cs" />
-    <Compile Include="Dialogs\DataModelConfigDialog.cs" />
+    <Compile Include="Dialogs\AddDataViewDialog.cs" />
     <Compile Include="HelperClasses\StringBool.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\PlotModel.cs" />
@@ -112,6 +112,9 @@
     </Compile>
     <Compile Include="Views\AddDatabaseView.xaml.cs">
       <DependentUpon>AddDatabaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExportDataViewDialogView.xaml.cs">
+      <DependentUpon>ExportDataViewDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CollectionView.xaml.cs">
       <DependentUpon>CollectionView.xaml</DependentUpon>
@@ -128,8 +131,8 @@
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DataModelConfigView.xaml.cs">
-      <DependentUpon>DataModelConfigView.xaml</DependentUpon>
+    <Compile Include="Views\AddDataViewDialogView.xaml.cs">
+      <DependentUpon>AddDataViewDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
@@ -154,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ExportDataViewDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,7 +181,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DataModelConfigView.xaml">
+    <Page Include="Views\AddDataViewDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

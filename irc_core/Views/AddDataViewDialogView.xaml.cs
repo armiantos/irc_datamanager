@@ -18,9 +18,9 @@ namespace irc_core.Views
     /// <summary>
     /// Interaction logic for DataModelConfigView.xaml
     /// </summary>
-    public partial class DataModelConfigView : UserControl
+    public partial class AddDataViewDialogView : UserControl
     {
-        public DataModelConfigView()
+        public AddDataViewDialogView()
         {
             InitializeComponent();
         }

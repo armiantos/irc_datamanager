@@ -36,8 +36,8 @@
             </ListView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type dialogs:DataModelConfigDialog}">
-            <local:DataModelConfigView/>
+        <DataTemplate DataType="{x:Type dialogs:AddDataViewDialog}">
+            <local:AddDataViewDialogView/>
         </DataTemplate>
 
     </Window.Resources>
