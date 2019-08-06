@@ -1,5 +1,6 @@
 ﻿using irc_core.DataSources;
 using irc_core.Dialogs;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -16,6 +17,7 @@ namespace irc_core.ViewModels
 
         public ObservableCollection<DataSource> DataSources { get; set; }
 
+
         #endregion
                
         #region public getters, setters
@@ -31,6 +33,7 @@ namespace irc_core.ViewModels
                 return addDataSourceCommand;
             }
         }
+        public SnackbarMessageQueue MessageQueue { get; set; }
 
         #endregion
 
@@ -40,6 +43,7 @@ namespace irc_core.ViewModels
         {
 
             DataSources = new ObservableCollection<DataSource>();
+            MessageQueue = new SnackbarMessageQueue();
         }
 
         private void AddDataSource()
@@ -47,6 +51,7 @@ namespace irc_core.ViewModels
             AddDataSourceDialog dialog = new AddDataSourceDialog();
             Dialog.Show(dialog, DialogClosingEventHandler);
         }
+
 
         private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
         {

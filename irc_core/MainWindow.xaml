@@ -78,6 +78,7 @@
                 </Button>
             </Grid>
         </Grid>
+        <materialDesign:Snackbar MessageQueue="{Binding MessageQueue}"/>
     </Grid>
 
 </Window>

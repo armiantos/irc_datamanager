@@ -1,5 +1,7 @@
 ﻿using irc_core.Dialogs;
 using irc_core.Models;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -18,6 +20,8 @@ namespace irc_core.DataSources
         private ICommand addDataViewCommand;
 
         private ICommand closeDataViewCommand;
+
+        private ICommand exportDataCommand;
 
         public DatabaseCollection()
         {
@@ -62,6 +66,17 @@ namespace irc_core.DataSources
             }
         }
 
+        public ICommand ExportDataCommand
+        {
+            get
+            {
+                if (exportDataCommand == null)
+                    exportDataCommand = new RelayCommand(param =>
+                    ExportData(null));
+                return exportDataCommand;
+            }
+        }
+
 
         #region methods 
 
@@ -86,8 +101,13 @@ namespace irc_core.DataSources
             {
                 if ((AddDataViewDialog.Action)args.Parameter == AddDataViewDialog.Action.AddDataView)
                 {
-                    AddDataViewDialog AddDataViewDialogView = (AddDataViewDialog)args.Content;
-                    AddDataView(AddDataViewDialogView.GetSelectedViewType(), AddDataViewDialogView.GetIncluded());
+                    AddDataViewDialog addDataViewDialog = (AddDataViewDialog)args.Content;
+                    AddDataView(addDataViewDialog.GetSelectedViewType(), addDataViewDialog.GetIncluded());
+                }
+                if ((ExportDataDialog.Action)args.Parameter == ExportDataDialog.Action.ExportData)
+                {
+                    ExportDataDialog exportDataDialog = (ExportDataDialog)args.Content;
+                    ExportData(exportDataDialog.GetIncluded());
                 }
             }
         }
@@ -96,6 +116,25 @@ namespace irc_core.DataSources
         {
             DataModels.Remove(DataModels.FirstOrDefault(o =>
                 o == (DataModel)dataModel));
+        }
+
+        private async void ExportData(List<string> tags)
+        {
+            if (tags == null)
+            {
+                DataTable listData = await Task.Run(() => ListData());
+                ExportDataDialog exportDataDialog = new ExportDataDialog(listData);
+                Dialog.Show(exportDataDialog, DialogClosingEventHandler);
+            }
+            else
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "CSV File |*.csv";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    await SaveToFile(tags, saveFileDialog.FileName);
+                }
+            }
         }
 
         #endregion
@@ -137,6 +176,7 @@ namespace irc_core.DataSources
         /// <returns></returns>
         protected abstract Task Update(DataModel model);
 
+        protected abstract Task SaveToFile(List<string> tags, string path);
 
         #endregion
     }

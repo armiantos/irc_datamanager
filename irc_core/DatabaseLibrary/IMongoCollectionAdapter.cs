@@ -9,6 +9,7 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Linq;
 using OxyPlot.Axes;
+using System.IO;
 
 namespace irc_core.DatabaseLibrary
 {
@@ -110,6 +111,49 @@ namespace irc_core.DatabaseLibrary
             var results = await mongoCollection.FindAsync(filter, options);
 
             return await results.ToListAsync();
+        }
+
+        protected override async Task SaveToFile(List<string> tags, string path)
+        {
+            bool firstDocument = true;
+            if (!string.IsNullOrEmpty(timeTag) && !tags.Contains(timeTag))
+            {
+                tags.Add(timeTag);
+            }
+
+            FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
+            StreamWriter sw = new StreamWriter(path, true);
+
+            IFindFluent<BsonDocument, BsonDocument> find = mongoCollection.Find(filter);
+            if (tags.Count > 0)
+            {
+                string projectionBuilder = "{";
+                tags.ForEach(label => projectionBuilder += $"\"{label}\" : 1, ");
+                projectionBuilder = projectionBuilder.Remove(projectionBuilder.Length - 2);
+                projectionBuilder += "}";
+                find = find.Project(projectionBuilder);
+            }
+
+            await find.ForEachAsync(document =>
+            {
+                if (firstDocument)
+                {
+                    foreach (BsonElement element in document)
+                    {
+                        sw.Write(element.Name);
+                        sw.Write(",");
+                    }
+                    sw.Write(sw.NewLine);
+                    firstDocument = false;
+                }
+                foreach (BsonElement element in document)
+                {
+                    sw.Write(element.Value);
+                    sw.Write(",");
+                }
+                sw.Write(sw.NewLine);
+            });
+            sw.Close();            
         }
 
         protected override async Task Update(DataModel model)
