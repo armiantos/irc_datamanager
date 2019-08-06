@@ -62,11 +62,14 @@ namespace irc_core.Dialogs
         {
             get
             {
+                if (initialDate == null)
+                    initialDate = DateTime.UtcNow;
                 return initialDate;
             }
             set
             {
                 initialDate = value;
+                Console.WriteLine($"initialdate:{value}");
                 OnPropertyChanged("InitialDate");
             }
         }
@@ -75,11 +78,14 @@ namespace irc_core.Dialogs
         {
             get
             {
+                if (initialTime == null)
+                    initialTime = DateTime.UtcNow;
                 return initialTime;
             }
             set
             {
                 initialTime = value;
+                Console.WriteLine($"initialtime:{value}");
                 OnPropertyChanged("InitialTime");
             }
         }
@@ -88,12 +94,15 @@ namespace irc_core.Dialogs
         {
             get
             {
+                if (finalTime == null)
+                    finalTime = DateTime.UtcNow;
                 return finalTime;
             }
             set
             {
                 finalTime = value;
-                OnPropertyChanged("InitialTime");
+                Console.WriteLine($"finaltime:{value}");
+                OnPropertyChanged("FinalTime");
             }
         }
 
@@ -101,11 +110,14 @@ namespace irc_core.Dialogs
         {
             get
             {
+                if (finalDate == null)
+                    finalDate = DateTime.UtcNow;
                 return finalDate;
             }
             set
             {
                 finalDate = value;
+                Console.WriteLine($"finaldate:{value}");
                 OnPropertyChanged("FinalDate");
             }
         }

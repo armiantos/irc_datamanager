@@ -47,16 +47,16 @@
                 <StackPanel Orientation="Vertical"
                             Grid.Column="0">
                     <TextBlock>Initial</TextBlock>
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate}"/>
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate, UpdateSourceTrigger=LostFocus}"/>
                     <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
-                                               SelectedTime="{Binding InitialTime}"/>
+                                               SelectedTime="{Binding InitialTime, UpdateSourceTrigger=LostFocus}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
                             Grid.Column="1">
                     <TextBlock>Final</TextBlock>
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate}"
-                                DisplayDateStart="{Binding InitialDate}"/>
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate, UpdateSourceTrigger=LostFocus}"
+                                DisplayDateStart="{Binding InitialDate, UpdateSourceTrigger=LostFocus}"/>
                     <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
                                                SelectedTime="{Binding FinalTime}"/>
                 </StackPanel>
