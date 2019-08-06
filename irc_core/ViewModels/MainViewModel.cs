@@ -17,11 +17,11 @@ namespace irc_core.ViewModels
 
         public ObservableCollection<DataSource> DataSources { get; set; }
 
-
         #endregion
                
         #region public getters, setters
-
+    
+        public static SnackbarMessageQueue MessageQueue { get; private set; }
 
         public ICommand AddDataSourceCommand
         {
@@ -33,7 +33,6 @@ namespace irc_core.ViewModels
                 return addDataSourceCommand;
             }
         }
-        public SnackbarMessageQueue MessageQueue { get; set; }
 
         #endregion
 
@@ -41,7 +40,6 @@ namespace irc_core.ViewModels
 
         public MainViewModel()
         {
-
             DataSources = new ObservableCollection<DataSource>();
             MessageQueue = new SnackbarMessageQueue();
         }
@@ -49,7 +47,7 @@ namespace irc_core.ViewModels
         private void AddDataSource()
         {
             AddDataSourceDialog dialog = new AddDataSourceDialog();
-            Dialog.Show(dialog, DialogClosingEventHandler);
+            Dialog.Show(dialog, DialogClosingEventHandler);   
         }
 
 
@@ -69,30 +67,6 @@ namespace irc_core.ViewModels
                 }
             }
         }
-
-        //private void ListDialogClosingHandler(object sender, DialogClosingEventArgs eventArgs)
-        //{
-        //    if (eventArgs.Session.Content is AddDataSourceDialog)
-        //    {
-        //        if (eventArgs.Parameter != null)
-        //        {
-        //            if (eventArgs.Parameter is object[])
-        //            {
-        //                object[] param = (object[])eventArgs.Parameter;
-        //                if (param[0] is AddDatabaseSource)
-        //                {
-        //                    AddDatabaseSource dbSource = (AddDatabaseSource)param[0];
-        //                    PasswordBox pwdBox = (PasswordBox)param[1];
-        //                    DataSources.Add(new DatabaseSource(dbSource.SelectedDb,
-        //                        dbSource.Host,
-        //                        dbSource.Username,
-        //                        pwdBox.Password)
-        //                        { Label = $"{dbSource.SelectedDb} @ {dbSource.Host}" });
-        //                }
-        //            }
-        //        }
-        //    }           
-        //}
         #endregion
     }
 }

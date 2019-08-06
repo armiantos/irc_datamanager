@@ -1,5 +1,6 @@
 ﻿using irc_core.Dialogs;
 using irc_core.Models;
+using irc_core.ViewModels;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -132,7 +133,9 @@ namespace irc_core.DataSources
                 saveFileDialog.Filter = "CSV File |*.csv";
                 if (saveFileDialog.ShowDialog() == true)
                 {
+                    MainViewModel.MessageQueue.Enqueue("Saving file");
                     await SaveToFile(tags, saveFileDialog.FileName);
+                    MainViewModel.MessageQueue.Enqueue("Saved file! :)");
                 }
             }
         }
