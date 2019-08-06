@@ -21,6 +21,12 @@ namespace irc_core.Dialogs
 
         private ICommand searchTextboxCommand;
 
+        private DateTime initialDate;
+        private DateTime finalDate;
+        private DateTime initialTime;
+        private DateTime finalTime;
+        
+
         public enum Action { AddDataView, ExportData}       
 
         private List<string> included;
@@ -49,6 +55,58 @@ namespace irc_core.Dialogs
             {
                 searchField = value;
                 OnPropertyChanged("SearchField");
+            }
+        }
+
+        public DateTime InitialDate
+        {
+            get
+            {
+                return initialDate;
+            }
+            set
+            {
+                initialDate = value;
+                OnPropertyChanged("InitialDate");
+            }
+        }
+
+        public DateTime InitialTime
+        {
+            get
+            {
+                return initialTime;
+            }
+            set
+            {
+                initialTime = value;
+                OnPropertyChanged("InitialTime");
+            }
+        }
+
+        public DateTime FinalTime
+        {
+            get
+            {
+                return finalTime;
+            }
+            set
+            {
+                finalTime = value;
+                OnPropertyChanged("InitialTime");
+            }
+        }
+
+        public DateTime FinalDate
+        {
+            get
+            {
+                return finalDate;
+            }
+            set
+            {
+                finalDate = value;
+                OnPropertyChanged("FinalDate");
             }
         }
 

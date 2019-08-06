@@ -35,23 +35,33 @@
                   ColumnWidth="200"
                   />
 
-        <StackPanel Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="20 10">
-            <TextBlock>View type:</TextBlock>
-            <ItemsControl ItemsSource="{Binding SupportedViews}"
-                          Margin="10">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton Content="{Binding Label}"
-                                     GroupName="View type"
-                                     Margin="5"
-                                     IsChecked="{Binding Boolean}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="1" Grid.Column="1"
+                    Margin="20">
+            <TextBlock FontWeight="Bold">Filter:</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="0">
+                    <TextBlock>Initial</TextBlock>
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate}"/>
+                    <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
+                                               SelectedTime="{Binding InitialTime}"/>
+                </StackPanel>
 
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="1">
+                    <TextBlock>Final</TextBlock>
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate}"
+                                DisplayDateStart="{Binding InitialDate}"/>
+                    <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
+                                               SelectedTime="{Binding FinalTime}"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
         <Button VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Grid.Row="2"
