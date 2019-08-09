@@ -255,11 +255,12 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
     ```
     If out of memory exception occurs when attempting to read big data, refer to https://www.mathworks.com/help/database/ug/import-large-data-from-mongodb.html to import the data in batches.
 
-### mongoDB Sharded cluster
-One of the advantages of using NoSQL databases is the ability to scale horizontally, where data is distributed across multiple nodes for high availability and load balancing. 
+### Sharded cluster
+One of the advantages of using NoSQL databases is the ability to scale horizontally, where data is distributed across multiple nodes for high availability and load balancing.
+
+If a replica set has an even number of members, add an arbiter 
 
 <br/>
-
 ## MySQL
 <!-- introduction to MySQL -->
 
