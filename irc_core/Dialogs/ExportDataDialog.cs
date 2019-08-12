@@ -26,7 +26,6 @@ namespace irc_core.Dialogs
         private DateTime initialTime;
         private DateTime finalTime;
         
-
         public enum Action { AddDataView, ExportData}       
 
         private List<string> included;
@@ -166,6 +165,15 @@ namespace irc_core.Dialogs
         public List<string> GetIncluded()
         {
             return included;
+        }
+
+        public Tuple<DateTime, DateTime> GetTimeRange()
+        {
+            Console.WriteLine(initialDate);
+            Console.WriteLine(initialTime);
+            Console.WriteLine(finalDate);
+            Console.WriteLine(finalTime);
+            return new Tuple<DateTime, DateTime>(initialDate, finalDate);
         }
 
         public string GetSelectedViewType()

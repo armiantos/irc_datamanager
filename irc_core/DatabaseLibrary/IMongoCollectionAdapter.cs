@@ -93,11 +93,22 @@ namespace irc_core.DatabaseLibrary
             }
 
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
-            FindOptions<BsonDocument> options = new FindOptions<BsonDocument>
+            FindOptions<BsonDocument> options;
+            if (!string.IsNullOrEmpty(timeTag)) {
+                options = new FindOptions<BsonDocument>
+                {
+                    Limit = 500,
+                    Sort = $"{{{timeTag}: -1}}" // get latest data
+                };
+            }
+            else
             {
-                Limit = 500,
-                Sort = "{$natural:-1}" // get latest data 
-            }; 
+                options = new FindOptions<BsonDocument>
+                {
+                    Limit = 500,
+                    Sort = $"{{natural: -1}}" // get latest data
+                };
+            }
 
             if (model.Tags.Count > 0)
             {
@@ -113,7 +124,7 @@ namespace irc_core.DatabaseLibrary
             return await results.ToListAsync();
         }
 
-        protected override async Task SaveToFile(List<string> tags, string path)
+        protected override async Task SaveToFile(List<string> tags, Tuple<DateTime, DateTime> timeRange, string path)
         {
             bool firstDocument = true;
             if (!string.IsNullOrEmpty(timeTag) && !tags.Contains(timeTag))

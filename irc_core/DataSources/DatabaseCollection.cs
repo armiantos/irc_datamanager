@@ -108,7 +108,7 @@ namespace irc_core.DataSources
                 if ((ExportDataDialog.Action)args.Parameter == ExportDataDialog.Action.ExportData)
                 {
                     ExportDataDialog exportDataDialog = (ExportDataDialog)args.Content;
-                    ExportData(exportDataDialog.GetIncluded());
+                    ExportData(exportDataDialog.GetIncluded(), exportDataDialog.GetTimeRange());
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace irc_core.DataSources
                 o == (DataModel)dataModel));
         }
 
-        private async void ExportData(List<string> tags)
+        private async void ExportData(List<string> tags, Tuple<DateTime, DateTime> timeRange)
         {
             if (tags == null)
             {
@@ -134,7 +134,7 @@ namespace irc_core.DataSources
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     MainViewModel.MessageQueue.Enqueue("Saving file");
-                    await SaveToFile(tags, saveFileDialog.FileName);
+                    await SaveToFile(tags, timeRange, saveFileDialog.FileName);
                     MainViewModel.MessageQueue.Enqueue("Saved file! :)");
                 }
             }
@@ -179,7 +179,7 @@ namespace irc_core.DataSources
         /// <returns></returns>
         protected abstract Task Update(DataModel model);
 
-        protected abstract Task SaveToFile(List<string> tags, string path);
+        protected abstract Task SaveToFile(List<string> tags, Tuple<DateTime, DateTime> timeRange,  string path);
 
         #endregion
     }
