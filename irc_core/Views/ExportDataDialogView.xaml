@@ -44,19 +44,23 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
                 <StackPanel Orientation="Vertical"
-                            Grid.Column="0">
+                            Grid.Column="0"
+                            Margin="10">
                     <TextBlock>Initial</TextBlock>
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate, UpdateSourceTrigger=LostFocus}"/>
+                    
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate}"/>
                     <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
-                                               SelectedTime="{Binding InitialTime, UpdateSourceTrigger=LostFocus}"/>
+                                               SelectedTime="{Binding InitialTime}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical"
-                            Grid.Column="1">
+                            Grid.Column="1"
+                            Margin="10">
                     <TextBlock>Final</TextBlock>
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate, UpdateSourceTrigger=LostFocus}"
-                                DisplayDateStart="{Binding InitialDate, UpdateSourceTrigger=LostFocus}"/>
+                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate}"
+                                DisplayDateStart="{Binding InitialDate}"/>
                     <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
                                                SelectedTime="{Binding FinalTime}"/>
                 </StackPanel>
