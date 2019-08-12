@@ -114,8 +114,8 @@
     <Compile Include="Views\AddDatabaseView.xaml.cs">
       <DependentUpon>AddDatabaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExportDataViewDialogView.xaml.cs">
-      <DependentUpon>ExportDataViewDialogView.xaml</DependentUpon>
+    <Compile Include="Views\ExportDataDialogView.xaml.cs">
+      <DependentUpon>ExportDataDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CollectionView.xaml.cs">
       <DependentUpon>CollectionView.xaml</DependentUpon>
@@ -158,7 +158,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExportDataViewDialogView.xaml">
+    <Page Include="Views\ExportDataDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

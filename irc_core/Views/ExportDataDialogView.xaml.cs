@@ -18,9 +18,9 @@ namespace irc_core.Views
     /// <summary>
     /// Interaction logic for DataModelConfigView.xaml
     /// </summary>
-    public partial class ExportDataViewDialogView : UserControl
+    public partial class ExportDataDialogView : UserControl
     {
-        public ExportDataViewDialogView()
+        public ExportDataDialogView()
         {
             InitializeComponent();
         }
