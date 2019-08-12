@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              
+             
+             xmlns:wpfex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Margin="30">
         <Grid.ColumnDefinitions>
@@ -39,32 +41,19 @@
                     Grid.Row="1" Grid.Column="1"
                     Margin="20">
             <TextBlock FontWeight="Bold">Filter:</TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <StackPanel Orientation="Vertical"
+            <StackPanel Orientation="Vertical"
                             Grid.Column="0"
                             Margin="10">
                     <TextBlock>Initial</TextBlock>
-                    
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding InitialDate}"/>
-                    <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
-                                               SelectedTime="{Binding InitialTime}"/>
+                    <wpfex:DateTimePicker Value="{Binding InitialTime}"></wpfex:DateTimePicker>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical"
+            <StackPanel Orientation="Vertical"
                             Grid.Column="1"
                             Margin="10">
-                    <TextBlock>Final</TextBlock>
-                    <DatePicker materialDesign:HintAssist.Hint="Date" SelectedDate="{Binding FinalDate}"
-                                DisplayDateStart="{Binding InitialDate}"/>
-                    <materialDesign:TimePicker WithSeconds="True" materialDesign:HintAssist.Hint="Time"
-                                               SelectedTime="{Binding FinalTime}"/>
-                </StackPanel>
-            </Grid>
+                <TextBlock>Final</TextBlock>
+                <wpfex:DateTimePicker Value="{Binding FinalTime}"></wpfex:DateTimePicker>
+            </StackPanel>
         </StackPanel>
         <Button VerticalAlignment="Center"
                     HorizontalAlignment="Center"

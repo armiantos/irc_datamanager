@@ -21,8 +21,6 @@ namespace irc_core.Dialogs
 
         private ICommand searchTextboxCommand;
 
-        private DateTime initialDate;
-        private DateTime finalDate;
         private DateTime initialTime;
         private DateTime finalTime;
         
@@ -57,18 +55,6 @@ namespace irc_core.Dialogs
             }
         }
 
-        public DateTime InitialDate
-        {
-            get
-            {
-                return initialDate;
-            }
-            set
-            {
-                initialDate = value;
-                OnPropertyChanged("InitialDate");
-            }
-        }
 
         public DateTime InitialTime
         {
@@ -93,19 +79,6 @@ namespace irc_core.Dialogs
             {
                 finalTime = value;
                 OnPropertyChanged("FinalTime");
-            }
-        }
-
-        public DateTime FinalDate
-        {
-            get
-            {
-                return finalDate;
-            }
-            set
-            {
-                finalDate = value;
-                OnPropertyChanged("FinalDate");
             }
         }
 
@@ -158,13 +131,7 @@ namespace irc_core.Dialogs
 
         public Tuple<DateTime, DateTime> GetTimeRange()
         {
-            initialDate -= new TimeSpan(1, 0, 0, 0);
-            finalDate -= new TimeSpan(1, 0, 0, 0);
-
-            initialDate += new TimeSpan(initialTime.Hour, initialTime.Minute, initialTime.Second);
-            finalDate += new TimeSpan(finalTime.Hour, finalTime.Minute, finalTime.Second);
-
-            return new Tuple<DateTime, DateTime>(initialDate, finalDate);
+            return new Tuple<DateTime, DateTime>(InitialTime, FinalTime);
         }
 
         public ExportDataDialog()
@@ -172,8 +139,10 @@ namespace irc_core.Dialogs
             InitialTime = DateTime.UtcNow;
             FinalTime = DateTime.UtcNow;
 
-            InitialDate = DateTime.UtcNow;
-            FinalDate = DateTime.UtcNow;
+            InitialTime -= new TimeSpan(0, 0, InitialTime.Second);
+
+            FinalTime -= new TimeSpan(0, 0, FinalTime.Second);
+
             included = new List<string>();
         }
 
