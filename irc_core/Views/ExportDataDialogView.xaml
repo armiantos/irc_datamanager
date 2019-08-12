@@ -12,8 +12,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Margin="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -43,14 +43,14 @@
             <TextBlock FontWeight="Bold">Filter:</TextBlock>
             <StackPanel Orientation="Vertical"
                             Grid.Column="0"
-                            Margin="10">
+                        Margin="5 0 0 0">
                     <TextBlock>Initial</TextBlock>
                     <wpfex:DateTimePicker Value="{Binding InitialTime}"></wpfex:DateTimePicker>
                 </StackPanel>
 
             <StackPanel Orientation="Vertical"
                             Grid.Column="1"
-                            Margin="10">
+                        Margin="5 0 0 0">
                 <TextBlock>Final</TextBlock>
                 <wpfex:DateTimePicker Value="{Binding FinalTime}"></wpfex:DateTimePicker>
             </StackPanel>
