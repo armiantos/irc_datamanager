@@ -73,7 +73,7 @@ namespace irc_core.DataSources
             {
                 if (exportDataCommand == null)
                     exportDataCommand = new RelayCommand(param =>
-                    ExportData(null));
+                    ExportData(null, null));
                 return exportDataCommand;
             }
         }
@@ -129,8 +129,10 @@ namespace irc_core.DataSources
             }
             else
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "CSV File |*.csv";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV File |*.csv"
+                };
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     MainViewModel.MessageQueue.Enqueue("Saving file");

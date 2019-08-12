@@ -126,13 +126,28 @@ namespace irc_core.DatabaseLibrary
 
         protected override async Task SaveToFile(List<string> tags, Tuple<DateTime, DateTime> timeRange, string path)
         {
+            Console.WriteLine(timeRange.Item1);
+            Console.WriteLine(timeRange.Item2);
+
+            FilterDefinition<BsonDocument> filter;
             bool firstDocument = true;
             if (!string.IsNullOrEmpty(timeTag) && !tags.Contains(timeTag))
             {
                 tags.Add(timeTag);
             }
-
-            FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
+            if (timeRange.Item1 == null)
+            {
+                filter = FilterDefinition<BsonDocument>.Empty;
+            }
+            else
+            {
+                var builder = new FilterDefinitionBuilder<BsonDocument>();
+                filter = builder.Gte(timeTag, timeRange.Item1);
+                if (timeRange.Item2 != null)
+                {
+                    filter &= builder.Lte(timeTag, timeRange.Item2);
+                }
+            }
             StreamWriter sw = new StreamWriter(path, true);
 
             IFindFluent<BsonDocument, BsonDocument> find = mongoCollection.Find(filter);
@@ -170,24 +185,24 @@ namespace irc_core.DatabaseLibrary
         protected override async Task Update(DataModel model)
         {
             List<BsonDocument> results = await GetData(model);
-            
-            if (model is PlotModel)
-            {
-                PlotModel actualModel = (PlotModel)model;
 
+            if (model is PlotModel plotModel)
+            {
                 if (!string.IsNullOrEmpty(timeTag))
                 {
-                    if (actualModel.Model.Axes.FirstOrDefault(axis => axis is DateTimeAxis) == null)
-                        actualModel.Model.Axes.Add(new DateTimeAxis());
+                    if (plotModel.Model.Axes.FirstOrDefault(axis => axis is DateTimeAxis) == null)
+                        plotModel.Model.Axes.Add(new DateTimeAxis());
                 }
 
-                actualModel.Model.Series.Clear();
-                foreach (string tag in actualModel.Tags)
+                plotModel.Model.Series.Clear();
+                foreach (string tag in plotModel.Tags)
                 {
                     if (tag == timeTag)
                         continue;
-                    LineSeries line = new LineSeries();
-                    line.Title = tag;
+                    LineSeries line = new LineSeries
+                    {
+                        Title = tag
+                    };
 
                     for (int i = 0; i < results.Count; i++)
                     {
@@ -204,22 +219,21 @@ namespace irc_core.DatabaseLibrary
                                 line.Points.Add(new OxyPlot.DataPoint(results.Count - i, results[i][tag].ToDouble()));
                             }
                         }
-                        catch 
+                        catch
                         {
                         }
                     }
-                    actualModel.Model.Series.Add(line);
-                    actualModel.Model.InvalidatePlot(true);
+                    plotModel.Model.Series.Add(line);
+                    plotModel.Model.InvalidatePlot(true);
                 }
-                actualModel.Tags.ForEach(tag =>
+                plotModel.Tags.ForEach(tag =>
                 {
-                    
+
                 });
             }
 
-            else if (model is TableModel)
+            else if (model is TableModel tableModel)
             {
-                TableModel actualModel = (TableModel)model;
                 DataTable dt = new DataTable();
 
                 model.Tags.ForEach(labelName => dt.Columns.Add(labelName,
@@ -228,11 +242,11 @@ namespace irc_core.DatabaseLibrary
                 foreach (var result in results)
                 {
                     DataRow r = dt.NewRow();
-                    actualModel.Tags.ForEach(label => r[label] = result[label]);
+                    tableModel.Tags.ForEach(label => r[label] = result[label]);
                     dt.Rows.Add(r);
                 }
 
-                actualModel.DataView = dt.AsDataView();
+                tableModel.DataView = dt.AsDataView();
             }
 
         }

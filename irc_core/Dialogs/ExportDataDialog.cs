@@ -61,14 +61,11 @@ namespace irc_core.Dialogs
         {
             get
             {
-                if (initialDate == null)
-                    initialDate = DateTime.UtcNow;
                 return initialDate;
             }
             set
             {
                 initialDate = value;
-                Console.WriteLine($"initialdate:{value}");
                 OnPropertyChanged("InitialDate");
             }
         }
@@ -77,14 +74,11 @@ namespace irc_core.Dialogs
         {
             get
             {
-                if (initialTime == null)
-                    initialTime = DateTime.UtcNow;
                 return initialTime;
             }
             set
             {
                 initialTime = value;
-                Console.WriteLine($"initialtime:{value}");
                 OnPropertyChanged("InitialTime");
             }
         }
@@ -93,14 +87,11 @@ namespace irc_core.Dialogs
         {
             get
             {
-                if (finalTime == null)
-                    finalTime = DateTime.UtcNow;
                 return finalTime;
             }
             set
             {
                 finalTime = value;
-                Console.WriteLine($"finaltime:{value}");
                 OnPropertyChanged("FinalTime");
             }
         }
@@ -109,14 +100,11 @@ namespace irc_core.Dialogs
         {
             get
             {
-                if (finalDate == null)
-                    finalDate = DateTime.UtcNow;
                 return finalDate;
             }
             set
             {
                 finalDate = value;
-                Console.WriteLine($"finaldate:{value}");
                 OnPropertyChanged("FinalDate");
             }
         }
@@ -160,8 +148,9 @@ namespace irc_core.Dialogs
                 return searchTextboxCommand;
             }
         }
+        #endregion
 
-
+        #region methods
         public List<string> GetIncluded()
         {
             return included;
@@ -169,34 +158,22 @@ namespace irc_core.Dialogs
 
         public Tuple<DateTime, DateTime> GetTimeRange()
         {
-            Console.WriteLine(initialDate);
-            Console.WriteLine(initialTime);
-            Console.WriteLine(finalDate);
-            Console.WriteLine(finalTime);
+            initialDate -= new TimeSpan(1, 0, 0, 0);
+            finalDate -= new TimeSpan(1, 0, 0, 0);
+
+            initialDate += new TimeSpan(initialTime.Hour, initialTime.Minute, initialTime.Second);
+            finalDate += new TimeSpan(finalTime.Hour, finalTime.Minute, finalTime.Second);
+
             return new Tuple<DateTime, DateTime>(initialDate, finalDate);
         }
 
-        public string GetSelectedViewType()
-        {
-            string selectedType = SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
-            if (!string.IsNullOrEmpty(selectedType))
-            {
-                return selectedType;
-            }
-            throw new InvalidOperationException();
-        }
-
-        public ObservableCollection<StringBool> SupportedViews { get; set; }
-        #endregion
-
-        #region methods
         public ExportDataDialog()
         {
-            SupportedViews = new ObservableCollection<StringBool>
-            {
-                new StringBool{Label = "Plot", Boolean = false},
-                new StringBool{Label = "Table", Boolean = false}
-            };
+            InitialTime = DateTime.UtcNow;
+            FinalTime = DateTime.UtcNow;
+
+            InitialDate = DateTime.UtcNow;
+            FinalDate = DateTime.UtcNow;
             included = new List<string>();
         }
 
