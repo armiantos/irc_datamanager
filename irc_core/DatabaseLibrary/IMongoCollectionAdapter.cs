@@ -150,7 +150,8 @@ namespace irc_core.DatabaseLibrary
             }
             StreamWriter sw = new StreamWriter(path, true);
 
-            IFindFluent<BsonDocument, BsonDocument> find = mongoCollection.Find(filter);
+            IFindFluent<BsonDocument, BsonDocument> find = mongoCollection.Find(filter)
+                .Sort(new SortDefinitionBuilder<BsonDocument>().Ascending(timeTag));
             if (tags.Count > 0)
             {
                 string projectionBuilder = "{";
