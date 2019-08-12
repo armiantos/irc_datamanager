@@ -21,8 +21,8 @@ namespace irc_core.Dialogs
 
         private ICommand searchTextboxCommand;
 
-        private DateTime initialTime;
-        private DateTime finalTime;
+        private string initialTime;
+        private string finalTime;
         
         public enum Action { AddDataView, ExportData}       
 
@@ -56,7 +56,7 @@ namespace irc_core.Dialogs
         }
 
 
-        public DateTime InitialTime
+        public string InitialTime
         {
             get
             {
@@ -69,7 +69,7 @@ namespace irc_core.Dialogs
             }
         }
 
-        public DateTime FinalTime
+        public string FinalTime
         {
             get
             {
@@ -131,18 +131,19 @@ namespace irc_core.Dialogs
 
         public Tuple<DateTime, DateTime> GetTimeRange()
         {
-            return new Tuple<DateTime, DateTime>(InitialTime, FinalTime);
+            try
+            {
+                return new Tuple<DateTime, DateTime>(Convert.ToDateTime(initialTime),
+                    Convert.ToDateTime(finalTime));
+            }
+            catch
+            {
+                throw new InvalidExpressionException("Invalid DateTime format.");
+            }
         }
 
         public ExportDataDialog()
         {
-            InitialTime = DateTime.UtcNow;
-            FinalTime = DateTime.UtcNow;
-
-            InitialTime -= new TimeSpan(0, 0, InitialTime.Second);
-
-            FinalTime -= new TimeSpan(0, 0, FinalTime.Second);
-
             included = new List<string>();
         }
 

@@ -45,14 +45,20 @@
                             Grid.Column="0"
                         Margin="5 0 0 0">
                     <TextBlock>Initial</TextBlock>
-                    <wpfex:DateTimePicker Value="{Binding InitialTime}"></wpfex:DateTimePicker>
+                <TextBox HorizontalAlignment="Stretch"
+                         materialDesign:HintAssist.Hint="YYYY-MM-ddTHH:mm:ss"
+                         Text="{Binding InitialTime}"></TextBox>
+                    <!--<wpfex:DateTimePicker Value="{Binding InitialTime}"></wpfex:DateTimePicker>-->
                 </StackPanel>
 
             <StackPanel Orientation="Vertical"
                             Grid.Column="1"
                         Margin="5 0 0 0">
                 <TextBlock>Final</TextBlock>
-                <wpfex:DateTimePicker Value="{Binding FinalTime}"></wpfex:DateTimePicker>
+                <TextBox HorizontalAlignment="Stretch"
+                         materialDesign:HintAssist.Hint="YYYY-MM-ddTHH:mm:ss"
+                         Text="{Binding FinalTime}"></TextBox>
+                <!--<wpfex:DateTimePicker Value="{Binding FinalTime}"></wpfex:DateTimePicker>-->
             </StackPanel>
         </StackPanel>
         <Button VerticalAlignment="Center"

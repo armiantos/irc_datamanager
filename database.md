@@ -258,7 +258,11 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 ### Sharded cluster
 One of the advantages of using NoSQL databases is the ability to scale horizontally, where data is distributed across multiple nodes for high availability and load balancing.
 
-If a replica set has an even number of members, add an arbiter 
+Currently we have a 5 node setup running on 2 computers: CME-712337 and CME540319 (Pendulum cart computer). CME-712337 acts as the router, config server and one of the nodes in a shard replica set while CME540319 acts as the other node in the shard replica set and an aribter node of the same shard replica set. Replica sets should contain at least 3 members for fault tolerance. In the event of a primary node failure, re-election can properly be executed only if there is majority vote, because of this, mongoDB's documentation mentions
+
+> If a replica set has an even number of members, add an arbiter.
+
+The routers are set up with the port 27017, the config servers 27018, sharding nodes 27019, and arbiter nodes 27020. This allows a single computer to have multiple roles in the cluster. In practice, each computer should only have a single role, but due to hardware limitations we can only use two computers. 
 
 <br/>
 ## MySQL

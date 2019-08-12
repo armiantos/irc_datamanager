@@ -129,21 +129,16 @@ namespace irc_core.DatabaseLibrary
             Console.WriteLine(timeRange.Item1);
             Console.WriteLine(timeRange.Item2);
 
-            FilterDefinition<BsonDocument> filter;
+            FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             bool firstDocument = true;
             if (!string.IsNullOrEmpty(timeTag) && !tags.Contains(timeTag))
             {
                 tags.Add(timeTag);
             }
-            if (timeRange.Item1 == null)
-            {
-                filter = FilterDefinition<BsonDocument>.Empty;
-            }
-            else
-            {
+            if (timeRange.Item1 != DateTime.MinValue) { 
                 var builder = new FilterDefinitionBuilder<BsonDocument>();
                 filter = builder.Gte(timeTag, timeRange.Item1);
-                if (timeRange.Item2 != null)
+                if (timeRange.Item2 != DateTime.MinValue)
                 {
                     filter &= builder.Lte(timeTag, timeRange.Item2);
                 }
