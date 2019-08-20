@@ -1,39 +1,63 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using irc_core.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class Dialog : ObservableObject
+
+   
+    public abstract class Dialog : ObservableObject
     {
-        public async void Show()
+        private static DialogView dialogView;
+
+        private static Dialog context;
+
+        public delegate void ClosingEventHandler(object sender, ClosingEventArgs args);
+
+        private static ClosingEventHandler handler;
+
+        public static void Show(Dialog context)
         {
-            await DialogHost.Show(this);
+            dialogView = new DialogView();
+            dialogView.DataContext = context;
+            Dialog.context = context;
+            dialogView.Show();
         }
 
-        public async void Show(DialogClosingEventHandler dialogClosingEventHandler)
+        public static void Show(Dialog context, ClosingEventHandler handler) 
         {
-            await DialogHost.Show(this, dialogClosingEventHandler);
+            Show(context);
+            Dialog.handler = handler;
         }
 
-        public void Close()
+        public static void Close()
         {
-            DialogHost.CloseDialogCommand.Execute(null, null);
+            handler?.Invoke(context, new ClosingEventArgs() { Content = dialogView.ContentControl.Content });
+            dialogView.Close();
         }
 
-        public void Close(bool success)
+        public static void Close(object param)
         {
-            DialogHost.CloseDialogCommand.Execute(success, null);
+            handler?.Invoke(context, new ClosingEventArgs(param) { Content = dialogView.ContentControl.Content });
+            dialogView.Close();
+        }
+    }
+
+    public class ClosingEventArgs
+    { 
+        public object Parameter { get; set; }
+
+        public object Content { get; set; }
+
+        public ClosingEventArgs()
+        {
+
         }
 
-        public void Close(object param)
+        public ClosingEventArgs(object param) : base()
         {
-            DialogHost.CloseDialogCommand.Execute(param, null);
+            Parameter = param;
         }
     }
 }

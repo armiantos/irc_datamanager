@@ -21,14 +21,20 @@ namespace irc_core
         {
             base.OnStartup(e);
             mw = new MainWindow();
-            AppViewModel avm = new AppViewModel();
-            mw.DataContext = avm;
+            MainViewModel mvm = new MainViewModel();
+            mw.DataContext = mvm;
             mw.Show();
         }
 
+        /// <summary>
+        /// Application wide exception handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            Console.WriteLine(e.Exception.Message);
+            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
         }
     }
 }

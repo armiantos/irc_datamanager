@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_connector.Views
+namespace irc_core.Views
 {
     /// <summary>
-    /// Interaction logic for OperationsView.xaml
+    /// Interaction logic for DataModelConfigView.xaml
     /// </summary>
-    public partial class OperationsView : UserControl
+    public partial class AddDataViewDialogView : UserControl
     {
-        public OperationsView()
+        public AddDataViewDialogView()
         {
             InitializeComponent();
         }

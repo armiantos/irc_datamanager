@@ -4,101 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:irc_connector"
-        xmlns:viewModels="clr-namespace:irc_connector.ViewModels"
-        xmlns:views="clr-namespace:irc_connector.Views"
-        
         mc:Ignorable="d"
-        Title="Connector" Height="450" Width="800"
-        MinHeight="450" MinWidth="800">
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModels:OpcDaViewModel}">
-            <views:OpcDaView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:WinAppViewModel}">
-            <views:WinAppView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:DbViewModel}">
-            <views:DbView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:OperationsViewModel}">
-            <views:OperationsView/>
-        </DataTemplate>
-    </Window.Resources>
-    
+        Title="MainWindow" Height="450" Width="800"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"
-                              MinWidth="150"/>
-            <ColumnDefinition Width="1*"
-                              MinWidth="150"/>
-            <ColumnDefinition Width="1*"
-                              MinWidth="150"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <!-- First column -->
-        <Label Grid.Column="0"
-               Grid.Row="0"
-               Margin="10 0 0 0"
-               VerticalAlignment="Center">Data sources</Label>
-        <Grid Grid.Column="0"
-              Grid.Row="1"
-              DataContext="{Binding CurrentSourceViewModel}"
-              Margin="20 0 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <ComboBox ItemsSource="{Binding DataContext.SourceTypes, RelativeSource={RelativeSource AncestorType=Window}}"
-                      VerticalContentAlignment="Center"
-                      Margin="10"
-                      SelectedItem="{Binding DataContext.CurrentSourceName, RelativeSource={RelativeSource AncestorType=Window}}"/>
-            <ContentControl Grid.Row="1" Content="{Binding}"/>
-        </Grid>
-
-        <GridSplitter Grid.Column="0" Width="2"
-                      Grid.RowSpan="2"/>
-
-
-        <!-- Second column -->
-        <Label Grid.Column="1"
-               Grid.Row="0"
-               Margin="10 0 0 0"
-               VerticalAlignment="Center">Data sinks</Label>
-        <Grid Grid.Column="1"
-              Grid.Row="1"
-              DataContext="{Binding CurrentSinkViewModel}"
-              Margin="20 0 0 0">
-            <ContentControl Content="{Binding}"/>
-        </Grid>
-
-
-        <GridSplitter Grid.Column="1" Width="2"
-                      Grid.RowSpan="2"/>
-
-        <!-- Third column -->
-        <Label Grid.Column="2"
-               Grid.Row="0"
-               Margin="10 0 0 0"
-               VerticalAlignment="Center">Operations</Label>
-        <Grid Grid.Column="2"
-              Grid.Row="1"
-              DataContext="{Binding OperationsViewModel}"
-              Margin="20 0 0 0">
-            <ContentControl Content="{Binding}"/>
-        </Grid>
-
-        <StatusBar Grid.ColumnSpan="3" 
-                   Grid.Row="2">
-            <StackPanel Orientation="Horizontal">
-                <Label Margin="0 0 10 0">Status:</Label>
-                <Label Content="{Binding StatusMessage}"/>
-            </StackPanel>
-        </StatusBar>
-
+        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.RowSpan="2"
+                    Background="{DynamicResource PrimaryHueDarkBrush}">
+            <ItemsControl ItemsSource="{Binding Tasks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
     </Grid>
 </Window>

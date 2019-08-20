@@ -1,4 +1,5 @@
 ﻿using irc_core.DataSources;
+using irc_core.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,7 @@ namespace irc_core.Dialogs
         private BaseDataSourceDialog currentDataSource;
         #endregion
 
-        public AddDataSourceDialog()
+        public AddDataSourceDialog() 
         {
             SupportedTypes = new List<string>
             {
@@ -51,7 +52,7 @@ namespace irc_core.Dialogs
             set
             {
                 selectedType = value;
-                CurrentDataSource = DataSourceFactory.CreateDataSource(value, this);
+                CurrentDataSource = DataSourceFactory.CreateDataSource(value);
                 OnPropertyChanged("SelectedType");
             }
         }
@@ -74,11 +75,11 @@ namespace irc_core.Dialogs
 
     public static class DataSourceFactory
     {
-        public static BaseDataSourceDialog CreateDataSource(string type, AddDataSourceDialog mainDialog)
+        public static BaseDataSourceDialog CreateDataSource(string type)
         {
             if (type == "Databases")
             {
-                return new AddDatabaseSource(mainDialog);
+                return new AddDatabaseSource();
             }
             throw new NotImplementedException();
         }

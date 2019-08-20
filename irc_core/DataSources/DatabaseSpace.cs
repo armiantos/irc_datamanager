@@ -1,38 +1,19 @@
 ﻿using irc_core.Dialogs;
-using irc_core.Models;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
+using System.Linq;
 
 namespace irc_core.DataSources
 {
     public abstract class DatabaseSpace : DataSource
     {
-        private string label;
-
         private ICommand addCollectionCommand;
 
         public ObservableCollection<DatabaseCollection> Collections { get; set; }
-
-
-        public string Label
-        {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Label");
-            }
-        }
 
         public DatabaseSpace()
         {
@@ -44,7 +25,7 @@ namespace irc_core.DataSources
             get
             {
                 if (addCollectionCommand == null)
-                    addCollectionCommand = new CommandWrapper(param =>
+                    addCollectionCommand = new RelayCommand(param =>
                         AddCollection(null));
                 return addCollectionCommand;
             }
@@ -56,19 +37,22 @@ namespace irc_core.DataSources
             {
                 var collections = await Task.Run(() => ListCollections());
                 ListDialog listDialog = new ListDialog(this, collections);
-                listDialog.Show(DialogClosingEventHandler);
+                Dialog.Show(listDialog, DialogClosingEventHandler);
             }
             else
             {
-                Collections.Add(GetCollection(collectionName));
+                if (Collections.FirstOrDefault(collection => collection.Label == collectionName) == null)
+                {
+                    Collections.Add(GetCollection(collectionName));
+                }
             }
         }
 
-        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
         {
-            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+            if (args.Parameter != null && args.Parameter is string)
             {
-                string param = (string)eventArgs.Parameter;
+                string param = (string)args.Parameter;
                 AddCollection(param);
             }
         }

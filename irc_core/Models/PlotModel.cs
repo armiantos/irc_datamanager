@@ -1,30 +1,23 @@
-﻿using LiveCharts;
-using System;
+﻿using OxyPlot;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfSharedLibrary;
 
 namespace irc_core.Models
 {
     public class PlotModel : DataModel
     {
-        private SeriesCollection series;
+        private OxyPlot.PlotModel model;
 
-        public SeriesCollection Series
+        public OxyPlot.PlotModel Model
         {
             get
             {
-                if (series == null)
-                    series = new SeriesCollection();
-                return series;
+                if (model == null)
+                {
+                    model = new OxyPlot.PlotModel();
+                }
+                return model;
             }
-            set
-            {
-                series = value;
-                OnPropertyChanged("Series");
-            }
+            set => model = value;
         }
     }
 }

@@ -13,30 +13,31 @@
             <ComboBox ItemsSource="{Binding SupportedDbs}"
                   Margin="10"
                   HorizontalContentAlignment="Center"
+                      materialDesign:HintAssist.Hint="Database Type"
                   SelectedValue="{Binding SelectedDb}"></ComboBox>
             <TextBox Text="{Binding Host}"
                  HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Host"
+                     materialDesign:HintAssist.Hint="Host"
                  Margin="10"></TextBox>
 
             <TextBox Text="{Binding Username}"
                  HorizontalContentAlignment="Center"
-                 materialDesign:HintAssist.Hint="Username"
+                     materialDesign:HintAssist.Hint="Username"
+                     ToolTip="Username"
                  Margin="10"></TextBox>
 
             <PasswordBox x:Name="PasswordField"
                      HorizontalContentAlignment="Center"
-                     materialDesign:HintAssist.Hint="Password"
+                         materialDesign:HintAssist.Hint="Password"
                      Margin="10"></PasswordBox>
 
 
-            <Button HorizontalAlignment="Center"
+            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                HorizontalAlignment="Center"
                 Margin="20"
                 Command="{Binding AddDatabaseSourceCommand}"
                 CommandParameter="{Binding ElementName=PasswordField}">
-                <materialDesign:PackIcon Kind="Add"
-                                        Width="24"
-                                        Height="24"/>
+                <materialDesign:PackIcon Kind="Add"/>
             </Button>
 
         </StackPanel>

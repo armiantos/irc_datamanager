@@ -19,7 +19,7 @@
                    Grid.Row="0"
                    VerticalAlignment="Center"></TextBlock>
         
-        <ItemsControl ItemsSource="{Binding DataViews}"
+        <ItemsControl ItemsSource="{Binding DataModels}"
                       Grid.Row="1"
                       Margin="10">
             <ItemsControl.ItemsPanel>
@@ -36,26 +36,29 @@
                 </DataTemplate>
             </ItemsControl.Resources>
         </ItemsControl>
-        
-        <materialDesign:PopupBox
-                PlacementMode="BottomAndAlignCentres"
-                ToolTipService.Placement="Right"
-                ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Grid.Row="0">
-            <StackPanel>
-                <Button Style="{StaticResource MaterialDesignToolButton}"
-                        Command="{Binding AddDataViewCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Add"
-                                                 Height="15"
-                                                 Width="15" 
-                                                 VerticalAlignment="Center"/>
-                        <TextBlock VerticalAlignment="Center">Add data view</TextBlock>
-                    </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding ExportDataCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="5"
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="Download"/>
+                </Button>
+                <Button Command="{Binding AddDataViewCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="5"
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="Add"/>
                 </Button>
             </StackPanel>
-        </materialDesign:PopupBox>
+            
+
+        </StackPanel>
+        
     </Grid>
 </UserControl>

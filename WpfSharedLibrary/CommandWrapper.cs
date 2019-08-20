@@ -3,14 +3,14 @@ using System.Windows.Input;
 
 namespace WpfSharedLibrary
 {
-    public class CommandWrapper : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object> execute;
         private Predicate<object> canExecute;
 
-        public CommandWrapper(Action<object> execute) : this(execute, null) { }
+        public RelayCommand(Action<object> execute) : this(execute, null) { }
 
-        public CommandWrapper(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             this.execute = execute;
             this.canExecute = canExecute;

@@ -1,5 +1,4 @@
-﻿using irc_connector.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,10 +15,17 @@ namespace irc_connector
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow mw = new MainWindow();
-            MainWindowViewModel mwvm = new MainWindowViewModel();
-            mw.DataContext = mwvm;
-            mw.Show();
+            base.OnStartup(e);
+            MainWindow mainWindow = new MainWindow();
+            MainViewModel mainViewModel = new MainViewModel();
+            mainWindow.DataContext = mainViewModel;
+            mainWindow.Show();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
         }
     }
 }

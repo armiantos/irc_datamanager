@@ -11,17 +11,20 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDataViewDialog : Dialog
+    public class ExportDataDialog : Dialog
     {
         private DataView dataView;
 
         private string searchField;
 
-        private ICommand addDataViewCommand;
+        private ICommand exportDataCommand;
 
         private ICommand searchTextboxCommand;
 
-        public enum Action { AddDataView, SaveData}       
+        private string initialTime;
+        private string finalTime;
+        
+        public enum Action { AddDataView, ExportData}       
 
         private List<string> included;
 
@@ -52,17 +55,44 @@ namespace irc_core.Dialogs
             }
         }
 
-        /// <summary>
-        /// Triggered when the add button is clicked on the dialog.
-        /// </summary>
-        public ICommand AddDataViewCommand
+
+        public string InitialTime
         {
             get
             {
-                if (addDataViewCommand == null)
-                    addDataViewCommand = new RelayCommand(param =>
-                        CloseAddDataViewDialogView(Action.AddDataView));
-                return addDataViewCommand;
+                return initialTime;
+            }
+            set
+            {
+                initialTime = value;
+                OnPropertyChanged("InitialTime");
+            }
+        }
+
+        public string FinalTime
+        {
+            get
+            {
+                return finalTime;
+            }
+            set
+            {
+                finalTime = value;
+                OnPropertyChanged("FinalTime");
+            }
+        }
+
+        /// <summary>
+        /// Triggered when the add button is clicked on the dialog.
+        /// </summary>
+        public ICommand ExportDataCommand
+        {
+            get
+            {
+                if (exportDataCommand == null)
+                    exportDataCommand = new RelayCommand(param =>
+                        CloseExportDataDialogView(Action.ExportData));
+                return exportDataCommand;
             }
         }
 
@@ -91,43 +121,38 @@ namespace irc_core.Dialogs
                 return searchTextboxCommand;
             }
         }
+        #endregion
 
-
+        #region methods
         public List<string> GetIncluded()
         {
             return included;
         }
 
-        public string GetSelectedViewType()
+        public Tuple<DateTime, DateTime> GetTimeRange()
         {
-            string selectedType = SupportedViews.FirstOrDefault(entry => entry.Boolean == true).Label;
-            if (!string.IsNullOrEmpty(selectedType))
+            try
             {
-                return selectedType;
+                return new Tuple<DateTime, DateTime>(Convert.ToDateTime(initialTime),
+                    Convert.ToDateTime(finalTime));
             }
-            throw new InvalidOperationException();
+            catch
+            {
+                throw new InvalidExpressionException("Invalid DateTime format.");
+            }
         }
 
-        public ObservableCollection<StringBool> SupportedViews { get; set; }
-        #endregion
-
-        #region methods
-        public AddDataViewDialog()
+        public ExportDataDialog()
         {
-            SupportedViews = new ObservableCollection<StringBool>
-            {
-                new StringBool{Label = "Plot", Boolean = false},
-                new StringBool{Label = "Table", Boolean = false}
-            };
             included = new List<string>();
         }
 
-        public AddDataViewDialog( DataTable table) : this()
+        public ExportDataDialog( DataTable table) : this()
         {
             DataView = table.AsDataView();
         }
 
-        private void CloseAddDataViewDialogView(Action action)
+        private void CloseExportDataDialogView(Action action)
         {
             var o = dataView.Table.AsEnumerable().Where(p => (bool)p["Include"]);
 

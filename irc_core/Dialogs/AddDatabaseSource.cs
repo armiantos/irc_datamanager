@@ -18,7 +18,7 @@ namespace irc_core.Dialogs
         private string username;
         private ICommand addDatabaseSourceCommand;
 
-        public AddDatabaseSource(AddDataSourceDialog mainDialog) : base(mainDialog)
+        public AddDatabaseSource()
         {
             supportedDbs = new List<string>
             {
@@ -87,10 +87,10 @@ namespace irc_core.Dialogs
             get
             {
                 if (addDatabaseSourceCommand == null)
-                    addDatabaseSourceCommand = new CommandWrapper(param =>
+                    addDatabaseSourceCommand = new RelayCommand(param =>
                     {
-                        object[] args = new object[] { this, param };
-                        mainDialog.Close(args);
+                        object[] arr_param = new object[] { this, param };
+                        Close(arr_param);
                     });
                 return addDatabaseSourceCommand;
             }

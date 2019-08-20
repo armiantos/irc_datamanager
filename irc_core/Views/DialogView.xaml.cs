@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irc_core.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace irc_connector.Views
+namespace irc_core.Views
 {
     /// <summary>
-    /// Interaction logic for OpcDaView.xaml
+    /// Interaction logic for DialogView.xaml
     /// </summary>
-    public partial class OpcDaView : UserControl
+    public partial class DialogView : Window
     {
-        public OpcDaView()
+        public DialogView()
         {
             InitializeComponent();
         }
     }
+
 }

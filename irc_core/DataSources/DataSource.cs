@@ -9,6 +9,20 @@ namespace irc_core.DataSources
 {
     public abstract class DataSource : ObservableObject
     {
+        private string label;
+
+        public string Label
+        {
+            get
+            {
+                return label;
+            }
+            set
+            {
+                label = value;
+                OnPropertyChanged("Label");
+            }
+        }
 
     }
 }

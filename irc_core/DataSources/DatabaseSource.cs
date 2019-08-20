@@ -1,11 +1,7 @@
 ﻿using irc_core.DatabaseLibrary;
 using irc_core.Dialogs;
-using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfSharedLibrary;
@@ -16,22 +12,7 @@ namespace irc_core.DataSources
     {
         private IDatabase client;
 
-        private string label;
-
         private ICommand addSpaceCommand;
-
-        public string Label
-        {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Label");
-            }
-        }
 
         public ObservableCollection<DatabaseSpace> Spaces { get; set; }
 
@@ -40,7 +21,7 @@ namespace irc_core.DataSources
             get
             {
                 if (addSpaceCommand == null)
-                    addSpaceCommand = new CommandWrapper(param =>
+                    addSpaceCommand = new RelayCommand(param =>
                     {
                         AddSpace(null);
                     });
@@ -62,7 +43,7 @@ namespace irc_core.DataSources
             {
                 var spaces = await Task.Run(() => client.ListDatabases());
                 ListDialog listDialog = new ListDialog(this, spaces);
-                listDialog.Show(DialogClosingEventHandler);
+                Dialog.Show(listDialog, DialogClosingEventHandler);
             }
             else
             {
@@ -71,13 +52,14 @@ namespace irc_core.DataSources
             }
         }
 
-        private void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        private void DialogClosingEventHandler(object sender, ClosingEventArgs args)
         {
-            if (eventArgs.Parameter != null && eventArgs.Parameter is string)
+            if (args.Parameter != null && args.Parameter is string)
             {
-                string param = (string)eventArgs.Parameter;
+                string param = (string)args.Parameter;
                 AddSpace(param);
             }
         }
+
     }
 }

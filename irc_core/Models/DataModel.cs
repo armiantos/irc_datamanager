@@ -9,19 +9,13 @@ namespace irc_core.Models
 {
     public abstract class DataModel : ObservableObject
     {
-        private string label;
+        public List<string> Tags { get; set; }
 
-        public string Label
+        public bool IsLive { get; set; }
+
+        public DataModel()
         {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-                OnPropertyChanged("Label");
-            }
+            IsLive = true;
         }
     }
 }
