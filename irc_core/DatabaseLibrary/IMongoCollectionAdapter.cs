@@ -126,16 +126,13 @@ namespace irc_core.DatabaseLibrary
 
         protected override async Task SaveToFile(List<string> tags, Tuple<DateTime, DateTime> timeRange, string path)
         {
-            Console.WriteLine(timeRange.Item1);
-            Console.WriteLine(timeRange.Item2);
-
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             bool firstDocument = true;
             if (!string.IsNullOrEmpty(timeTag) && !tags.Contains(timeTag))
             {
                 tags.Add(timeTag);
             }
-            if (timeRange.Item1 != DateTime.MinValue) { 
+            if (timeRange.Item1 != DateTime.MinValue) {
                 var builder = new FilterDefinitionBuilder<BsonDocument>();
                 filter = builder.Gte(timeTag, timeRange.Item1);
                 if (timeRange.Item2 != DateTime.MinValue)
