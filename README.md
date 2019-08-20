@@ -11,11 +11,11 @@
  ### App design
  The programs are WPF applications. To decouple components that make up a user interface for easier debugging and more manageable code, it's best to use the MVVM pattern designed for WPF applications. MVVM is some what similar to MVC, but  Here's a really great [blog](https://rachel53461.wordpress.com/) where you can learn the design pattern. To summarize:
 
- | Component | Function                                                                                                                                                       | File type |
- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
- | View      | Responsible to display data stored in _models_ through a user friendly interface                                                                               | .xaml     |
- | Model     | Responsible for templating data that needs to be displayed. Implements INotifyProperty to let view automatically update whenever data in the model is updated. | .cs       |
- | ViewModel | Links together the _view_ and _model_. Removes application logic or code behind from _views_ so that _views_ can be changed regardless of the model            | .cs       |
+ | Component | Function | File type |
+ | --- | --- | --- |
+ | View | Responsible to display data stored in _models_ through a user friendly interface | .xaml |
+ | Model | Responsible for templating data that needs to be displayed. Implements INotifyProperty to let view automatically update whenever data in the model is updated. | .cs  |
+ | ViewModel | Links together the _view_ and _model_. Removes application logic or code behind from _views_ so that _views_ can be changed regardless of the model | .cs |
 
  The core component in MVVM is _Data Binding_. Data binding allows users to access and alter the data model through the view. It can be described as two way publish, subscribe design pattern.
 
@@ -114,11 +114,12 @@ A database space refers to a single database in a database server. It is respons
 
 ##### DatabaseCollection
 A database collection refers to a single collection inside a database. It is reponsible for retrieving data through API's and generating data models to be displayed in the user interface. For an API to implement a DatabaseCollection, the wrapper must implement:
-| Methods          | Function                                                                                                                                                                                                                                                                                                                                                    | Return    |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| `ListData()`     | Retrieves a table containing the columns: Include(bool), Tag(string), Type(type or string). The type column value should be the .NET equivalent type (e.g. System32.Int32) for an integer which can be found using the `.GetType()` method.                                                                                                                 | DataTable |
+
+| Methods | Function | Return |
+| --- | --- | --- |
+| `ListData()` | Retrieves a table containing the columns: Include(bool), Tag(string), Type(type or string). The type column value should be the .NET equivalent type (e.g. System32.Int32) for an integer which can be found using the `.GetType()` method. | DataTable |
 | `GetDataModel()` | Returns a new DataModel with the specifications given as the argument. E.g. build a plot model for the following tags: FluidMech_Output_TempFlow, FluidMech_Output_TempTank. Ideally the data model should be showing the latest data therefore try to look up how to retrieve the latest data using the API (for mongoDB, it was `.sort({$natural: -1})`). | DataModel |
-| `Update()`       | This updates the data held by the data model with the latest data. The `GetDataModel()` doesn't have to call update, as each DataModel in the database collection is automatically updated every second in the code section given below.                                                                                                                    | void      |
+| `Update()`| This updates the data held by the data model with the latest data. The `GetDataModel()` doesn't have to call update, as each DataModel in the database collection is automatically updated every second in the code section given below.| void |
 ```c#
 // runs in separate thread to update in the background 
 new Thread(() =>
