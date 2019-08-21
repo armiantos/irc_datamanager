@@ -155,7 +155,7 @@ Most of the server settings are located in cassandra.yaml in cassandra\conf. The
 MongoDB is the most popular NoSQL database due to its Document based model, allowing for highly unstructured data. As a drawback, memory space may not be as efficient because fields are stored in each row (referred to a document in mongo). Although mongoDB supports clustering, it is still a single master setup where writes can only be done through one node. In the event that the master node dies, one slave node will automatically be promoted to a master. Note that in MongoDB, tables are referred to as collections and each entry in a collection (equivalent to a row in a table) is referred to as a document. https://docs.mongodb.com/manual/core/data-modeling-introduction/
 
 ### Installing MongoDB (install as a service)  
-https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+Go through the [official documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) for quick installation using setup executable given. Follow the instructions up until step 3 (before launching mongo.exe). Installing the software as a service is recommended. This way you can run a mongo server in the background without worrying about accidentally closing the terminal window that handles that process.
 ### Server setup
 1. Navigate to mongoDB’s binaries folder
     ```
@@ -258,15 +258,43 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 ### Sharded cluster
 One of the advantages of using NoSQL databases is the ability to scale horizontally, where data is distributed across multiple nodes for high availability and load balancing.
 
-Currently we have a 5 node setup running on 2 computers: CME-712337 and CME540319 (Pendulum cart computer). CME-712337 acts as the router, config server and one of the nodes in a shard replica set while CME540319 acts as the other node in the shard replica set and an aribter node of the same shard replica set. Replica sets should contain at least 3 members for fault tolerance. In the event of a primary node failure, re-election can properly be executed only if there is majority vote, because of this, mongoDB's documentation mentions
+##### Background
+A mongoDB cluster consists of three key components: a router (mongos.exe), a config server and sharding servers.
+| Component | Function |
+|---|---|
+| router | Serves clients and communicates between config server and sharding server. |
+| config server | Knows how and where the data is distributed. If this server dies, clients cannot retrieve anything from the database |
+|sharding server | Where the data is actually stored. A cluster can have multiple shards. |
+
+The config and sharding servers are usually implemented as _replica sets_. Replica sets are collections of nodes that maintain the same database. A production replica set should be in odd numbers of at least 3. This way there will always be majority vote in case the primary node in that replica set dies. Arbiter nodes can be added to the replica set to participate in elections only and not store data. 
+
+#### Lab Setup
+
+Currently we have a 5 node setup running on 2 computers: CME-712337 and CME540319 (Pendulum cart computer). CME-712337 acts as the router, config server and one of the nodes in a shard replica set while CME540319 acts as the other node in the shard replica set and an aribter node of the same shard replica set. Replica sets should contain at least 3 members for fault tolerance. In the event of a primary node failure, re-election can properly be executed only if there is majority vote.
 
 > If a replica set has an even number of members, add an arbiter.
 
-The routers are set up with the port 27017, the config servers 27018, sharding nodes 27019, and arbiter nodes 27020. This allows a single computer to have multiple roles in the cluster. In practice, each computer should only have a single role, but due to hardware limitations we can only use two computers. 
+The routers are set up with the port 27017, the config servers 27018, sharding nodes 27019, and arbiter nodes 27020. 
 
-#### Setting up a sharded cluster
-
-
+#### Shading a collection:
+1. Create an index for that collection by:
+    1. Using mongoshell, navigate to collection, example:
+        ```javascript
+        use irc;
+        ```
+    2. Determine collection and key to be indexed:
+        ```javascript
+        db.collection.createIndex({"key": 1});
+        ```
+        example:
+        ```javascript
+        db.crane3d.createIndex({"time": 1});
+        ```
+        Full details about the operation can be found in the official documentation [here](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/).
+2. Connect to the mongos instance for the cluster using the mongo shell and use
+    ```javascript
+    sh.shardCollection("irc.crane3d", {"time": 1});
+    ```
 <br/>
 ## MySQL
 <!-- introduction to MySQL -->
