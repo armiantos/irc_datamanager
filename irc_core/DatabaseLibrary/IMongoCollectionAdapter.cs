@@ -132,12 +132,13 @@ namespace irc_core.DatabaseLibrary
             {
                 tags.Add(timeTag);
             }
-            if (timeRange.Item1 != DateTime.MinValue) {
+            if (timeRange.Item1 != DateTime.MinValue)
+            {
                 var builder = new FilterDefinitionBuilder<BsonDocument>();
-                filter = builder.Gte(timeTag, timeRange.Item1);
+                filter = builder.Gte(timeTag, timeRange.Item1.ToLocalTime());
                 if (timeRange.Item2 != DateTime.MinValue)
                 {
-                    filter &= builder.Lte(timeTag, timeRange.Item2);
+                    filter &= builder.Lte(timeTag, timeRange.Item2.ToLocalTime());
                 }
             }
             StreamWriter sw = new StreamWriter(path, true);

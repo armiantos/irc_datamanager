@@ -133,6 +133,14 @@ namespace irc_core.Dialogs
         {
             try
             {
+                if (string.IsNullOrEmpty(initialTime))
+                {
+                    initialTime = null;
+                }
+                if (string.IsNullOrEmpty(finalTime))
+                {
+                    finalTime = null;
+                }
                 return new Tuple<DateTime, DateTime>(Convert.ToDateTime(initialTime),
                     Convert.ToDateTime(finalTime));
             }

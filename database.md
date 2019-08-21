@@ -264,6 +264,9 @@ Currently we have a 5 node setup running on 2 computers: CME-712337 and CME54031
 
 The routers are set up with the port 27017, the config servers 27018, sharding nodes 27019, and arbiter nodes 27020. This allows a single computer to have multiple roles in the cluster. In practice, each computer should only have a single role, but due to hardware limitations we can only use two computers. 
 
+#### Setting up a sharded cluster
+
+
 <br/>
 ## MySQL
 <!-- introduction to MySQL -->
