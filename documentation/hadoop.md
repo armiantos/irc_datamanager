@@ -5,16 +5,14 @@ Currently, a Hadoop 3.1.2 is installed in computers 192.168.1.31 and 192.168.1.2
 
 ## Getting started
 1. Start the Hadoop cluster by running `start_hadoop.cmd` shortcut found in the Desktop **as Administrator** on each of the nodes. At the time of writing, you only need to run `start_hadoop.cmd` on CME540319 and CME-712337.
-
-![start_hadoop.cmd](./images/start_hadoop.gif)
-
+    ![start_hadoop.cmd](./images/start_hadoop.gif)
 2. Ensure that the services are running by checking if there are any **shutdown messages** towards the end of the command prompt. The primary computer should run the services: resourcemanager, namenode, and history server. The secondary computers should run: datanode and nodemanager. Details about each of these services can be found in the documentation below. If anything goes wrong, refer to the troubleshooting section in the document below. <!-- TODO: troubleshooting section-->
+    ![safe_mode_off](./images/namenode_safemode_off.png)
 3. Wait until namenode exits safemode before running any MapReduce job.
-4. Submit a MapReduce job to the cluster. In computer CME-712337, I have prepared sample code to run a MapReduce job. The job analyses Seattle's 9GB library inventory data and finds the number of books for each subject/genre.
+s4. Submit a MapReduce job to the cluster. In computer CME-712337, I have prepared sample code to run a MapReduce job. The job analyses Seattle's 9GB library inventory data and finds the number of books for each subject/genre.
 Simply navigate to `C:\Users\OPCUSER\Documents\library_analysis` and run `run.cmd`.
 5. Stop the cluster, simply run the `kill_hadoop.cmd` shortcut as administrator and the command prompts should automatically close.
-
-![stop_hadoop.cmd](./images/kill_hadoop.gif)
+    ![stop_hadoop.cmd](./images/kill_hadoop.gif)
 
 ## Installation 
 Make sure that JAVA_HOME is set in your environment and does not contain any spaces. If your default Java installation directory has spaces then you must use the short pathname instead e.g. `c:\PROGRA~1\Java\...` instead of `C:\Program Files\Java\....`. Hadoop is currently installed in `C:\hadoop`. 

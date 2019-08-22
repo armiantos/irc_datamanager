@@ -1,6 +1,31 @@
 # Databases
 
-# Database Project
+## Getting started
+In the lab we primarily use mongoDB because we suspect our industry partners are using inmation, and inmation uses mongoDB as their backend service. We have two mongoDB set-ups in the lab: standalone and cluster. The standalone server will be deprecated once the lab has migrated the entire data to the cluster.
+### Starting the standalone server
+1. Open Window's services by searching 'services' in the taskbar.
+![](./images/open_windows_services.gif)
+2. Look for mongoDB in the list and start the service if it is not running.
+![](./images/mongodb_standalone_service.gif)
+3. Check whether the database is running by using the mongo shell to connect to the server.
+    1. Open a new command prompt.
+    ![](./images/open_cmd.gif)
+    2. Type in `mongo --username root`. Type `password` when prompted for a password.
+    ![](./images/mongo_login.gif)
+    3. Type in `show dbs` to list the databases available in the database
+    ![](./images/show_dbs.gif)
+    4. Type in `use irc` to browse through the irc database. Then type in `show collections` to see the list of experiments in the irc database.
+    ![](./images/show_collections.gif)
+    5. Type in `db.<collection_name>.findOne()` to see the first row of data in the collection. Replace `<collection_name>` with the experiment name listed in `show collections`.
+    ![](./images/mongo_findOne.gif)
+4. To kill the database server, simply right click on the mongoDB service and click `Stop`.
+![](./images/mongodb_standalone_kill.gif)
+### Starting a cluster
+1. Run `start_mongo.cmd` on the primary and secondary computers **as Administrator**. Ensure that the standalone mongoDB service is not running as they were set up to use the same IP and port.
+![](./images/start_mongocluster.gif)
+2. Check the connection using step 3 in _Starting the standalone server_.
+3. To terminate the database cluster, simply run `kill_mongo_cluster.bat` shortcut as Administrator.
+![](./images/kill_mongocluster.gif)
 
 ## Introduction
 A database is simply, a large collection of data. Although spreadsheets (Excel files) can hold large amounts of data, there is a limit to how much data can be stored in one file. With the increasing demand for data, a more robust and efficient system is required, this is where database management systems come in.
