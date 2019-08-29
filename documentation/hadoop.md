@@ -219,3 +219,8 @@ https://stackoverflow.com/questions/51758601/what-does-the-number-of-maximum-con
 ##### configure node resources
 https://stackoverflow.com/questions/26540507/what-is-the-maximum-containers-in-a-single-node-cluster-hadoop/26541051
 
+### Cluster config
+BB0362 - 192.168.1.11
+BHUANG-GD26 - 192.168.1.5
+BHUANG-GD25 - 192.168.1.7
+BHUANG-GD27 - 192.168.1.2
