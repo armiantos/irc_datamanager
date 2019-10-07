@@ -20,7 +20,7 @@
             <local:AddDataSourceDialogView/>
         </DataTemplate>
         
-        <DataTemplate DataType="{x:Type dialogs:AddDatabaseSource}">
+        <DataTemplate DataType="{x:Type dialogs:AddDbSourceDialog}">
             <local:AddDatabaseView/>
         </DataTemplate>
 

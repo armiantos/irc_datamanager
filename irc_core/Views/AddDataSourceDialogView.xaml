@@ -11,7 +11,7 @@
              
              xmlns:dialogs="clr-namespace:irc_core.Dialogs">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type dialogs:AddDatabaseSource}">
+        <DataTemplate DataType="{x:Type dialogs:AddDbSourceDialog}">
             <local:AddDatabaseView/>
         </DataTemplate>
     </UserControl.Resources>

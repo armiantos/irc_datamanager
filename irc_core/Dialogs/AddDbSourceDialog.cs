@@ -10,7 +10,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDatabaseSource : BaseDataSourceDialog
+    public class AddDbSourceDialog : DataSourceDialog
     {
         private List<string> supportedDbs;
         private string selectedDb;
@@ -18,7 +18,7 @@ namespace irc_core.Dialogs
         private string username;
         private ICommand addDatabaseSourceCommand;
 
-        public AddDatabaseSource()
+        public AddDbSourceDialog()
         {
             supportedDbs = new List<string>
             {

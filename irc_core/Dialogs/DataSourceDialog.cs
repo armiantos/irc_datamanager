@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace irc_core.Dialogs
 {
-    abstract public class BaseDataSourceDialog : Dialog
+    abstract public class DataSourceDialog : CustomDialog
     {
     }
 }

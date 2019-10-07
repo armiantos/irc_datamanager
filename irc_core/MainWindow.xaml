@@ -60,7 +60,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type ds:DatabaseSource}">
+                            <DataTemplate DataType="{x:Type ds:DbConnection}">
                                 <views:DatabaseView/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

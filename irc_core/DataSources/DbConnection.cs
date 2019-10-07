@@ -8,13 +8,13 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    public class DatabaseSource : DataSource
+    public class DbConnection : DataSource
     {
         private IDatabase client;
 
         private ICommand addSpaceCommand;
 
-        public ObservableCollection<DatabaseSpace> Spaces { get; set; }
+        public ObservableCollection<DbDatabase> Spaces { get; set; }
 
         public ICommand AddSpaceCommand
         {
@@ -29,9 +29,9 @@ namespace irc_core.DataSources
             }
         }
 
-        public DatabaseSource(string type, string host, string username, string password)
+        public DbConnection(string type, string host, string username, string password)
         {
-            Spaces = new ObservableCollection<DatabaseSpace>();
+            Spaces = new ObservableCollection<DbDatabase>();
             client = DbFactory.CreateDatabase(type);
             client.Connect(host, username, password);
         }
@@ -43,11 +43,11 @@ namespace irc_core.DataSources
             {
                 var spaces = await Task.Run(() => client.ListDatabases());
                 ListDialog listDialog = new ListDialog(this, spaces);
-                Dialog.Show(listDialog, DialogClosingEventHandler);
+                CustomDialog.Show(listDialog, DialogClosingEventHandler);
             }
             else
             {
-                DatabaseSpace dbSpace = client.GetDatabase(name);
+                DbDatabase dbSpace = client.GetDatabase(name);
                 Spaces.Add(dbSpace);
             }
         }

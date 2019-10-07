@@ -11,7 +11,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDataViewDialog : Dialog
+    public class AddDataViewDialog : CustomDialog
     {
         private DataView dataView;
 

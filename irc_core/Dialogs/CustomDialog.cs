@@ -4,31 +4,29 @@ using System.Windows.Controls;
 using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
-{
-
-   
-    public abstract class Dialog : ObservableObject
+{   
+    public abstract class CustomDialog : ObservableObject
     {
         private static DialogView dialogView;
 
-        private static Dialog context;
+        private static CustomDialog context;
 
         public delegate void ClosingEventHandler(object sender, ClosingEventArgs args);
 
         private static ClosingEventHandler handler;
 
-        public static void Show(Dialog context)
+        public static void Show(CustomDialog context)
         {
             dialogView = new DialogView();
             dialogView.DataContext = context;
-            Dialog.context = context;
+            CustomDialog.context = context;
             dialogView.Show();
         }
 
-        public static void Show(Dialog context, ClosingEventHandler handler) 
+        public static void Show(CustomDialog context, ClosingEventHandler handler) 
         {
             Show(context);
-            Dialog.handler = handler;
+            CustomDialog.handler = handler;
         }
 
         public static void Close()

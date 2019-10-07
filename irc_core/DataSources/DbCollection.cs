@@ -14,7 +14,7 @@ using WpfSharedLibrary;
 
 namespace irc_core.DataSources
 {
-    public abstract class DatabaseCollection : DataSource
+    public abstract class DbCollection : DataSource
     {
         public ObservableCollection<DataModel> DataModels { get; set; }
 
@@ -24,7 +24,7 @@ namespace irc_core.DataSources
 
         private ICommand exportDataCommand;
 
-        public DatabaseCollection()
+        public DbCollection()
         {
             DataModels = new ObservableCollection<DataModel>();
 
@@ -87,7 +87,7 @@ namespace irc_core.DataSources
             {
                 DataTable listData = await Task.Run(() => ListData());
                 AddDataViewDialog AddDataViewDialogView = new AddDataViewDialog(listData);
-                Dialog.Show(AddDataViewDialogView, DialogClosingEventHandler);
+                CustomDialog.Show(AddDataViewDialogView, DialogClosingEventHandler);
             }
             else
             {
@@ -125,7 +125,7 @@ namespace irc_core.DataSources
             {
                 DataTable listData = await Task.Run(() => ListData());
                 ExportDataDialog exportDataDialog = new ExportDataDialog(listData);
-                Dialog.Show(exportDataDialog, DialogClosingEventHandler);
+                CustomDialog.Show(exportDataDialog, DialogClosingEventHandler);
             }
             else
             {

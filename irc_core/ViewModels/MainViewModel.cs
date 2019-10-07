@@ -47,7 +47,7 @@ namespace irc_core.ViewModels
         private void AddDataSource()
         {
             AddDataSourceDialog dialog = new AddDataSourceDialog();
-            Dialog.Show(dialog, DialogClosingEventHandler);   
+            CustomDialog.Show(dialog, DialogClosingEventHandler);   
         }
 
 
@@ -56,11 +56,11 @@ namespace irc_core.ViewModels
             if (args.Parameter is object[])
             {
                 object[] parameters = (object[])args.Parameter;
-                if(parameters[0] is AddDatabaseSource)
+                if(parameters[0] is AddDbSourceDialog)
                 {
-                    AddDatabaseSource o = (AddDatabaseSource)parameters[0];
+                    AddDbSourceDialog o = (AddDbSourceDialog)parameters[0];
                     PasswordBox p = (PasswordBox)parameters[1];
-                    DataSources.Add(new DatabaseSource(o.SelectedDb, o.Host, o.Username, p.Password)
+                    DataSources.Add(new DbConnection(o.SelectedDb, o.Host, o.Username, p.Password)
                     {
                         Label = $"{o.SelectedDb} @ {o.Host}"
                     });

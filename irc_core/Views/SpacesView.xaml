@@ -29,7 +29,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type ds:DatabaseCollection}">
+                <DataTemplate DataType="{x:Type ds:DbCollection}">
                     <local:CollectionView/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

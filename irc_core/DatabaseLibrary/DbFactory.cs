@@ -12,7 +12,7 @@ namespace irc_core.DatabaseLibrary
         {
             if (type == "mongoDB")
             {
-                return new MongoDBWrapper();
+                return new MongoConn();
             }
             throw new NotImplementedException();
         }

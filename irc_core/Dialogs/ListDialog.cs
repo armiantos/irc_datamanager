@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace irc_core.Dialogs
 {
-    public class ListDialog : Dialog
+    public class ListDialog : CustomDialog
     {
         public ObservableCollection<string> ItemList { get; set; }
 

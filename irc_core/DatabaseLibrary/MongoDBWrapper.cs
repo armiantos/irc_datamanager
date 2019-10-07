@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace irc_core.DatabaseLibrary
 {
-    public class MongoDBWrapper : IDatabase
+    public class MongoConn : IDatabase
     {
         private MongoClient client; 
 
@@ -38,9 +38,9 @@ namespace irc_core.DatabaseLibrary
             throw new NotImplementedException();
         }
 
-        public DatabaseSpace GetDatabase(string name)
+        public DbDatabase GetDatabase(string name)
         {
-            return new IMongoDatabaseAdapter(client.GetDatabase(name)) { Label = name };
+            return new MongoDatabase(client.GetDatabase(name)) { Label = name };
         }
 
         public async Task<List<string>> ListDatabases()

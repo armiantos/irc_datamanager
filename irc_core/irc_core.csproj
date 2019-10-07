@@ -104,24 +104,24 @@
     </ApplicationDefinition>
     <Compile Include="DatabaseLibrary\DbFactory.cs" />
     <Compile Include="DatabaseLibrary\IDatabase.cs" />
-    <Compile Include="DatabaseLibrary\IMongoCollectionAdapter.cs" />
+    <Compile Include="DatabaseLibrary\MongoCollection.cs" />
     <Compile Include="DatabaseLibrary\MongoDBWrapper.cs" />
-    <Compile Include="DataSources\DatabaseCollection.cs" />
-    <Compile Include="DataSources\DatabaseSource.cs" />
-    <Compile Include="DataSources\DatabaseSpace.cs" />
+    <Compile Include="DataSources\DbCollection.cs" />
+    <Compile Include="DataSources\DbConnection.cs" />
+    <Compile Include="DataSources\DbDatabase.cs" />
     <Compile Include="DataSources\DataSource.cs" />
-    <Compile Include="DatabaseLibrary\IMongoDatabaseAdapter.cs" />
-    <Compile Include="Dialogs\AddDatabaseSource.cs" />
+    <Compile Include="DatabaseLibrary\MongoDatabase.cs" />
+    <Compile Include="Dialogs\AddDbSourceDialog.cs" />
     <Compile Include="Dialogs\ExportDataDialog.cs" />
-    <Compile Include="Dialogs\BaseDataSourceDialog.cs" />
-    <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\DataSourceDialog.cs" />
+    <Compile Include="Dialogs\CustomDialog.cs" />
     <Compile Include="Dialogs\AddDataSourceDialog.cs" />
     <Compile Include="Dialogs\ListDialog.cs" />
     <Compile Include="Dialogs\AddDataViewDialog.cs" />
+    <Compile Include="DataModels\DataModel.cs" />
+    <Compile Include="DataModels\PlotModel.cs" />
+    <Compile Include="DataModels\TableModel.cs" />
     <Compile Include="HelperClasses\StringBool.cs" />
-    <Compile Include="Models\DataModel.cs" />
-    <Compile Include="Models\PlotModel.cs" />
-    <Compile Include="Models\TableModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AddDataSourceDialogView.xaml.cs">
       <DependentUpon>AddDataSourceDialogView.xaml</DependentUpon>

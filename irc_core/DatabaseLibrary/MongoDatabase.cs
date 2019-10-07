@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace irc_core.DatabaseLibrary
 {
-    class IMongoDatabaseAdapter : DatabaseSpace
+    class MongoDatabase : DbDatabase
     {
         IMongoDatabase db;
 
-        public IMongoDatabaseAdapter(IMongoDatabase db)
+        public MongoDatabase(IMongoDatabase db)
         {
             this.db = db;
         }
 
-        public override DatabaseCollection GetCollection(string name)
+        public override DbCollection GetCollection(string name)
         {
             IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(name);
-            return new IMongoCollectionAdapter(collection) { Label = name };
+            return new MongoCollection(collection) { Label = name };
         }
 
         public override async Task<List<string>> ListCollections()

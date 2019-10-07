@@ -11,12 +11,12 @@ using WpfSharedLibrary;
 
 namespace irc_core.Dialogs
 {
-    public class AddDataSourceDialog : Dialog
+    public class AddDataSourceDialog : CustomDialog
     {
         #region privates
         private List<string> supportedTypes;
         private string selectedType;
-        private BaseDataSourceDialog currentDataSource;
+        private DataSourceDialog currentDataSource;
         #endregion
 
         public AddDataSourceDialog() 
@@ -57,7 +57,7 @@ namespace irc_core.Dialogs
             }
         }
 
-        public BaseDataSourceDialog CurrentDataSource
+        public DataSourceDialog CurrentDataSource
         {
             get
             {
@@ -75,11 +75,11 @@ namespace irc_core.Dialogs
 
     public static class DataSourceFactory
     {
-        public static BaseDataSourceDialog CreateDataSource(string type)
+        public static DataSourceDialog CreateDataSource(string type)
         {
             if (type == "Databases")
             {
-                return new AddDatabaseSource();
+                return new AddDbSourceDialog();
             }
             throw new NotImplementedException();
         }

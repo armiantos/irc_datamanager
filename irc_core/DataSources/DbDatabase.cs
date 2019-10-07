@@ -9,15 +9,15 @@ using System.Linq;
 
 namespace irc_core.DataSources
 {
-    public abstract class DatabaseSpace : DataSource
+    public abstract class DbDatabase : DataSource
     {
         private ICommand addCollectionCommand;
 
-        public ObservableCollection<DatabaseCollection> Collections { get; set; }
+        public ObservableCollection<DbCollection> Collections { get; set; }
 
-        public DatabaseSpace()
+        public DbDatabase()
         {
-            Collections = new ObservableCollection<DatabaseCollection>();
+            Collections = new ObservableCollection<DbCollection>();
         }
 
         public ICommand AddCollectionCommand
@@ -37,7 +37,7 @@ namespace irc_core.DataSources
             {
                 var collections = await Task.Run(() => ListCollections());
                 ListDialog listDialog = new ListDialog(this, collections);
-                Dialog.Show(listDialog, DialogClosingEventHandler);
+                CustomDialog.Show(listDialog, DialogClosingEventHandler);
             }
             else
             {
@@ -59,6 +59,6 @@ namespace irc_core.DataSources
 
         public abstract Task<List<string>> ListCollections();
 
-        public abstract DatabaseCollection GetCollection(string name);
+        public abstract DbCollection GetCollection(string name);
     }
 }

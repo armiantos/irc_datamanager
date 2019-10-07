@@ -15,6 +15,6 @@ namespace irc_core.DatabaseLibrary
 
         Task<List<string>> ListDatabases();
 
-        DatabaseSpace GetDatabase(string name);
+        DbDatabase GetDatabase(string name);
     }
 }

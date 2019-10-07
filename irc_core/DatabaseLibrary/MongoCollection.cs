@@ -13,19 +13,32 @@ using System.IO;
 
 namespace irc_core.DatabaseLibrary
 {
-    public class IMongoCollectionAdapter : DatabaseCollection
+    /// <summary>
+    /// Collection adapter for MongoDB collections generated from MongoDB databases
+    /// </summary>
+    public class MongoCollection : DbCollection
     {
         private IMongoCollection<BsonDocument> mongoCollection;
 
-        private DataTable listDataCache;
+        private DataTable listDataCache;  // for optimization
 
-        private string timeTag;
+        private string timeTag; // automatically checks which tag should be treated as time
 
-        public IMongoCollectionAdapter(IMongoCollection<BsonDocument> mongoCollection)
+        /// <summary>
+        /// Links an IMongoCollection to the adapter class upon construction
+        /// </summary>
+        /// <param name="mongoCollection"> IMongoColleciton returned by <c>IMongoDatabase.GetCollection()</c></param>
+        public MongoCollection(IMongoCollection<BsonDocument> mongoCollection)
         {
             this.mongoCollection = mongoCollection;
         }
 
+        /// <summary>
+        /// Creates a data model of a specified type (plot or table) of the given tags, keys or column labels
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
         public override async Task<DataModel> GetDataModel(string type, List<string> tags)
         {
             DataModel datamodel;
@@ -50,41 +63,52 @@ namespace irc_core.DatabaseLibrary
             return datamodel;
         }
 
+
         public override async Task<DataTable> ListData()
         {
             if (listDataCache == null)
             {
                 listDataCache = new DataTable();
+
                 DataColumn includeCol = listDataCache.Columns.Add("Include", typeof(bool));
                 includeCol.DefaultValue = false;
+
                 listDataCache.Columns.Add("Tag");
+
                 listDataCache.Columns.Add("Type");
+
                 var document = await mongoCollection.Find(new BsonDocument()).Limit(1).FirstOrDefaultAsync();
 
                 foreach (var element in document)
                 {
-                    DataRow r = listDataCache.NewRow();
-                    r["Tag"] = element.Name;
-                    r["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();
+                    DataRow row = listDataCache.NewRow();
+                    row["Tag"] = element.Name;
 
+                    // standardize types from MongoDB types
+                    row["Type"] = BsonTypeMapper.MapToDotNetValue(element.Value).GetType();  
+                    
                     if (string.IsNullOrEmpty(timeTag))
-                    {
-                        if (r["Type"] is DateTime || element.Name.ToLower().Contains("time"))
-                        {
+                        if (row["Type"] is DateTime || element.Name.ToLower().Contains("time"))
                             timeTag = element.Name;
-                        }
-                    }
-
-                    listDataCache.Rows.Add(r);
+                        
+                    listDataCache.Rows.Add(row);
                 }
             }
+
+            // by default do not include any tags
             foreach (DataRow row in listDataCache.Rows)
             {
                 row["Include"] = false;
             }
+
             return listDataCache;
         }
 
+        /// <summary>
+        /// Helper function to populate data model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         private async Task<List<BsonDocument>> GetData(DataModel model)
         {
             if (!string.IsNullOrEmpty(timeTag) && !model.Tags.Contains(timeTag))
@@ -94,11 +118,12 @@ namespace irc_core.DatabaseLibrary
 
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
             FindOptions<BsonDocument> options;
+
             if (!string.IsNullOrEmpty(timeTag)) {
                 options = new FindOptions<BsonDocument>
                 {
                     Limit = 500,
-                    Sort = $"{{{timeTag}: -1}}" // get latest data
+                    Sort = $"{{{timeTag}: -1}}"  
                 };
             }
             else
@@ -110,6 +135,7 @@ namespace irc_core.DatabaseLibrary
                 };
             }
 
+            // if tags are given, then only retrieve the given tags
             if (model.Tags.Count > 0)
             {
                 string projectionBuilder = "{";
@@ -124,6 +150,14 @@ namespace irc_core.DatabaseLibrary
             return await results.ToListAsync();
         }
 
+        /// <summary>
+        /// Streams data to csv file iteratively
+        /// Iterative fashion reduces memory usage while saving file
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <param name="timeRange"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         protected override async Task SaveToFile(List<string> tags, Tuple<DateTime, DateTime> timeRange, string path)
         {
             FilterDefinition<BsonDocument> filter = FilterDefinition<BsonDocument>.Empty;
@@ -141,10 +175,10 @@ namespace irc_core.DatabaseLibrary
                     filter &= builder.Lte(timeTag, timeRange.Item2.ToLocalTime());
                 }
             }
-            StreamWriter sw = new StreamWriter(path, true);
 
             IFindFluent<BsonDocument, BsonDocument> find = mongoCollection.Find(filter)
                 .Sort(new SortDefinitionBuilder<BsonDocument>().Ascending(timeTag));
+
             if (tags.Count > 0)
             {
                 string projectionBuilder = "{";
@@ -154,28 +188,31 @@ namespace irc_core.DatabaseLibrary
                 find = find.Project(projectionBuilder);
             }
 
+            // save documents to file
+            StreamWriter sw = new StreamWriter(path, true);  
+
             await find.ForEachAsync(document =>
             {
                 if (firstDocument)
                 {
                     foreach (BsonElement element in document)
-                    {
-                        sw.Write(element.Name);
-                        sw.Write(",");
-                    }
+                        sw.Write(element.Name + ",");
                     sw.Write(sw.NewLine);
                     firstDocument = false;
                 }
                 foreach (BsonElement element in document)
-                {
-                    sw.Write(element.Value);
-                    sw.Write(",");
-                }
+                    sw.Write(element.Value + ",");
                 sw.Write(sw.NewLine);
             });
+
             sw.Close();            
         }
 
+        /// <summary>
+        /// Updates data model contents
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         protected override async Task Update(DataModel model)
         {
             List<BsonDocument> results = await GetData(model);
@@ -188,15 +225,12 @@ namespace irc_core.DatabaseLibrary
                         plotModel.Model.Axes.Add(new DateTimeAxis());
                 }
 
-                plotModel.Model.Series.Clear();
+                plotModel.Model.Series.Clear(); 
                 foreach (string tag in plotModel.Tags)
                 {
                     if (tag == timeTag)
                         continue;
-                    LineSeries line = new LineSeries
-                    {
-                        Title = tag
-                    };
+                    LineSeries line = new LineSeries { Title = tag };
 
                     for (int i = 0; i < results.Count; i++)
                     {
@@ -210,7 +244,9 @@ namespace irc_core.DatabaseLibrary
                             }
                             else
                             {
-                                line.Points.Add(new OxyPlot.DataPoint(results.Count - i, results[i][tag].ToDouble()));
+                                line.Points.Add(new OxyPlot.DataPoint(
+                                    results.Count - i, 
+                                    results[i][tag].ToDouble()));
                             }
                         }
                         catch
@@ -220,10 +256,6 @@ namespace irc_core.DatabaseLibrary
                     plotModel.Model.Series.Add(line);
                     plotModel.Model.InvalidatePlot(true);
                 }
-                plotModel.Tags.ForEach(tag =>
-                {
-
-                });
             }
 
             else if (model is TableModel tableModel)
